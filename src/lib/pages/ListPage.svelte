@@ -1,9 +1,8 @@
 <script lang="ts">
-  import Item from "./components/Item.svelte";
-  import ListItemView from "./components/Item.svelte";
-  import type { ShoppingListItemModel } from "./models/ShoppingListItemModel.js";
-  import { GetDummyShoppingList } from "./services/GetDummyShoppingList";
-  import { generateString } from "./services/GetRandomId";
+  import ListItemView from "../components/Item.svelte";
+  import type { ShoppingListItemModel } from "../models/ShoppingListItemModel.js";
+  import { GetDummyShoppingList } from "../services/GetDummyShoppingList";
+  import { generateString } from "../services/GetRandomId";
 
   const categories = [
     "Fruit",
