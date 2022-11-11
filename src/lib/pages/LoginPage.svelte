@@ -1,17 +1,15 @@
-<script>
-  import { useNavigate, useLocation } from "svelte-navigator";
-  import { user } from "../stores";
+<script lang="ts">
+  import PocketBase from "pocketbase";
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const client = new PocketBase("http://127.0.0.1:8090");
+  console.log(client);
 
   let username;
   let password;
 
-  function handleSubmit() {
-    $user = { username, password };
-    const from = ($location.state && $location.state.from) || "/";
-    navigate(from, { replace: true });
+  async function handleSubmit() {
+    const userData = await client.users.authViaEmail(username, password);
+    console.log("userData", userData);
   }
 </script>
 
