@@ -11,3 +11,18 @@
 > 🍊
 
 That's at least my vision for this little helper app.
+
+## Setup
+
+Use Node 18, e.g. with `nvm use` in the project root.
+
+```bash
+$ node -v
+v18.12.1
+```
+
+Install with `npm install`.
+
+Run with `npm run dev`.
+
+Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase serve`.
