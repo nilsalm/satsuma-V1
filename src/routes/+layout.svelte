@@ -1,9 +1,12 @@
-<h1>Header</h1>
+<script>
+	import '../app.css';
+</script>
+
 <nav>
-    <a href="/">Home</a>
-    <a href="/lists">My Lists</a>
-    <a href="/profile">Profile</a>
-    <a href="/login">Login</a>
+	<a href="/" class="text-xl p-4 m-1 bg-green-300 rounded">🏠</a>
+	<a href="/lists" class="text-xl p-4 m-1 bg-green-300 rounded">📋</a>
+	<a href="/profile" class="text-xl p-4 m-1 bg-green-300 rounded">🕺</a>
+	<a href="/login" class="text-xl p-4 m-1 bg-green-300 rounded">🚪</a>
 </nav>
 
-<slot></slot>
+<slot />
