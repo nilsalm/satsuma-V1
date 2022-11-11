@@ -1,6 +1,7 @@
 <script lang="ts">
+	import type { ShoppingListItemModel } from "src/ShoppingListItemModel";
   import { createEventDispatcher } from "svelte";
-  import type { ShoppingListItemModel } from "../models/ShoppingListItemModel";
+
   const dispatch = createEventDispatcher();
 
   export let item: ShoppingListItemModel;
