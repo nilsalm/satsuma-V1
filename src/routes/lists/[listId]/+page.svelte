@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { ShoppingListItemModel } from 'src/ShoppingListItemModel';
+	import type { Item } from 'src/models/Item';
 	import type { PageData } from './$types';
-	import Item from './Item.svelte';
+	import ItemComponent from './ItemComponent.svelte';
 
 	export let data: PageData;
 
 	$: filteredList = data.list.filter((i) => !i.gotIt);
 
-	function updateTodo(item: ShoppingListItemModel) {
+	function updateTodo(item: Item) {
 		const i = data.list.findIndex((i) => i.id === item.id);
 		data.list[i] = { ...data.list[i], ...item };
 	}
@@ -18,6 +18,6 @@
 
 <div>
 	{#each filteredList as item}
-		<Item {item} on:update={(e) => updateTodo(e.detail)} />
+		<ItemComponent {item} on:update={(e) => updateTodo(e.detail)} />
 	{/each}
 </div>
