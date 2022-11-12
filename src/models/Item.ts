@@ -3,9 +3,9 @@ import type { Category } from './Category';
 export type Item = {
 	id: string;
 	name: string;
-	category: Category | undefined;
+	category: Category | undefined | string;
 	addedBy: string | undefined;
-	gotIt: boolean;
+	picked: boolean;
 	quantity: number;
 	unit: 'piece' | 'package' | 'kg' | 'gramm';
 };

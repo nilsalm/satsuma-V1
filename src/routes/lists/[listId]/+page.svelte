@@ -5,7 +5,7 @@
 
 	export let data: PageData;
 
-	$: filteredList = data.list.filter((i) => !i.gotIt);
+	$: filteredList = data.list.filter((i) => i.picked === false);
 
 	function updateTodo(item: Item) {
 		const i = data.list.findIndex((i) => i.id === item.id);

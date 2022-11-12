@@ -1,16 +1,22 @@
-<script>
-	import { resultList } from './+page';
+<script lang="ts">
+	import type { PageData } from './$types';
 
-	console.log(resultList);
+	export let data: PageData;
+
+	console.log('Lists', data.lists);
 </script>
 
-<p>Load lists here</p>
+<p>My Lists</p>
 
-<ul>
-	<li><a href="/lists/12343">list</a></li>
-	<li><a href="/lists/lksjhd">list</a></li>
-</ul>
-
-{#each resultList.items as list}
-	<a href="/lists/{list.id}">list</a>
-{/each}
+<div class="grid gap-2 justify-start">
+	{#each data.lists.items as list}
+		<a href="/lists/{list.id}" class="bg-yellow-500 rounded-xl w-24 h-24 text-center">
+			<div class="flex flex-col justify-center h-full">
+				<div class="">list</div>
+				<div class="text-xs">
+					{list.id}
+				</div>
+			</div>
+		</a>
+	{/each}
+</div>

@@ -7,7 +7,7 @@
 	export let item: Item;
 
 	function tickOff() {
-		item.gotIt = !item.gotIt;
+		item.picked = !item.picked;
 		dispatch('update', item);
 	}
 	function more() {
