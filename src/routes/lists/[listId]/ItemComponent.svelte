@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Item } from 'src/models/Item';
+	import type { GetItem } from 'src/models/Item';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
-	export let item: Item;
+	export let item: GetItem;
 
 	function tickOff() {
 		item.picked = !item.picked;
@@ -21,7 +21,7 @@
 </script>
 
 <div
-	class="bg-green-400 py-2 w-64 rounded-sm m-1"
+	class="bg-green-400 py-2 px-4 rounded-sm mb-1 mx-4"
 	on:dragleave={more}
 	on:click={tickOff}
 	on:keypress={tickOff}

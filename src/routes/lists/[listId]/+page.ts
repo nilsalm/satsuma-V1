@@ -1,35 +1,48 @@
 import type { PageLoad } from './$types';
 import PocketBase from 'pocketbase';
-import type { Item } from 'src/models/Item';
+import type { GetItem } from 'src/models/Item';
+import type { Category } from 'src/models/Category';
 
 export const load: PageLoad = async ({ params }) => {
 	// const items = GetDummyShoppingList();
 
 	const client = new PocketBase('http://127.0.0.1:8090');
-	const resultList = await client.records.getList('items', 1, 50, {
+	const itemsList = await client.records.getList('items', 1, 50, {
+		filter: 'created >= "2022-01-01 00:00:00" && picked = false'
+	});
+
+	const categoriesList = await client.records.getList('categories', 1, 50, {
 		filter: 'created >= "2022-01-01 00:00:00"'
 	});
 
-	console.log('Items', resultList);
+	const userId = client.authStore.model?.id;
+	console.log('Items', itemsList);
 
-	const items = resultList.items.map((i) => {
+	const categories = categoriesList.items.map((c) => {
+		return {
+			id: c.id,
+			name: c.name
+		} as Category;
+	});
+
+	const items = itemsList.items.map((i) => {
+		const cat = categories.find((cat) => cat.id === i.category);
+
 		return {
 			id: i.id,
 			name: i.name,
-			category: i.category,
+			category: cat,
 			addedBy: i.addedBy,
 			picked: i.picked,
 			quantity: i.quantity,
 			unit: i.unit
-		} as Item;
+		} as GetItem;
 	});
 
-	// const categories = items.map((i) => {
-	// 	return i.category?.name;
-	// });
 	return {
 		listId: params.listId,
-		list: items
-		// categories: categories
+		list: items,
+		userId: userId,
+		categories: categories
 	};
 };

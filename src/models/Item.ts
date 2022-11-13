@@ -1,11 +1,20 @@
 import type { Category } from './Category';
 
-export type Item = {
-	id: string;
+type BaseItem = {
+	id?: string;
 	name: string;
-	category: Category | undefined | string;
-	addedBy: string | undefined;
 	picked: boolean;
 	quantity: number;
+	listId: string;
 	unit: 'piece' | 'package' | 'kg' | 'gramm';
+};
+
+export type GetItem = BaseItem & {
+	category: Category | undefined;
+	addedBy: string | undefined;
+};
+
+export type PostItem = BaseItem & {
+	category: string;
+	addedBy: string;
 };

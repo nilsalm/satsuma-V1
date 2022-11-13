@@ -26,3 +26,17 @@ Install with `npm install`.
 Run with `npm run dev`.
 
 Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase serve`.
+
+## Todos
+
+- [x] list and pick categories
+- [x] sort items in categories
+- [x] auto-update list on screen
+- [x] update status on item
+- [ ] add template to list
+- [ ] add new list
+- [ ] set permissions policy in database
+- [ ] share list with other users
+- [ ] signup flow
+- [ ] add examples to category
+- [ ] increase quantity if a duplicate item is added
