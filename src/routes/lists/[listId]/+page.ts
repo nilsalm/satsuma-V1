@@ -2,6 +2,7 @@ import type { PageLoad } from './$types';
 import PocketBase from 'pocketbase';
 import type { GetItem } from 'src/models/Item';
 import type { Category } from 'src/models/Category';
+import type { ShoppingList } from 'src/models/ShoppingList';
 
 export const load: PageLoad = async ({ params }) => {
 	const client = new PocketBase('http://127.0.0.1:8090');
@@ -12,9 +13,12 @@ export const load: PageLoad = async ({ params }) => {
 		filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${currentListId}"`
 	});
 
-	console.log(itemsList);
 	const categoriesList = await client.records.getList('categories', 1, 50, {
 		filter: 'created >= "2022-01-01 00:00:00"'
+	});
+
+	const templatesList = await client.records.getList('shoppingLists', 1, 50, {
+		filter: 'created >= "2022-01-01 00:00:00" && template = true'
 	});
 
 	const userId = client.authStore.model?.id;
@@ -24,6 +28,14 @@ export const load: PageLoad = async ({ params }) => {
 			id: c.id,
 			name: c.name
 		} as Category;
+	});
+
+	const templates = templatesList.items.map((t) => {
+		return {
+			id: t.id,
+			name: t.name,
+			template: t.template
+		} as ShoppingList;
 	});
 
 	const items = itemsList.items.map((i) => {
@@ -44,6 +56,7 @@ export const load: PageLoad = async ({ params }) => {
 		listId: currentListId,
 		list: items,
 		userId: userId,
-		categories: categories
+		categories: categories,
+		templates: templates
 	};
 };

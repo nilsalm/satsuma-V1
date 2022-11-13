@@ -1,7 +1,6 @@
 import type { Category } from './Category';
 
 type BaseItem = {
-	id?: string;
 	name: string;
 	picked: boolean;
 	quantity: number;
@@ -10,6 +9,7 @@ type BaseItem = {
 };
 
 export type GetItem = BaseItem & {
+	id: string;
 	category: Category | undefined;
 	addedBy: string | undefined;
 };

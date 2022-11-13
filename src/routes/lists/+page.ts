@@ -10,8 +10,6 @@ export const load: PageLoad = async ({ params }) => {
 		filter: 'created >= "2022-01-01 00:00:00"'
 	});
 
-	console.log(resultList);
-
 	const lists = resultList.items.map((l) => {
 		return {
 			id: l.id,
@@ -19,8 +17,6 @@ export const load: PageLoad = async ({ params }) => {
 			template: l.template || false
 		} as ShoppingList;
 	});
-
-	console.log(lists);
 
 	return { lists: lists };
 };

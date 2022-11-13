@@ -10,7 +10,6 @@
 
 	async function handleSubmit() {
 		const userData = await client.users.authViaEmail(username, password);
-		console.log('userData', userData);
 	}
 	function handleLogout() {
 		client.authStore.clear();

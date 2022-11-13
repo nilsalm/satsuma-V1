@@ -4,7 +4,6 @@
 	import ItemComponent from './ItemComponent.svelte';
 	import PocketBase from 'pocketbase';
 	import type { Category } from 'src/models/Category';
-	import { load } from './+page';
 
 	const client = new PocketBase('http://127.0.0.1:8090');
 
@@ -25,7 +24,6 @@
 	}
 
 	async function submitNewItem() {
-		console.log('data', data, client.authStore.model?.id);
 		const newItem: PostItem = {
 			name: newItemName,
 			category: newItemCategoryId,
@@ -53,9 +51,8 @@
 	async function reloadListItems() {
 		const client = new PocketBase('http://127.0.0.1:8090');
 		const itemsList = await client.records.getList('items', 1, 50, {
-			filter: 'created >= "2022-01-01 00:00:00" && picked = false'
+			filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${data.listId}"`
 		});
-		console.log(itemsList);
 
 		const categoriesList = await client.records.getList('categories', 1, 50, {
 			filter: 'created >= "2022-01-01 00:00:00"'
@@ -85,11 +82,41 @@
 		data.list = items;
 		data.categories = categories;
 	}
+
+	async function addItemsFromTemplate(id: string) {
+		const client = new PocketBase('http://127.0.0.1:8090');
+		const templateItemsList = await client.records.getList('items', 1, 50, {
+			filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${id}"`
+		});
+
+		const templateItems = templateItemsList.items.map((i) => {
+			return {
+				name: i.name,
+				addedBy: data.userId,
+				picked: false,
+				quantity: i.quantity,
+				unit: i.unit,
+				category: i.category,
+				listId: data.listId
+			} as PostItem;
+		});
+
+		for (let index = 0; index < templateItems.length; index++) {
+			const item = templateItems[index];
+			const record = await client.records.create('items', item);
+		}
+
+		reloadListItems();
+	}
 </script>
 
-<p>Display an actual list here</p>
-<p>List Id : {data.listId}</p>
 <div class="h-fit">
+	<div>
+		<a href={`/lists/${data.listId}/edit`}>Edit</a>
+	</div>
+	{#if filteredList.length === 0}
+		<div class="my-auto text-xl">Well done! Now get some 🍦</div>
+	{/if}
 	<div class="h-full overflow-scroll">
 		{#each data.categories as cat}
 			{#if getItemsPerCategory(cat).length > 0}
@@ -105,7 +132,7 @@
 		<div class="flex flex-row overflow-x-scroll m-2">
 			{#each data.categories as cat}
 				<div
-					on:click={setNewItemCategoryId(cat.id)}
+					on:click={() => setNewItemCategoryId(cat.id)}
 					on:keydown={() => {}}
 					class="p-1 rounded-lg ml-1 text-white h-6 text-xs text-center {cat.id ===
 					newItemCategoryId
@@ -127,6 +154,17 @@
 			>
 				Add
 			</button>
+		</div>
+		<div class="flex flex-row overflow-x-scroll m-2">
+			{#each data.templates as template}
+				<div
+					on:click={() => addItemsFromTemplate(template.id)}
+					on:keydown={() => {}}
+					class="p-1 rounded-lg ml-1 text-white h-6 text-xs text-center bg-yellow-500"
+				>
+					{template.name || `Template ${template.id.substring(0, 3)}`}
+				</div>
+			{/each}
 		</div>
 	</div>
 </div>

@@ -33,7 +33,7 @@ Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase se
 - [x] sort items in categories
 - [x] auto-update list on screen
 - [x] update status on item
-- [ ] add template to list
+- [x] add template to list
 - [x] add new list
 - [ ] set permissions policy in database
 - [ ] share list with other users

@@ -19,24 +19,37 @@
 			template: newListTemplate
 		};
 		const record = await client.records.create('shoppingLists', newList);
-		console.log(record);
 		showModal = false;
 	}
 </script>
 
 <p>My Lists</p>
-<div class="h-8">
+<div class="h-14 flex flex-row items-center">
 	{#if showModal === false}
-		<div on:click={setShowModal} class="bg-yellow-600 rounded-full w-8 h-8 text-center text-xl">
-			➕
+		<div
+			on:click={setShowModal}
+			on:keydown={setShowModal}
+			class="bg-green-400 rounded-full w-8 h-8 my-auto text-center text-xl text-white font-bold"
+		>
+			+
 		</div>
 	{:else}
-		<div class="flex flex-row">
-			<input class="px-2" bind:value={newListName} type="text" placeholder="Name you list" />
-			Template
-			<input class="px-2" bind:checked={newListTemplate} type="checkbox" />
-			<div class="px-2" on:click={addNewList}>Add</div>
-			<div class="px-2" on:click={setShowModal}>x</div>
+		<div class=" flex flex-row rounded-xl bg-green-400">
+			<div class="p-2 my-auto">
+				<input bind:value={newListName} class="rounded" type="text" placeholder="Name you list" />
+			</div>
+			<div class="flex flex-row my-auto">
+				Template
+				<input bind:checked={newListTemplate} class="mx-1" type="checkbox" />
+			</div>
+			<div class="px-2 my-auto " on:click={addNewList} on:keydown={addNewList}>Add</div>
+			<div
+				class="px-2 my-auto w-8 h-8 text-center text-xl text-white font-bold"
+				on:click={setShowModal}
+				on:keydown={setShowModal}
+			>
+				x
+			</div>
 		</div>
 	{/if}
 </div>
