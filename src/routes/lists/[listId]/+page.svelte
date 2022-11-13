@@ -12,7 +12,6 @@
 
 	let newItemName = '';
 	let newItemQuantity = 1;
-	let newItemCategory = '';
 	let newItemCategoryId = '';
 
 	$: filteredList = data.list.filter((i) => i.picked === false);
@@ -108,14 +107,26 @@
 				<div
 					on:click={setNewItemCategoryId(cat.id)}
 					on:keydown={() => {}}
-					class="bg-blue-600 p-1 rounded-lg ml-1 text-white h-6 text-xs text-center"
+					class="p-1 rounded-lg ml-1 text-white h-6 text-xs text-center {cat.id ===
+					newItemCategoryId
+						? 'bg-blue-600'
+						: 'bg-blue-400'}"
 				>
 					{cat.name}
 				</div>
 			{/each}
 		</div>
-		<input class="w-3/6" bind:value={newItemName} type="text" />
-		<input class="w-1/6" bind:value={newItemQuantity} type="number" />
-		<button class="w-1/6" on:click={submitNewItem}>Add</button>
+		<div class="flex flex-row">
+			<input class="w-4/6 mx-1 rounded" bind:value={newItemName} type="text" />
+			<input class="w-1/6 mx-1 rounded" bind:value={newItemQuantity} type="number" />
+			<button
+				class="rounded mx-1 px-4 py-1 bg-green-400 disabled:bg-green-50 disabled:text.white"
+				on:click={submitNewItem}
+				on:keydown={() => {}}
+				disabled={newItemName.length === 0 || newItemCategoryId.length === 0}
+			>
+				Add
+			</button>
+		</div>
 	</div>
 </div>

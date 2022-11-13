@@ -10,5 +10,17 @@ export const load: PageLoad = async ({ params }) => {
 		filter: 'created >= "2022-01-01 00:00:00"'
 	});
 
-	return { lists: resultList };
+	console.log(resultList);
+
+	const lists = resultList.items.map((l) => {
+		return {
+			id: l.id,
+			name: l.name || '',
+			template: l.template || false
+		} as ShoppingList;
+	});
+
+	console.log(lists);
+
+	return { lists: lists };
 };

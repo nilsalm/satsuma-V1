@@ -4,19 +4,20 @@ import type { GetItem } from 'src/models/Item';
 import type { Category } from 'src/models/Category';
 
 export const load: PageLoad = async ({ params }) => {
-	// const items = GetDummyShoppingList();
-
 	const client = new PocketBase('http://127.0.0.1:8090');
+
+	const currentListId = params.listId;
+
 	const itemsList = await client.records.getList('items', 1, 50, {
-		filter: 'created >= "2022-01-01 00:00:00" && picked = false'
+		filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${currentListId}"`
 	});
 
+	console.log(itemsList);
 	const categoriesList = await client.records.getList('categories', 1, 50, {
 		filter: 'created >= "2022-01-01 00:00:00"'
 	});
 
 	const userId = client.authStore.model?.id;
-	console.log('Items', itemsList);
 
 	const categories = categoriesList.items.map((c) => {
 		return {
@@ -40,7 +41,7 @@ export const load: PageLoad = async ({ params }) => {
 	});
 
 	return {
-		listId: params.listId,
+		listId: currentListId,
 		list: items,
 		userId: userId,
 		categories: categories
