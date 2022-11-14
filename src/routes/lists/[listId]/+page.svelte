@@ -110,14 +110,14 @@
 	}
 </script>
 
-<div class="h-fit">
+<div class="">
 	<div>
 		<a href={`/lists/${data.listId}/edit`}>Edit</a>
 	</div>
 	{#if filteredList.length === 0}
 		<div class="my-auto text-xl">Well done! Now get some 🍦</div>
 	{/if}
-	<div class="h-full overflow-scroll">
+	<div class="overflow-scroll">
 		{#each data.categories as cat}
 			{#if getItemsPerCategory(cat).length > 0}
 				<div class="text-lg mt-4">{cat.name}</div>
@@ -126,15 +126,16 @@
 				{/each}
 			{/if}
 		{/each}
+		<div class="h-48" />
 	</div>
 
-	<div class="bg-gray-100 p-2 fixed bottom-0 mb-4">
+	<div class="bg-gray-800 p-2 h-36 w-full fixed bottom-0">
 		<div class="flex flex-row overflow-x-scroll m-2">
 			{#each data.categories as cat}
 				<div
 					on:click={() => setNewItemCategoryId(cat.id)}
 					on:keydown={() => {}}
-					class="p-1 rounded-lg ml-1 text-white h-6 text-xs text-center {cat.id ===
+					class="p-1 rounded-lg mr-1 text-white h-6 text-xs text-center {cat.id ===
 					newItemCategoryId
 						? 'bg-blue-600'
 						: 'bg-blue-400'}"
@@ -160,7 +161,7 @@
 				<div
 					on:click={() => addItemsFromTemplate(template.id)}
 					on:keydown={() => {}}
-					class="p-1 rounded-lg ml-1 text-white h-6 text-xs text-center bg-yellow-500"
+					class="p-1 rounded-lg mr-1 text-white h-6 text-xs text-center bg-yellow-500"
 				>
 					{template.name || `Template ${template.id.substring(0, 3)}`}
 				</div>
