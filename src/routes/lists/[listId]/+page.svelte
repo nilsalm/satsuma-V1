@@ -15,11 +15,14 @@
 
 	$: filteredList = data.list.filter((i) => i.picked === false);
 
-	async function updateTodo(item: GetItem) {
+	async function pickedItem(item: GetItem) {
 		const i = data.list.findIndex((i) => i.id === item.id);
 		data.list[i] = { ...data.list[i], ...item };
 
-		await client.records.update('items', item.id!, { picked: true });
+		await client.records.update('items', item.id!, {
+			picked: item.picked,
+			quantity: item.quantity
+		});
 		reloadListItems();
 	}
 
@@ -122,7 +125,7 @@
 			{#if getItemsPerCategory(cat).length > 0}
 				<div class="text-lg mt-4">{cat.name}</div>
 				{#each getItemsPerCategory(cat) as item}
-					<ItemComponent {item} on:update={(e) => updateTodo(e.detail)} />
+					<ItemComponent {item} on:update={(e) => pickedItem(e.detail)} />
 				{/each}
 			{/if}
 		{/each}
@@ -143,6 +146,13 @@
 					{cat.name}
 				</div>
 			{/each}
+			<div
+				on:click={() => addNewCategoryId()}
+				on:keydown={() => {}}
+				class="p-1 px-2 rounded-lg   text-white h-6 text-xs text-center bg-gradient-to-t from-blue-600 to-blue-400"
+			>
+				+
+			</div>
 		</div>
 		<div class="flex flex-row">
 			<input class="w-4/6 mx-1 rounded" bind:value={newItemName} type="text" />

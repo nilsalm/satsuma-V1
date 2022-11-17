@@ -53,7 +53,7 @@
 		</div>
 	{/if}
 </div>
-<div class="grid gap-2 justify-start">
+<div class="grid grid-flow-col gap-2 auto-cols-max">
 	{#each data.lists as list}
 		<a
 			href="/lists/{list.id}"

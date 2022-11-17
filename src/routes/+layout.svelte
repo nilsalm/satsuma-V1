@@ -2,7 +2,7 @@
 	import '../app.css';
 </script>
 
-<div class="h-full">
+<div class="h-full mx-2 md:mx-10">
 	<nav class="p-4">
 		<a href="/" class="text-xl p-4 m-1 bg-green-300 rounded">🏠</a>
 		<a href="/lists" class="text-xl p-4 m-1 bg-green-300 rounded">📋</a>
