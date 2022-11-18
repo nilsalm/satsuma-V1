@@ -41,3 +41,4 @@ Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase se
 - [ ] add item examples to category
 - [ ] increase quantity if a duplicate item is added
 - [ ] styling & color scheme
+- [ ] remove existing categories via profile
