@@ -184,9 +184,13 @@
 					<div class="text-sm px-2">+</div>
 				{:else}
 					<div class="flex flex-row px-1">
-						<input class="w-24 text-black mx-1 rounded" bind:value={newCategoryName} type="text" />
+						<input
+							class="w-24 text-black mx-1 rounded opacity-60"
+							bind:value={newCategoryName}
+							type="text"
+						/>
 						<button
-							class="rounded mx-1 py-1 px-1 bg-green-800 disabled:bg-gray-300 disabled:text-white"
+							class="rounded mx-1 py-1 px-1 bg-green-800 disabled:opacity-20 disabled:text-white"
 							on:click={addNewCategory}
 							on:keydown={() => {}}
 							disabled={newCategoryName.length === 0}
