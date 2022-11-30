@@ -36,8 +36,10 @@ Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase se
 - [x] add template to list
 - [x] add new list
 - [x] set permissions policy in database
-- [ ] share list with other users
 - [x] signup flow
+- [ ] refactor pb into hook
+- [ ] share list with other users
 - [ ] increase quantity if a duplicate item is added
 - [ ] styling & color scheme
 - [ ] remove existing categories via profile
+- [ ] [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
