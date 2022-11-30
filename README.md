@@ -35,10 +35,9 @@ Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase se
 - [x] update status on item
 - [x] add template to list
 - [x] add new list
-- [ ] set permissions policy in database
+- [x] set permissions policy in database
 - [ ] share list with other users
-- [ ] signup flow
-- [ ] add item examples to category
+- [x] signup flow
 - [ ] increase quantity if a duplicate item is added
 - [ ] styling & color scheme
 - [ ] remove existing categories via profile
