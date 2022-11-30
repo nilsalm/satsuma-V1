@@ -5,23 +5,23 @@ import type { Category } from 'src/models/Category';
 import type { ShoppingList } from 'src/models/ShoppingList';
 
 export const load: PageLoad = async ({ params }) => {
-	const client = new PocketBase('http://127.0.0.1:8090');
+	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	const currentListId = params.listId;
 
-	const itemsList = await client.records.getList('items', 1, 50, {
+	const itemsList = await pb.collection('items').getList(1, 50, {
 		filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${currentListId}"`
 	});
 
-	const categoriesList = await client.records.getList('categories', 1, 50, {
+	const categoriesList = await pb.collection('categories').getList(1, 50, {
 		filter: 'created >= "2022-01-01 00:00:00"'
 	});
 
-	const templatesList = await client.records.getList('shoppingLists', 1, 50, {
+	const templatesList = await pb.collection('shoppingLists').getList(1, 50, {
 		filter: 'created >= "2022-01-01 00:00:00" && template = true'
 	});
 
-	const userId = client.authStore.model?.id;
+	const userId = pb.authStore.model?.id;
 
 	const categories = categoriesList.items.map((c) => {
 		return {

@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import PocketBase from 'pocketbase';
 
-	const client = new PocketBase('http://127.0.0.1:8090');
+	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	export let data: PageData;
 
@@ -17,9 +17,9 @@
 		const newList = {
 			name: newListName,
 			template: newListTemplate,
-			owner: client.authStore.model?.id
+			owner: pb.authStore.model?.id
 		};
-		const record = await client.records.create('shoppingLists', newList);
+		const record = await pb.collection('shoppingLists').create(newList);
 		showModal = false;
 	}
 </script>

@@ -1,18 +1,18 @@
 <script>
 	import PocketBase from 'pocketbase';
 
-	const client = new PocketBase('http://127.0.0.1:8090');
+	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	let username = '';
 	let password = '';
 
-	$: loggedIn = client.authStore.isValid;
+	$: loggedIn = pb.authStore.isValid;
 
 	async function handleSubmit() {
-		const userData = await client.users.authViaEmail(username, password);
+		const authData = await pb.collection('users').authWithPassword(username, password);
 	}
 	function handleLogout() {
-		client.authStore.clear();
+		pb.authStore.clear();
 	}
 </script>
 
