@@ -34,7 +34,8 @@ export const load: PageLoad = async ({ params }) => {
 		return {
 			id: t.id,
 			name: t.name,
-			template: t.template
+			template: t.template,
+			owner: t.owner
 		} as ShoppingList;
 	});
 
@@ -45,7 +46,7 @@ export const load: PageLoad = async ({ params }) => {
 			id: i.id,
 			name: i.name,
 			category: cat,
-			addedBy: i.addedBy,
+			owner: i.owner,
 			picked: i.picked,
 			quantity: i.quantity,
 			unit: i.unit

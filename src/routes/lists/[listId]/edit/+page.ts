@@ -11,7 +11,8 @@ export const load: PageLoad = async ({ params }) => {
 	const list: ShoppingList = {
 		id: record.id,
 		name: record.name,
-		template: record.template
+		template: record.template,
+		owner: record.owner
 	};
 
 	return { list: list };

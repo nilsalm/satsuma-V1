@@ -11,10 +11,10 @@ type BaseItem = {
 export type GetItem = BaseItem & {
 	id: string;
 	category: Category | undefined;
-	addedBy: string | undefined;
+	owner: string | undefined;
 };
 
 export type PostItem = BaseItem & {
 	category: string;
-	addedBy: string;
+	owner: string;
 };

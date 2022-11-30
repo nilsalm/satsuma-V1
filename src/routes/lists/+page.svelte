@@ -16,7 +16,8 @@
 	async function addNewList() {
 		const newList = {
 			name: newListName,
-			template: newListTemplate
+			template: newListTemplate,
+			owner: client.authStore.model?.id
 		};
 		const record = await client.records.create('shoppingLists', newList);
 		showModal = false;

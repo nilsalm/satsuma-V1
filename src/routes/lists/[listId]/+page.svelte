@@ -52,7 +52,7 @@
 			picked: false,
 			unit: 'piece',
 			listId: data.listId,
-			addedBy: data.userId!
+			owner: data.userId!
 		};
 		newItemName = '';
 		newItemQuantity = 1;
@@ -69,7 +69,7 @@
 	}
 	async function addNewCategory() {
 		if (newCategoryName.length > 0) {
-			await client.records.create('categories', { name: newCategoryName });
+			await client.records.create('categories', { name: newCategoryName, owner: data.userId! });
 			newCategoryName = '';
 			showNewCategoryModal = false;
 		}
@@ -102,7 +102,7 @@
 				id: i.id,
 				name: i.name,
 				category: cat,
-				addedBy: i.addedBy,
+				owner: i.owner,
 				picked: i.picked,
 				quantity: i.quantity,
 				unit: i.unit
@@ -122,7 +122,7 @@
 		const templateItems = templateItemsList.items.map((i) => {
 			return {
 				name: i.name,
-				addedBy: data.userId,
+				owner: data.userId,
 				picked: false,
 				quantity: i.quantity,
 				unit: i.unit,
