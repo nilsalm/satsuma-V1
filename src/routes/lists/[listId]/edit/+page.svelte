@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import PocketBase from 'pocketbase';
 
-	const client = new PocketBase('http://127.0.0.1:8090');
+	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	export let data: PageData;
 
@@ -13,7 +13,7 @@
 	let emailSuccess = false;
 
 	async function updateList() {
-		const record = await client.records.update('shoppingLists', data.list.id, {
+		const record = await pb.collection('shoppingLists').update(data.list.id, {
 			name: listName,
 			template: listTemplate
 		});

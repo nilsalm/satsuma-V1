@@ -5,7 +5,7 @@
 	import PocketBase from 'pocketbase';
 	import type { Category } from 'src/models/Category';
 
-	const client = new PocketBase('http://127.0.0.1:8090');
+	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	export let data: PageData;
 
@@ -22,7 +22,7 @@
 	async function proposeCategory(itemName: string) {
 		if (itemName.length < 3) return;
 
-		const resultList = await client.records.getList('items', 1, 50, {
+		const resultList = await pb.collection('items').getList(1, 50, {
 			filter: `name ~ "${itemName}"`
 		});
 
@@ -37,7 +37,7 @@
 		const i = data.list.findIndex((i) => i.id === item.id);
 		data.list[i] = { ...data.list[i], ...item };
 
-		await client.records.update('items', item.id!, {
+		await pb.collection('items').update(item.id!, {
 			picked: item.picked,
 			quantity: item.quantity
 		});
@@ -56,7 +56,7 @@
 		};
 		newItemName = '';
 		newItemQuantity = 1;
-		await client.records.create('items', newItem);
+		await pb.collection('items').create(newItem);
 
 		reloadListItems();
 	}
@@ -69,7 +69,7 @@
 	}
 	async function addNewCategory() {
 		if (newCategoryName.length > 0) {
-			await client.records.create('categories', { name: newCategoryName, owner: data.userId! });
+			await pb.collection('categories').create({ name: newCategoryName, owner: data.userId! });
 			newCategoryName = '';
 			showNewCategoryModal = false;
 		}
@@ -80,11 +80,11 @@
 	}
 
 	async function reloadListItems() {
-		const itemsList = await client.records.getList('items', 1, 50, {
+		const itemsList = await pb.collection('items').getList(1, 50, {
 			filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${data.listId}"`
 		});
 
-		const categoriesList = await client.records.getList('categories', 1, 50, {
+		const categoriesList = await pb.collection('categories').getList(1, 50, {
 			filter: 'created >= "2022-01-01 00:00:00"'
 		});
 
@@ -114,8 +114,8 @@
 	}
 
 	async function addItemsFromTemplate(id: string) {
-		const client = new PocketBase('http://127.0.0.1:8090');
-		const templateItemsList = await client.records.getList('items', 1, 50, {
+		const pb = new PocketBase('http://127.0.0.1:8090');
+		const templateItemsList = await pb.collection('items').getList(1, 50, {
 			filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${id}"`
 		});
 
@@ -133,7 +133,7 @@
 
 		for (let index = 0; index < templateItems.length; index++) {
 			const item = templateItems[index];
-			const record = await client.records.create('items', item);
+			const itemsCollection = await pb.collection('items').create(item);
 		}
 
 		reloadListItems();
