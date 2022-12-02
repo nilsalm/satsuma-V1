@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import PocketBase from 'pocketbase';
+	import type { ShoppingList } from 'src/models/ShoppingList';
 
 	const pb = new PocketBase('http://127.0.0.1:8090');
 
 	export let data: PageData;
+	$: myLists = [...data.lists];
 
 	let showModal = false;
 	let newListName: string;
@@ -20,8 +22,21 @@
 			owner: pb.authStore.model?.id
 		};
 		const record = await pb.collection('shoppingLists').create(newList);
+
+		newListName = '';
+		newListTemplate = false;
 		showModal = false;
+
+		const newListCreated: ShoppingList = {
+			id: record.id,
+			name: record.name || '',
+			template: record.template || false,
+			owner: record.owner
+		};
+
+		myLists = [...myLists, newListCreated];
 	}
+	$: console.log(myLists);
 </script>
 
 <p>My Lists</p>
@@ -54,8 +69,8 @@
 		</div>
 	{/if}
 </div>
-<div class="grid grid-flow-col gap-2 auto-cols-max">
-	{#each data.lists as list}
+<div class="grid grid-cols-8 gap-2 ">
+	{#each myLists as list}
 		<a
 			href="/lists/{list.id}"
 			class="rounded-xl w-24 h-24 text-center {list.template ? 'bg-yellow-500' : 'bg-orange-500'}"
@@ -63,7 +78,7 @@
 			<div class="flex flex-col justify-center h-full break-words ">
 				<div class="font-semibold">{list.name || 'List ' + list.id.substring(0, 3)}</div>
 				{#if list.template === true}
-					<div class="text-xs text-gray-100">Template</div>
+					<div class="text-xs text-gray-100 font-light">Template</div>
 				{/if}
 			</div>
 		</a>
