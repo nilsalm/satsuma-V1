@@ -21,11 +21,10 @@ $ node -v
 v18.12.1
 ```
 
-Install with `npm install`.
-
-Run with `npm run dev`.
+Install with `npm install`. Run with `npm run dev`.
 
 Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase serve`.
+Create an admin account to log in. You can then import the `pb_schema.json` in Settings > Import collections. 
 
 ## Todos
 
