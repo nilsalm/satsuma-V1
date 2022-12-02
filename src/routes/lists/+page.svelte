@@ -36,7 +36,6 @@
 
 		myLists = [...myLists, newListCreated];
 	}
-	$: console.log(myLists);
 </script>
 
 <p>My Lists</p>
