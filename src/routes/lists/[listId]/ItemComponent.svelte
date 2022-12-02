@@ -15,8 +15,10 @@
 		dispatch('update', item);
 	}
 	function decrease() {
-		item.quantity -= 1;
-		dispatch('update', item);
+		if (item.quantity > 1) {
+			item.quantity -= 1;
+			dispatch('update', item);
+		}
 	}
 </script>
 
@@ -32,20 +34,21 @@
 		</div>
 		<div class="w-full" on:click={tickOff} on:keypress={tickOff} />
 		<div class="flex flex-row">
-			<div
-				class="bg-gray-400 text-white font-semibold px-2 mx-1 hover:bg-yellow-400 active:border-yellow-200 border-2  border-gray-300 rounded"
+			<button
+				class="bg-gray-400 text-white font-semibold px-2 mx-1  disabled:text-gray-400 disabled:bg-gray-200 border-2  border-gray-300 rounded"
 				on:click={decrease}
 				on:keypress={decrease}
+				disabled={item.quantity <= 1}
 			>
 				-
-			</div>
-			<div
-				class="bg-gray-400 text-white font-semibold px-2 mx-1 hover:bg-yellow-400 active:border-yellow-200 border-2  border-gray-300 rounded"
+			</button>
+			<button
+				class="bg-gray-400 text-white font-semibold px-2 mx-1  border-2  border-gray-300 rounded"
 				on:click={increase}
 				on:keypress={increase}
 			>
 				+
-			</div>
+			</button>
 		</div>
 	</div>
 </div>
