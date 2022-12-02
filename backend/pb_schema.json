@@ -1,0 +1,251 @@
+[
+  {
+    "id": "kt9ahyh0u6h36xu",
+    "name": "shoppingLists",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "smhzhocn",
+        "name": "template",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "dvyblrpa",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "thmucoip",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "collectionId": "systemprofiles0",
+          "cascadeDelete": true
+        }
+      }
+    ],
+    "listRule": "@request.auth.id = owner",
+    "viewRule": "@request.auth.id = owner",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner",
+    "deleteRule": "@request.auth.id = owner",
+    "options": {}
+  },
+  {
+    "id": "h56h537s7nc4amg",
+    "name": "items",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "7pd74hjo",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "xmxridhh",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "collectionId": "systemprofiles0",
+          "cascadeDelete": true
+        }
+      },
+      {
+        "id": "lhwxxecr",
+        "name": "picked",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "0bmvg5sp",
+        "name": "quantity",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      },
+      {
+        "id": "xwyzegwb",
+        "name": "unit",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "piece",
+            "package",
+            "kg",
+            "gramm"
+          ]
+        }
+      },
+      {
+        "id": "zbcr3edy",
+        "name": "category",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "collectionId": "r2d16022w59eocz",
+          "cascadeDelete": true
+        }
+      },
+      {
+        "id": "t9zagc25",
+        "name": "listId",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "collectionId": "kt9ahyh0u6h36xu",
+          "cascadeDelete": true
+        }
+      }
+    ],
+    "listRule": "@request.auth.id = owner",
+    "viewRule": "@request.auth.id = owner",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner",
+    "deleteRule": "@request.auth.id = owner",
+    "options": {}
+  },
+  {
+    "id": "r2d16022w59eocz",
+    "name": "categories",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "rd3cjgua",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "wmwjkxj1",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "collectionId": "systemprofiles0",
+          "cascadeDelete": true
+        }
+      }
+    ],
+    "listRule": "@request.auth.id = owner",
+    "viewRule": "@request.auth.id = owner",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner",
+    "deleteRule": "@request.auth.id = owner",
+    "options": {}
+  },
+  {
+    "id": "systemprofiles0",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "schema": [
+      {
+        "id": "pbfieldname",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "pbfieldavatar",
+        "name": "avatar",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": [
+            "image/jpg",
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/gif"
+          ],
+          "thumbs": null
+        }
+      }
+    ],
+    "listRule": "id = @request.auth.id",
+    "viewRule": "id = @request.auth.id",
+    "createRule": "",
+    "updateRule": "id = @request.auth.id",
+    "deleteRule": null,
+    "options": {
+      "allowEmailAuth": true,
+      "allowOAuth2Auth": true,
+      "allowUsernameAuth": false,
+      "exceptEmailDomains": null,
+      "manageRule": null,
+      "minPasswordLength": 8,
+      "onlyEmailDomains": null,
+      "requireEmail": true
+    }
+  }
+]
