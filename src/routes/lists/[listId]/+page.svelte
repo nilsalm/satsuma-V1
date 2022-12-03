@@ -48,18 +48,24 @@
 	}
 
 	async function submitNewItem() {
-		const newItem: PostItem = {
-			name: newItemName,
-			category: newItemCategoryId,
-			quantity: newItemQuantity,
-			picked: false,
-			unit: 'piece',
-			listId: data.listId,
-			owner: data.userId!
-		};
+		const item = filteredList.find((item) => item.name.toLowerCase() === newItemName.toLowerCase());
+
+		if (item) {
+			await pb.collection('items').update(item.id, { quantity: item.quantity + 1 });
+		} else {
+			const newItem: PostItem = {
+				name: newItemName,
+				category: newItemCategoryId,
+				quantity: newItemQuantity,
+				picked: false,
+				unit: 'piece',
+				listId: data.listId,
+				owner: data.userId!
+			};
+			await pb.collection('items').create(newItem);
+		}
 		newItemName = '';
 		newItemQuantity = 1;
-		await pb.collection('items').create(newItem);
 
 		reloadListItems();
 	}
