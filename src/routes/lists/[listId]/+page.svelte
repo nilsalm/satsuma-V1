@@ -2,10 +2,11 @@
 	import type { GetItem, PostItem } from 'src/models/Item';
 	import type { PageData } from './$types';
 	import ItemComponent from './ItemComponent.svelte';
-	import PocketBase from 'pocketbase';
-	import type { Category } from 'src/models/Category';
 
-	const pb = new PocketBase('http://127.0.0.1:8090');
+	import type { Category } from 'src/models/Category';
+	import { getPbClient } from '$lib/usePocketBase';
+
+	const pb = getPbClient();
 
 	export let data: PageData;
 
@@ -25,6 +26,8 @@
 		const resultList = await pb.collection('items').getList(1, 50, {
 			filter: `name ~ "${itemName}"`
 		});
+
+		console.log(resultList);
 
 		if (resultList.items.length === 0) return;
 
@@ -114,7 +117,6 @@
 	}
 
 	async function addItemsFromTemplate(id: string) {
-		const pb = new PocketBase('http://127.0.0.1:8090');
 		const templateItemsList = await pb.collection('items').getList(1, 50, {
 			filter: `created >= "2022-01-01 00:00:00" && picked = false && listId = "${id}"`
 		});

@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { getPbClient } from '$lib/usePocketBase';
 	import type { PageData } from './$types';
-	import PocketBase from 'pocketbase';
 	import type { ShoppingList } from 'src/models/ShoppingList';
 	import MdClose from 'svelte-icons/md/MdClose.svelte';
 	import MdAddCircleOutline from 'svelte-icons/md/MdAddCircleOutline.svelte';
 	import MdAdd from 'svelte-icons/md/MdAdd.svelte';
 
-	const pb = new PocketBase('http://127.0.0.1:8090');
+	const pb = getPbClient();
 
 	export let data: PageData;
 	$: myLists = [...data.lists];

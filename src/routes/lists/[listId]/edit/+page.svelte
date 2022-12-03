@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import PocketBase from 'pocketbase';
+	import { getPbClient } from '$lib/usePocketBase';
 
-	const pb = new PocketBase('http://127.0.0.1:8090');
+	const pb = getPbClient();
 
 	export let data: PageData;
 

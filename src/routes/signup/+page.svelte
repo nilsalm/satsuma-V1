@@ -1,9 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
-	import PocketBase from 'pocketbase';
+	import { getPbClient } from '$lib/usePocketBase';
 
-	const pb = new PocketBase('http://127.0.0.1:8090');
-
+	const pb = getPbClient();
 	let username = '';
 	let email = '';
 	let password = '';

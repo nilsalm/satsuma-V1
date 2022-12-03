@@ -1,11 +1,11 @@
 import type { PageLoad } from './$types';
-import PocketBase from 'pocketbase';
 import type { GetItem } from 'src/models/Item';
 import type { Category } from 'src/models/Category';
 import type { ShoppingList } from 'src/models/ShoppingList';
+import { getPbClient } from '$lib/usePocketBase';
 
 export const load: PageLoad = async ({ params }) => {
-	const pb = new PocketBase('http://127.0.0.1:8090');
+	const pb = getPbClient();
 
 	const currentListId = params.listId;
 
