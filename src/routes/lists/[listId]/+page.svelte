@@ -140,7 +140,7 @@
 	}
 </script>
 
-<div class="">
+<div>
 	<div>
 		<a href={`/lists/${data.listId}/edit`}>Edit</a>
 	</div>
@@ -168,7 +168,7 @@
 				<span
 					on:click={() => setNewItemCategoryId(cat.id)}
 					on:keydown={() => {}}
-					class="p-1 rounded-lg mr-1 text-white  text-sm text-center  {cat.id === newItemCategoryId
+					class="p-1 rounded-lg mr-1 text-white text-sm text-center {cat.id === newItemCategoryId
 						? 'bg-blue-600'
 						: 'bg-blue-400'}"
 				>
@@ -204,10 +204,10 @@
 
 		<!-- The Text input -->
 		<div class="flex flex-row">
-			<input class="w-4/6 mx-1 rounded" bind:value={newItemName} type="text" />
-			<input class="w-1/6 mx-1 rounded" bind:value={newItemQuantity} type="number" />
+			<input class="w-5/6 mx-1 rounded" bind:value={newItemName} type="text" />
+			<!-- <input class="w-1/6 mx-1 rounded" bind:value={newItemQuantity} type="number" /> -->
 			<button
-				class="rounded mx-1 px-4 py-1 bg-green-400 disabled:bg-green-50 disabled:text.white"
+				class="rounded mx-1 px-3 py-1 bg-green-400 disabled:bg-green-50 disabled:text.white"
 				on:click={submitNewItem}
 				on:keydown={() => {}}
 				disabled={newItemName.length === 0 || newItemCategoryId.length === 0}

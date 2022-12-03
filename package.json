@@ -35,6 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.8.1"
+		"pocketbase": "^0.8.1",
+		"svelte-icons": "^2.1.0"
 	}
 }

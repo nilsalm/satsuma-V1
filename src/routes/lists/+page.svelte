@@ -2,6 +2,9 @@
 	import type { PageData } from './$types';
 	import PocketBase from 'pocketbase';
 	import type { ShoppingList } from 'src/models/ShoppingList';
+	import MdClose from 'svelte-icons/md/MdClose.svelte';
+	import MdAddCircleOutline from 'svelte-icons/md/MdAddCircleOutline.svelte';
+	import MdAdd from 'svelte-icons/md/MdAdd.svelte';
 
 	const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -44,31 +47,34 @@
 		<div
 			on:click={setShowModal}
 			on:keydown={setShowModal}
-			class="bg-green-400 rounded-full w-8 h-8 my-auto text-center text-xl text-white font-bold"
+			class="bg-green-400 rounded-full w-10 h-10 my-auto text-white "
 		>
-			+
+			<MdAdd />
 		</div>
 	{:else}
-		<div class=" flex flex-row rounded-xl bg-green-400">
+		<div class=" flex flex-row rounded-md bg-green-400">
 			<div class="p-2 my-auto">
-				<input bind:value={newListName} class="rounded" type="text" placeholder="Name you list" />
+				<input
+					bind:value={newListName}
+					class="rounded text-sm"
+					type="text"
+					placeholder="Name you list"
+				/>
 			</div>
 			<div class="flex flex-row my-auto">
 				Template
 				<input bind:checked={newListTemplate} class="mx-1" type="checkbox" />
 			</div>
-			<div class="px-2 my-auto " on:click={addNewList} on:keydown={addNewList}>Add</div>
-			<div
-				class="px-2 my-auto w-8 h-8 text-center text-xl text-white font-bold"
-				on:click={setShowModal}
-				on:keydown={setShowModal}
-			>
-				x
+			<div class="px-2 w-10 h-10 text-white" on:click={addNewList} on:keydown={addNewList}>
+				<MdAddCircleOutline />
+			</div>
+			<div class="px-2 w-10 h-10 text-white" on:click={setShowModal} on:keydown={setShowModal}>
+				<MdClose />
 			</div>
 		</div>
 	{/if}
 </div>
-<div class="grid grid-cols-8 gap-2 ">
+<div class="grid grid-flow-row-dense md:grid-cols-6 grid-cols-3 gap-4 ">
 	{#each myLists as list}
 		<a
 			href="/lists/{list.id}"
