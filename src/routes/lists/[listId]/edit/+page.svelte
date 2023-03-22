@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { getPbClient } from '$lib/usePocketBase';
+	import MyTitle from '../../../../../src/components/MyTitle.svelte';
 
 	const pb = getPbClient();
 
@@ -27,25 +28,36 @@
 	}
 </script>
 
-<div class="text-xl">Edit list</div>
-
-<div class="bg-gray-100">
-	<div>
-		Name
-		<input bind:value={listName} type="text" class="border rounded" placeholder="Name this list" />
-	</div>
-	<div>
-		Template
-		<input bind:checked={listTemplate} type="checkbox" />
-	</div>
-	<div on:click={updateList} on:keydown={updateList} class="bg-green-400 p-2 w-24 mx-auto">
-		Update
-	</div>
-	{#if updateSuccess === true}
-		<div>🎉</div>
-	{/if}
+<MyTitle title={`Edit list ${data.list.name || ''}`} />
+<div class="border border-black rounded p-1 w-fit">
+	<a href={`/lists/${data.list.id}`}>👈 Back</a>
 </div>
 
+<div class="flex flex-row gap-4 mt-4">
+	<p class="font-semibold pl-2 ">Name</p>
+	<input
+		bind:value={listName}
+		type="text"
+		class="border rounded-md p-1 md:w-1/3 "
+		placeholder="Name this list"
+	/>
+</div>
+<div class="flex flex-row gap-4 mt-4">
+	<p class="font-semibold pl-2 ">Template</p>
+	<input bind:checked={listTemplate} type="checkbox" class="border rounded-md p-1 md:w-1/3 " />
+</div>
+<div
+	on:click={updateList}
+	on:keydown={updateList}
+	class=" rounded-md text-center bg-purple disabled:bg-pink disabled:text-light text-light font-semibold text-lg m-2 p-1 mt-8 md:w-1/3 "
+>
+	Update
+</div>
+{#if updateSuccess === true}
+	<div>🎉</div>
+{/if}
+
+<!-- 
 <div class="bg-gray-200">
 	<div>
 		Invite to list
@@ -57,6 +69,4 @@
 	{#if emailSuccess === true}
 		<div>🎉</div>
 	{/if}
-</div>
-
-<a href={`/lists/${data.list.id}`}>Back</a>
+</div> -->

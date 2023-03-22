@@ -2,9 +2,8 @@
 	import { getPbClient } from '$lib/usePocketBase';
 	import type { PageData } from './$types';
 	import type { ShoppingList } from 'src/models/ShoppingList';
-	import MdClose from 'svelte-icons/md/MdClose.svelte';
-	import MdAddCircleOutline from 'svelte-icons/md/MdAddCircleOutline.svelte';
 	import MdAdd from 'svelte-icons/md/MdAdd.svelte';
+	import MyTitle from '../../components/MyTitle.svelte';
 
 	const pb = getPbClient();
 
@@ -41,44 +40,48 @@
 	}
 </script>
 
-<p>My Lists</p>
+<MyTitle title={'My Lists'} />
 <div class="h-14 flex flex-row items-center">
 	{#if showModal === false}
 		<div
 			on:click={setShowModal}
 			on:keydown={setShowModal}
-			class="bg-green-400 rounded-full w-10 h-10 my-auto text-white "
+			class="bg-pink border-2-purple rounded-lg w-10 h-10 my-auto text-purple shadow-md"
 		>
 			<MdAdd />
 		</div>
 	{:else}
-		<div class=" flex flex-row rounded-md bg-green-400">
+		<div class="flex flex-row rounded-lg bg-pink text-black align-bottom shadow-md">
 			<div class="p-2 my-auto">
 				<input
 					bind:value={newListName}
-					class="rounded text-sm"
+					class="rounded text-sm "
 					type="text"
-					placeholder="Name you list"
+					placeholder="Name your list"
 				/>
 			</div>
-			<div class="flex flex-row my-auto">
-				Template
+			<div class=" my-auto pr-2">
+				Make template?
 				<input bind:checked={newListTemplate} class="mx-1" type="checkbox" />
 			</div>
-			<div class="px-2 w-10 h-10 text-white" on:click={addNewList} on:keydown={addNewList}>
-				<MdAddCircleOutline />
+			<div
+				class="px-2 my-auto bg-mint font-thin rounded shadow-md"
+				on:click={addNewList}
+				on:keydown={addNewList}
+			>
+				Add
 			</div>
-			<div class="px-2 w-10 h-10 text-white" on:click={setShowModal} on:keydown={setShowModal}>
-				<MdClose />
+			<div class="px-2 my-auto font-thin" on:click={setShowModal} on:keydown={setShowModal}>
+				Cancel
 			</div>
 		</div>
 	{/if}
 </div>
-<div class="grid grid-flow-row-dense md:grid-cols-6 grid-cols-3 gap-4 ">
+<div class="grid grid-cols-3 md:grid-cols-6 gap-2">
 	{#each myLists as list}
 		<a
 			href="/lists/{list.id}"
-			class="rounded-xl w-24 h-24 text-center {list.template ? 'bg-yellow-500' : 'bg-orange-500'}"
+			class="rounded-xl w-24 h-24 text-center {list.template ? 'bg-purple' : 'bg-pink'}"
 		>
 			<div class="flex flex-col justify-center h-full break-words ">
 				<div class="font-semibold">{list.name || 'List ' + list.id.substring(0, 3)}</div>

@@ -6,6 +6,7 @@
 	import type { Category } from 'src/models/Category';
 	import { getPbClient } from '$lib/usePocketBase';
 	import type { ListResult } from 'pocketbase';
+	import MyTitle from '../../../components/MyTitle.svelte';
 
 	const pb = getPbClient();
 
@@ -17,7 +18,7 @@
 	let newCategoryName = '';
 	let showNewCategoryModal = false;
 
-	let myList = data.list;
+	let myList = data.items;
 	$: filteredList = [...myList.filter((i) => i.picked === false)];
 	$: categories = [...data.categories];
 
@@ -176,12 +177,17 @@
 	}
 </script>
 
+<MyTitle title={data.list.name || ''} />
 <div>
-	<div>
-		<a href={`/lists/${data.listId}/edit`}>Edit</a>
+	<div class="border border-black rounded p-1 w-fit">
+		<a href={`/lists/${data.listId}/edit`}>✏️ Edit list</a>
 	</div>
+
 	{#if filteredList.length === 0}
-		<div class="my-auto text-xl">Well done! Now get some 🍦</div>
+		<div class="mt-20 text-center font-semibold text-xl">
+			<p>Well done!</p>
+			<p>Now get some 🍦</p>
+		</div>
 	{/if}
 	<!-- The Items list -->
 	<div class="overflow-scroll">
@@ -198,16 +204,16 @@
 	</div>
 
 	<!-- The footer part -->
-	<div class="bg-gray-800 p-2 h-36 w-full fixed bottom-0 inline-block align-middle">
+	<div class="bg-light p-2 h-36 w-full fixed bottom-0 inline-block align-middle">
 		<!-- The categories row -->
 		<div class="flex flex-row overflow-x-scroll m-2 h-8">
 			{#each categories as cat}
 				<span
 					on:click={() => setNewItemCategoryId(cat.id)}
 					on:keydown={() => {}}
-					class="p-1 rounded-lg mr-1 text-white text-sm text-center {cat.id === newItemCategoryId
-						? 'bg-blue-600'
-						: 'bg-blue-400'}"
+					class="p-1 rounded-lg mr-1  text-sm text-center {cat.id === newItemCategoryId
+						? 'bg-pink text-gray-700'
+						: 'bg-purple text-gray-200'}"
 				>
 					{cat.name}
 				</span>
@@ -215,7 +221,7 @@
 			<div
 				on:click={() => showAddNewCategory()}
 				on:keydown={() => {}}
-				class="py-1 rounded-lg text-white text-xs text-center bg-gradient-to-r from-red-400 to-purple-400"
+				class="py-1 rounded-lg text-gray-700 text-xs text-center bg-pink"
 			>
 				{#if showNewCategoryModal === false}
 					<div class="text-sm px-2">+</div>
@@ -227,7 +233,7 @@
 							type="text"
 						/>
 						<button
-							class="rounded mx-1 py-1 px-1 bg-green-800 disabled:opacity-20 disabled:text-white"
+							class="rounded mx-1 py-1 px-1 bg-mint disabled:opacity-40 border disabled:text-gray-400 text-gray-700"
 							on:click={addNewCategory}
 							on:keydown={() => {}}
 							disabled={newCategoryName.length === 0}
@@ -245,7 +251,7 @@
 			<input class="w-5/6 mx-1 rounded" bind:value={newItemName} type="text" />
 			<!-- <input class="w-1/6 mx-1 rounded" bind:value={newItemQuantity} type="number" /> -->
 			<button
-				class="rounded mx-1 px-3 py-1 bg-green-400 disabled:bg-green-50 disabled:text.white"
+				class="rounded mx-1 px-3 py-1 bg-mint disabled:bg-opacity-40 disabled:text-gray-400 text-gray-700"
 				on:click={submitNewItem}
 				disabled={newItemName.length === 0 || newItemCategoryId.length === 0}
 			>
@@ -259,7 +265,7 @@
 				<div
 					on:click={() => addItemsFromTemplate(template.id)}
 					on:keydown={() => {}}
-					class="p-1 rounded-lg mr-1 text-white h-6 text-xs text-center bg-yellow-500"
+					class="p-1 rounded-lg mr-1 text-gray-700 h-6 text-xs text-center bg-mint"
 				>
 					{template.name || `Template ${template.id.substring(0, 3)}`}
 				</div>

@@ -11,3 +11,12 @@ export function getPbClient() {
 	client = new PocketBase(PB_URL_PROD);
 	return client;
 }
+
+export type newUserData = {
+	username: string;
+	password: string;
+	email: string;
+};
+export async function createUser(data: newUserData) {
+	return await getPbClient().collection('users').create(data);
+}

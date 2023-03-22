@@ -22,9 +22,7 @@
 	}
 </script>
 
-<div
-	class="bg-gradient-to-r from-yellow-400 to-orange-500 border-b-2 border-gray-200 py-2 px-4 rounded-sm mx-4"
->
+<div class=" border-b-2 border-purple py-2 px-4 rounded-sm mx-4">
 	<div class="flex flex-row justify-between">
 		<div class="flex flex-row">
 			<div class="w-8">{item.quantity}</div>
@@ -35,7 +33,7 @@
 		<div class="w-full" on:click={tickOff} on:keypress={tickOff} />
 		<div class="flex flex-row">
 			<button
-				class="bg-gray-400 text-white font-semibold px-2 mx-1  disabled:text-gray-400 disabled:bg-gray-200 border-2  border-gray-300 rounded"
+				class=" text-gray-700 font-semibold px-2 mx-1 disabled:opacity-0 border-2 border-purple rounded"
 				on:click={decrease}
 				on:keypress={decrease}
 				disabled={item.quantity <= 1}
@@ -43,7 +41,7 @@
 				-
 			</button>
 			<button
-				class="bg-gray-400 text-white font-semibold px-2 mx-1  border-2  border-gray-300 rounded"
+				class="text-gray-700 font-semibold px-2 mx-1 border-2 border-purple rounded"
 				on:click={increase}
 				on:keypress={increase}
 			>

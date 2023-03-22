@@ -39,6 +39,10 @@ Create an admin account to log in. You can then import the `pb_schema.json` in S
 - [s] refactor pb into hook
 - [ ] share list with other users
 - [x] increase quantity if a duplicate item is added
-- [ ] styling & color scheme
+- [x] styling & color scheme
 - [ ] remove existing categories via profile
 - [x] [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
+- [ ] Error handling for signin / signup
+- [ ] dynamic header
+- [ ] redirects
+- [ ] 

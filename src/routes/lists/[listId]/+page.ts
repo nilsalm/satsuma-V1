@@ -21,6 +21,14 @@ export const load: PageLoad = async ({ params }) => {
 		filter: 'created >= "2022-01-01 00:00:00" && template = true'
 	});
 
+	const thisListRecord = await pb.collection('shoppingLists').getOne(currentListId);
+	const thisList: ShoppingList = {
+		id: thisListRecord.id,
+		name: thisListRecord.name,
+		owner: thisListRecord.owner,
+		template: thisListRecord.template
+	};
+
 	const userId = pb.authStore.model?.id;
 
 	const categories = categoriesList.items.map((c) => {
@@ -55,7 +63,8 @@ export const load: PageLoad = async ({ params }) => {
 
 	return {
 		listId: currentListId,
-		list: items,
+		items: items,
+		list: thisList,
 		userId: userId,
 		categories: categories,
 		templates: templates
