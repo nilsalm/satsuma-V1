@@ -4,6 +4,7 @@
 	import type { ShoppingList } from 'src/models/ShoppingList';
 	import MdAdd from 'svelte-icons/md/MdAdd.svelte';
 	import MyTitle from '../../components/MyTitle.svelte';
+	import Toggle from '../../components/Toggle.svelte';
 
 	const pb = getPbClient();
 
@@ -61,18 +62,17 @@
 				/>
 			</div>
 			<div class=" my-auto pr-2">
-				Make template?
-				<input bind:checked={newListTemplate} class="mx-1" type="checkbox" />
+				<Toggle bind:val={newListTemplate} label="Template" />
 			</div>
 			<div
-				class="px-2 my-auto bg-mint font-thin rounded shadow-md"
+				class="px-2 my-auto bg-mint font-semibold rounded shadow-md"
 				on:click={addNewList}
 				on:keydown={addNewList}
 			>
 				Add
 			</div>
-			<div class="px-2 my-auto font-thin" on:click={setShowModal} on:keydown={setShowModal}>
-				Cancel
+			<div class="px-2 my-auto font-semibold" on:click={setShowModal} on:keydown={setShowModal}>
+				╳
 			</div>
 		</div>
 	{/if}

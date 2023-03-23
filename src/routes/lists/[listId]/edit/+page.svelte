@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import { getPbClient } from '$lib/usePocketBase';
 	import MyTitle from '../../../../../src/components/MyTitle.svelte';
+	import Toggle from '../../../../../src/components/Toggle.svelte';
 
 	const pb = getPbClient();
 
@@ -42,10 +43,11 @@
 		placeholder="Name this list"
 	/>
 </div>
-<div class="flex flex-row gap-4 mt-4">
+<!-- <div class="flex flex-row gap-4 mt-4">
 	<p class="font-semibold pl-2 ">Template</p>
 	<input bind:checked={listTemplate} type="checkbox" class="border rounded-md p-1 md:w-1/3 " />
-</div>
+</div> -->
+<Toggle bind:val={listTemplate} label="Template" />
 <div
 	on:click={updateList}
 	on:keydown={updateList}
