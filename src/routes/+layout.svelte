@@ -12,7 +12,9 @@
 		<div class="navbar-end">
 			<ul class="menu menu-horizontal">
 				{#if $currentUser}
-					<li><a href="/">{$currentUser.email}</a></li>
+					<!-- <li><a href="/">{$currentUser.email}</a></li> -->
+					<li><a href="/lists">Lists</a></li>
+					<li><a href="/lists/new">Add List</a></li>
 					<li>
 						<form
 							method="POST"
