@@ -30,8 +30,8 @@
 	{/if}
 </div>
 
-<div class="max-w-lg fixed bottom-0 pb-4">
-	<div class="flex flex-row overflow-x-scroll m-2 h-8">
+<div class="max-w-lg pb-4">
+	<div class="flex overflow-x-scroll m-2 h-8">
 		{#each data.categories as cat}
 			<span
 				on:click={() => setNewItemCategoryId(cat.id)}
@@ -44,15 +44,22 @@
 			</span>
 		{/each}
 	</div>
-	<form action="?/createItem" method="POST" use:enhance>
-		<input
-			class="border-0 border-b-2 bg-secondary px-4 py-2 text-gray-700"
-			type="text"
-			name="name"
-		/>
-		<button class="btn btn-accent" type="submit">Add</button>
 
-		<input type="hidden" name="category" value={newItemCategoryId} />
-		<input type="hidden" name="list" value={data.list.id} />
-	</form>
+	<div class="flex">
+		<div class="flex-grow">
+			<form action="?/createItem" method="POST" use:enhance>
+				<div class="w-full flex items-start gap-4 align-bottom">
+					<input
+						class="w-full border-0 border-b-2 rounded bg-secondary px-4 text-gray-700"
+						type="text"
+						name="name"
+					/>
+					<button class="btn btn-accent" type="submit">Add</button>
+				</div>
+
+				<input type="hidden" name="category" value={newItemCategoryId} />
+				<input type="hidden" name="list" value={data.list.id} />
+			</form>
+		</div>
+	</div>
 </div>
