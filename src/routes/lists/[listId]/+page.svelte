@@ -1,17 +1,23 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Item from '$lib/components/Item.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	let newItemCategoryId = '';
+	function setNewItemCategoryId(id: string) {
+		newItemCategoryId = id;
+	}
 </script>
 
 <Title title={data.list.name} />
 {#if data.list.isTemplate}
 	<p>Template</p>
 {/if}
-<div class="max-w-md">
+<div class="max-w-lg">
 	{#if data.items.length === 0}
 		<div class="text-center h-full mt-20">
 			<p>Good job!</p>
@@ -22,4 +28,31 @@
 			<Item {item} />
 		{/each}
 	{/if}
+</div>
+
+<div class="max-w-lg fixed bottom-0 pb-4">
+	<div class="flex flex-row overflow-x-scroll m-2 h-8">
+		{#each data.categories as cat}
+			<span
+				on:click={() => setNewItemCategoryId(cat.id)}
+				on:keydown={() => {}}
+				class="p-1 rounded-lg mr-1 text-sm text-center {cat.id === newItemCategoryId
+					? 'bg-secondary text-gray-700'
+					: 'bg-primary text-gray-200'}"
+			>
+				{cat.name}
+			</span>
+		{/each}
+	</div>
+	<form action="?/createItem" method="POST" use:enhance>
+		<input
+			class="border-0 border-b-2 bg-secondary px-4 py-2 text-gray-700"
+			type="text"
+			name="name"
+		/>
+		<button class="btn btn-accent" type="submit">Add</button>
+
+		<input type="hidden" name="category" value={newItemCategoryId} />
+		<input type="hidden" name="list" value={data.list.id} />
+	</form>
 </div>

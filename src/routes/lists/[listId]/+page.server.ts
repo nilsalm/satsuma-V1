@@ -110,5 +110,22 @@ export const actions: Actions = {
 			throw e;
 		}
 		return { success: true };
+	},
+	createItem: async ({ locals, request }) => {
+		const values = await request.formData();
+		const name = String(values.get('name'));
+		const list = String(values.get('list'));
+		const category = String(values.get('category'));
+		const quantity = 1; //Number(values.get('quantity'));
+		const user = locals.user.id;
+		const picked = false;
+
+		try {
+			await locals.pb.collection('items').create({ name, list, category, quantity, user, picked });
+		} catch (e) {
+			console.error(e);
+			throw e;
+		}
+		return { success: true };
 	}
 };
