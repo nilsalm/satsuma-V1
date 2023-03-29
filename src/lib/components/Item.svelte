@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -38,7 +39,7 @@
 <div class="border-b-2 border-secondary py-2 px-4 rounded-sm mx-4 mt-1">
 	<div class="flex flex-row">
 		<div class="flex-grow">
-			<form action="?/pickItem" method="POST">
+			<form action="?/pickItem" method="POST" use:enhance>
 				<button class="flex items-start w-full">
 					<div class="pr-4 w-8 text-gray-700">{item.quantity}</div>
 					<div
@@ -55,7 +56,7 @@
 		</div>
 
 		<div class="flex gap-6">
-			<form action="?/increaseItem" method="POST">
+			<form action="?/increaseItem" method="POST" use:enhance>
 				<button
 					class=" text-gray-700 font-semibold px-2 disabled:opacity-0 border-2 border-primary rounded"
 					on:click={decrease}
