@@ -7,9 +7,16 @@
 
 	export let data: PageData;
 
+	// STATE
 	let newItemCategoryId = '';
+	let newCategoryName = '';
+	let showNewCategoryModal = false;
+
 	function setNewItemCategoryId(id: string) {
 		newItemCategoryId = id;
+	}
+	function showAddNewCategory() {
+		showNewCategoryModal = true;
 	}
 </script>
 
@@ -43,6 +50,32 @@
 				{cat.name}
 			</span>
 		{/each}
+		<div
+			on:click={() => showAddNewCategory()}
+			on:keydown={() => showAddNewCategory()}
+			class="py-1 rounded-lg text-gray-700 text-xs text-center bg-secondary"
+		>
+			{#if showNewCategoryModal === false}
+				<div class="text-sm px-2">+</div>
+			{:else}
+				<form action="?/createCategory" method="POST" use:enhance>
+					<div class="flex flex-row px-1">
+						<input
+							class="w-24 text-black text-xs h-8 bg-transparent border-0 rounded opacity-60"
+							bind:value={newCategoryName}
+							name="name"
+							type="text"
+						/>
+						<button
+							class="rounded ml-1 py-1 px-1 bg-accent disabled:opacity-40 border disabled:text-gray-400 text-gray-700"
+							disabled={newCategoryName.length === 0}
+						>
+							Add
+						</button>
+					</div>
+				</form>
+			{/if}
+		</div>
 	</div>
 
 	<div class="flex">

@@ -127,5 +127,18 @@ export const actions: Actions = {
 			throw e;
 		}
 		return { success: true };
+	},
+	createCategory: async ({ locals, request }) => {
+		const values = await request.formData();
+		const name = String(values.get('name'));
+		const user = locals.user.id;
+
+		try {
+			await locals.pb.collection('categories').create({ name, user });
+		} catch (e) {
+			console.error(e);
+			throw e;
+		}
+		return { success: true };
 	}
 };
