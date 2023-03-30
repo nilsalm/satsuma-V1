@@ -15,9 +15,6 @@
 	function setNewItemCategoryId(id: string) {
 		newItemCategoryId = id;
 	}
-	function showAddNewCategory() {
-		showNewCategoryModal = true;
-	}
 </script>
 
 <Title title={data.list.name} />
@@ -40,9 +37,9 @@
 <div class="max-w-lg pb-4">
 	<div class="flex overflow-x-scroll m-2 h-8">
 		{#each data.categories as cat}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<span
 				on:click={() => setNewItemCategoryId(cat.id)}
-				on:keydown={() => {}}
 				class="p-1 rounded-lg mr-1 text-sm text-center {cat.id === newItemCategoryId
 					? 'bg-secondary text-gray-700'
 					: 'bg-primary text-gray-200'}"
@@ -50,9 +47,11 @@
 				{cat.name}
 			</span>
 		{/each}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
-			on:click={() => showAddNewCategory()}
-			on:keydown={() => showAddNewCategory()}
+			on:click={() => {
+				showNewCategoryModal = true;
+			}}
 			class="py-1 rounded-lg text-gray-700 text-xs text-center bg-secondary"
 		>
 			{#if showNewCategoryModal === false}
