@@ -178,5 +178,57 @@ export const actions: Actions = {
 			throw e;
 		}
 		return { success: true };
+	},
+	addTemplateItemsToList: async ({ locals, request }) => {
+		const values = await request.formData();
+		const list = String(values.get('list'));
+		const template = String(values.get('template'));
+
+		try {
+			const templateItems = (await locals.pb.collection('items').getList(1, 100, {
+				filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${template}"`
+			})) as {
+				page: number;
+				perPage: number;
+				totalItems: number;
+				totalPages: number;
+				items: Array<{
+					name: string;
+					picked: boolean;
+					user: string;
+					list: string;
+					category: string;
+					quantity: number;
+				}>;
+			};
+
+			for (const item of templateItems.items) {
+				const existingItems = await locals.pb.collection('items').getList(1, 100, {
+					filter: `created >= "2022-01-01 00:00:00" && name ~ "${item.name.toLowerCase()}" && picked = false && list = "${list}"`
+				});
+
+				if (existingItems.items.length > 0) {
+					const existingItem = existingItems.items[0];
+					await locals.pb
+						.collection('items')
+						.update(existingItem.id, { quantity: existingItem.quantity + item.quantity });
+				} else {
+					const newItem = {
+						name: item.name,
+						list: list,
+						category: item.category,
+						quantity: item.quantity,
+						user: item.user,
+						picked: false
+					};
+					console.log(newItem);
+					await locals.pb.collection('items').create(newItem);
+				}
+			}
+		} catch (e) {
+			console.error(e);
+			throw e;
+		}
+		return { success: true };
 	}
 };

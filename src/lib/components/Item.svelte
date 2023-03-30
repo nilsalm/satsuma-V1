@@ -32,8 +32,6 @@
 			dispatch('update', item);
 		}
 	}
-
-	$: console.log(item.id, item.picked, item.quantity);
 </script>
 
 <div class="border-b-2 border-secondary py-2 px-4 rounded-sm mx-4 mt-1">

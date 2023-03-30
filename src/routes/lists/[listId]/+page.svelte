@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import Item from '$lib/components/Item.svelte';
 	import Title from '$lib/components/Title.svelte';
+	import { pb } from '$lib/pocketbase';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { PageData } from './$types';
 
@@ -35,46 +36,47 @@
 </div>
 
 <div class="max-w-lg pb-4">
-	<div class="flex overflow-x-scroll m-2 h-8">
+	<div class="flex overflow-x-scroll my-2 h-12 p-2 bg-secondary gap-1">
 		{#each data.categories as cat}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
+			<div
 				on:click={() => setNewItemCategoryId(cat.id)}
-				class="p-1 rounded-lg mr-1 text-sm text-center {cat.id === newItemCategoryId
-					? 'bg-secondary text-gray-700'
-					: 'bg-primary text-gray-200'}"
+				class="p-1 bg-neutral rounded-lg text-gray-700 text-sm text-center {cat.id ===
+				newItemCategoryId
+					? 'border-2 border-primary'
+					: 'border-2 border-neutral'}"
 			>
 				{cat.name}
-			</span>
+			</div>
 		{/each}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div
-			on:click={() => {
-				showNewCategoryModal = true;
-			}}
-			class="py-1 rounded-lg text-gray-700 text-xs text-center bg-secondary"
-		>
-			{#if showNewCategoryModal === false}
+		{#if showNewCategoryModal === false}
+			<div
+				on:click={() => {
+					showNewCategoryModal = true;
+				}}
+				class="py-1 rounded-lg text-gray-700 text-xs text-center bg-accent cursor-pointer"
+			>
 				<div class="text-sm px-2">+</div>
-			{:else}
-				<form action="?/createCategory" method="POST" use:enhance>
-					<div class="flex flex-row px-1">
-						<input
-							class="w-24 text-black text-xs h-8 bg-transparent border-0 rounded opacity-60"
-							bind:value={newCategoryName}
-							name="name"
-							type="text"
-						/>
-						<button
-							class="rounded ml-1 py-1 px-1 bg-accent disabled:opacity-40 border disabled:text-gray-400 text-gray-700"
-							disabled={newCategoryName.length === 0}
-						>
-							Add
-						</button>
-					</div>
-				</form>
-			{/if}
-		</div>
+			</div>
+		{:else}
+			<form action="?/createCategory" method="POST" use:enhance>
+				<div class="flex flex-row px-1 gap-1">
+					<input
+						class="w-28 text-gray-700 text-xs bg-neutral border-0 rounded-md"
+						bind:value={newCategoryName}
+						name="name"
+						type="text"
+					/>
+					<button
+						class="rounded px-3 bg-primary disabled:opacity-70 disabled:text-gray-300 text-gray-700"
+						disabled={newCategoryName.length === 0}
+					>
+						Add
+					</button>
+				</div>
+			</form>
+		{/if}
 	</div>
 
 	<div class="flex">
@@ -94,4 +96,17 @@
 			</form>
 		</div>
 	</div>
+	{#if data.templates.length > 0 && data.list.isTemplate === false}
+		<div class="flex flex-row overflow-x-scroll m-2">
+			{#each data.templates as template}
+				<form action="?/addTemplateItemsToList" method="POST" use:enhance>
+					<button class="p-1 rounded-lg mr-1 text-gray-700 h-6 text-xs text-center bg-accent">
+						{template.name || `Template ${template.id.substring(0, 3)}`}
+					</button>
+					<input type="hidden" name="template" value={template.id} />
+					<input type="hidden" name="list" value={data.list.id} />
+				</form>
+			{/each}
+		</div>
+	{/if}
 </div>
