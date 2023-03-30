@@ -62,11 +62,36 @@ export const load = ({ locals, params }) => {
 			throw err;
 		}
 	};
+	const getTemplates = async () => {
+		try {
+			const templates = structuredClone(
+				await locals.pb.collection('lists').getList(1, 100, {
+					filter: `created >= "2022-01-01 00:00:00" && isTemplate = true`
+				})
+			) as {
+				page: number;
+				perPage: number;
+				totalItems: number;
+				totalPages: number;
+				items: Array<{
+					id: string;
+					name: string;
+					isTemplate: boolean;
+					user: string;
+				}>;
+			};
+			return templates.items;
+		} catch (err) {
+			console.error(err);
+			throw err;
+		}
+	};
 
 	return {
 		list: getList(params.listId),
 		categories: getCategories(),
-		items: getItems(params.listId)
+		items: getItems(params.listId),
+		templates: getTemplates()
 	};
 };
 
@@ -120,8 +145,21 @@ export const actions: Actions = {
 		const user = locals.user.id;
 		const picked = false;
 
+		const newItem = { name, list, category, quantity, user, picked };
+
 		try {
-			await locals.pb.collection('items').create({ name, list, category, quantity, user, picked });
+			const existingItems = await locals.pb.collection('items').getList(1, 100, {
+				filter: `created >= "2022-01-01 00:00:00" && name ~ "${name.toLowerCase()}" && picked = false && list = "${list}"`
+			});
+
+			if (existingItems.items.length > 0) {
+				const existingItem = existingItems.items[0];
+				await locals.pb
+					.collection('items')
+					.update(existingItem.id, { quantity: existingItem.quantity + 1 });
+			} else {
+				await locals.pb.collection('items').create(newItem);
+			}
 		} catch (e) {
 			console.error(e);
 			throw e;
