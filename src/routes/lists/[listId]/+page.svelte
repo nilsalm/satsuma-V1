@@ -2,8 +2,6 @@
 	import { enhance } from '$app/forms';
 	import Item from '$lib/components/Item.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import { pb } from '$lib/pocketbase';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -29,8 +27,15 @@
 			<p>Now get yourself some ice cream 🍦</p>
 		</div>
 	{:else}
-		{#each data.items as item}
-			<Item {item} />
+		{#each data.categories as cat}
+			{#if data.items.filter((i) => i.category === cat.id).length > 0}
+				<div class="text-lg mt-8 border-primary border-b-4 text-primary font-semibold">
+					<p>{cat.name}</p>
+				</div>
+				{#each data.items.filter((i) => i.category === cat.id) as item}
+					<Item {item} />
+				{/each}
+			{/if}
 		{/each}
 	{/if}
 </div>
