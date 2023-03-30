@@ -49,7 +49,12 @@
 	}
 </script>
 
-<Title title={data.list.name} />
+<div class="flex justify-between max-w-lg align-bottom">
+	<Title title={data.list.name} />
+	<a href="{data.list.id}/edit" class="border border-gray-700 text-gray-700 rounded px-2 py-1 h-9"
+		>Edit</a
+	>
+</div>
 {#if data.list.isTemplate}
 	<p>Template</p>
 {/if}

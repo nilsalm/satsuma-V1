@@ -5,8 +5,14 @@
 	export let data: PageData;
 </script>
 
-<form action="?/updateList" method="POST">
+<div class="flex justify-between max-w-lg">
 	<Title title={'Edit List ' + data.list.name} />
+	<a
+		href={'/lists/' + data.list.id}
+		class="border border-gray-700 text-gray-700 rounded px-2 py-1 h-9">Cancel</a
+	>
+</div>
+<form action="?/updateList" method="POST">
 	<div class="form-control gap-2 mb-4">
 		<input
 			type="text"
