@@ -3,6 +3,7 @@
 	import Item from '$lib/components/Item.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
+	import { pb } from '$lib/pocketbase';
 
 	export let data: PageData;
 
@@ -10,9 +11,41 @@
 	let newItemCategoryId = '';
 	let newCategoryName = '';
 	let showNewCategoryModal = false;
+	let newItemName = '';
+
+	$: proposeCategory(newItemName);
 
 	function setNewItemCategoryId(id: string) {
 		newItemCategoryId = id;
+	}
+
+	async function proposeCategory(itemName: string) {
+		if (itemName.length < 3) return;
+
+		let resultList;
+
+		try {
+			resultList = (await pb.collection('items').getList(1, 50, {
+				filter: `name ~ "${itemName}"`
+			})) as {
+				page: number;
+				perPage: number;
+				totalItems: number;
+				totalPages: number;
+				items: Array<{
+					name: string;
+					category: string;
+				}>;
+			};
+		} catch (ClientResponseError) {
+			return;
+		}
+
+		if (resultList.items.length === 0) return;
+
+		const item = resultList.items.reverse()[0];
+		const catId = item.category;
+		newItemCategoryId = catId;
 	}
 </script>
 
@@ -92,6 +125,7 @@
 						class="w-full border-0 border-b-2 rounded bg-secondary px-4 text-gray-700"
 						type="text"
 						name="name"
+						bind:value={newItemName}
 					/>
 					<button class="btn btn-accent" type="submit">Add</button>
 				</div>
