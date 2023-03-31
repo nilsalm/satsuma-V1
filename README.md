@@ -1,38 +1,48 @@
-# create-svelte
+# 🍊 Satsuma - the helpful shopping list
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+> Are you adding the same staples to you shopping list week after week? There should be a template function for this!
+>
+> Are you wandering back and forth in the supermarket because the things on your list are not group by section? That shouldn't be too hard.
+>
+> Are frustrated with how many clicks it can take to add an item to a list or how hard it is to invite your partner to share the same list?
+>
+> Relax, have a satsuma and enjoy the next trip to the supermarket.
+>
+> 🍊
 
-## Creating a project
+That's at least my vision for this little helper app.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Setup
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Use Node 18, e.g. with `nvm use` in the project root.
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+$ node -v
+v18.12.1
 ```
 
-## Building
+Install with `npm install`. Run with `npm run dev`.
 
-To create a production version of your app:
+Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase serve`.
+Create an admin account to log in. You can then import the `pb_schema.json` in Settings > Import collections.
 
-```bash
-npm run build
-```
+## Todos
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [x] list and pick categories
+- [x] sort items in categories
+- [x] auto-update list on screen
+- [x] update status on item
+- [x] add template to list
+- [x] add new list
+- [x] set permissions policy in database
+- [x] signup flow
+- [s] refactor pb into hook
+- [ ] share list with other users
+- [x] increase quantity if a duplicate item is added
+- [x] styling & color scheme
+- [ ] remove existing categories via profile
+- [x] [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
+- [ ] Error handling for signin / signup
+- [ ] dynamic header
+- [ ] redirects
+- [ ]
