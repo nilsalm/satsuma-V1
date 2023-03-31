@@ -1,19 +1,22 @@
-# fly.toml file generated for satsuma-be on 2022-12-03T11:32:48+01:00
+# fly.toml file generated for satsuma on 2023-03-31T08:51:17+02:00
 
-app = "satsuma-be"
+app = "satsuma"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
 [env]
 
+[experimental]
+  auto_rollback = true
+
 [mounts]
   destination = "/pb/pb_data"
   source = "pb_data"
 
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true
+# optional if you want to change the PocketBase version
+[build.args]
+  PB_VERSION="0.14.0"
 
 [[services]]
   http_checks = []
