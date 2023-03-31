@@ -6,7 +6,12 @@
 	export let data: PageData;
 </script>
 
-<Title title={'My Lists'} />
+<div class="flex justify-between max-w-lg align-bottom">
+	<Title title={'My Lists'} />
+	<a href="/lists/new" class="border border-gray-700 text-gray-700 rounded px-2 py-1 h-9"
+		>Add list</a
+	>
+</div>
 
 <div class="w-full mt-4 flex flex-col items-center">
 	{#if data.lists.length === 0}

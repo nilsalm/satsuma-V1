@@ -14,7 +14,6 @@
 				{#if $currentUser}
 					<!-- <li><a href="/">{$currentUser.email}</a></li> -->
 					<li><a href="/lists">Lists</a></li>
-					<li><a href="/lists/new">Add List</a></li>
 					<li><a href="/profile">Profile</a></li>
 					<li>
 						<form
