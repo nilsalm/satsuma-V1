@@ -10,7 +10,7 @@
 >
 > 🍊
 
-That's at least my vision for this little helper app.
+That's at least the vision for this little helper app.
 
 ## Setup
 
@@ -21,12 +21,12 @@ $ node -v
 v18.12.1
 ```
 
-Install with `npm install`. Run with `npm run dev`.
+Install with `yarn install`. Run with `yarn dev`.
 
 Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase serve`.
 Create an admin account to log in. You can then import the `pb_schema.json` in Settings > Import collections.
 
-## Todos
+## Roadmap
 
 - [x] list and pick categories
 - [x] sort items in categories
@@ -37,12 +37,14 @@ Create an admin account to log in. You can then import the `pb_schema.json` in S
 - [x] set permissions policy in database
 - [x] signup flow
 - [s] refactor pb into hook
-- [ ] share list with other users
 - [x] increase quantity if a duplicate item is added
-- [x] styling & color scheme
-- [ ] remove existing categories via profile
 - [x] [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
+- [ ] redo styling without daisyui
+- [ ] remove existing categories via profile
 - [ ] Error handling for signin / signup
 - [ ] dynamic header
-- [ ] redirects
-- [ ]
+- [ ] share list with other users
+
+## Links
+
+🎨 [Color Scheme](https://colorhunt.co/palette/cdf0eaf9f9f9f7dbf0beaee2)
