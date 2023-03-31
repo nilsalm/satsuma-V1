@@ -14,17 +14,12 @@ That's at least the vision for this little helper app.
 
 ## Setup
 
-Use Node 18, e.g. with `nvm use` in the project root.
-
-```bash
-$ node -v
-v18.12.1
-```
-
-Install with `yarn install`. Run with `yarn dev`.
-
-Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase serve`.
+1. Run `nvm use` in the project root to ensure the right node version is used.
+2. Install with `yarn install`.
+3. **OPTIONAL** Install [PocketBase.io](https://pocketbase.io/) and run it with `./pocketbase serve`.
 Create an admin account to log in. You can then import the `pb_schema.json` in Settings > Import collections.
+4. Create a local `.env` file with `cp .env.template .env`.
+5. Run with `yarn dev`.
 
 ## Roadmap
 
