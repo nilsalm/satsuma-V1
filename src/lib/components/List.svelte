@@ -6,14 +6,14 @@
 	};
 </script>
 
-<div class="rounded-xl w-24 h-24 text-center m-4">
-	<a
-		href={`/lists/${list.id}`}
-		class="btn h-full {list.isTemplate ? 'btn-secondary' : 'btn-primary'}"
-	>
-		<p class="font-semibold">{list.name}</p>
+<a
+	href={`/lists/${list.id}`}
+	class="h-full rounded-lg {list.isTemplate ? 'bg-secondary' : 'bg-primary'}"
+>
+	<div class=" w-24 h-24 text-center m-4 flex flex-col justify-center">
+		<p class="font-semibold text-neutral">{list.name}</p>
 		{#if list.isTemplate === true}
 			<p class="text-xs text-gray-500 font-light">Template</p>
 		{/if}
-	</a>
-</div>
+	</div>
+</a>
