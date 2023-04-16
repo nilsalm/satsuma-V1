@@ -60,7 +60,7 @@
 {/if}
 <div class="max-w-lg">
 	{#if data.items.length === 0}
-		<div class="text-center h-full mt-20">
+		<div class="text-center h-full mt-20 mb-20">
 			<p>Good job!</p>
 			<p>Now get yourself some ice cream 🍦</p>
 		</div>

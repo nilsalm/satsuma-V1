@@ -8,15 +8,13 @@
 
 <div class="flex justify-between max-w-lg align-bottom">
 	<Title title={'My Lists'} />
-	<a href="/lists/new" class="border border-gray-700 text-gray-700 rounded px-2 py-1 h-9"
-		>Add list</a
-	>
+	<a href="/lists/new" class="btn btn-accent" class:hidden={data.lists.length === 0}>Add list</a>
 </div>
 
 <div class="w-full mt-4 flex flex-col items-center">
 	{#if data.lists.length === 0}
-		<div class="text-gray-500 text-center">You don't have any lists yet.</div>
-		<a href="/lists/new" class="btn btn-primary max-w-md mt-4">Add One</a>
+		<div class="text-gray-500 text-center mt-20">You don't have any lists yet.</div>
+		<a href="/lists/new" class="btn btn-primary max-w-md mt-4">Add list</a>
 	{:else}
 		{#each data.lists as list}
 			<List {list} />
