@@ -4,18 +4,21 @@
 	import { applyAction, enhance } from '$app/forms';
 </script>
 
-<div class="bg-primary text-neutral-content">
-	<div class="max-w-xl mx-auto navbar">
-		<div class="navbar-start">
-			<a href="/" class="btn btn-ghost text-xl">HOME</a>
+<div class="bg-primary text-neutral h-16">
+	<div class="max-w-xl mx-auto flex justify-between">
+		<div class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+			<a href="/" class=" text-xl">HOME</a>
 		</div>
-		<div class="navbar-end">
-			<ul class="menu menu-horizontal">
+		<div class="">
+			<ul class="flex">
 				{#if $currentUser}
-					<!-- <li><a href="/">{$currentUser.email}</a></li> -->
-					<li><a href="/lists">Lists</a></li>
-					<li><a href="/profile">Profile</a></li>
-					<li>
+					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+						<a class=" text-lg" href="/lists">Lists</a>
+					</li>
+					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+						<a class=" text-lg" href="/profile">Profile</a>
+					</li>
+					<li class="hover:bg-secondary rounded p-2 m-2 hover:bg-opacity-40">
 						<form
 							method="POST"
 							action="/logout"
@@ -26,12 +29,16 @@
 								};
 							}}
 						>
-							<button>Log out</button>
+							<button class="text-lg">Log out</button>
 						</form>
 					</li>
 				{:else}
-					<li><a href="/login">Log in</a></li>
-					<li><a href="/register">Register</a></li>
+					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+						<a class=" text-lg" href="/login">Log in</a>
+					</li>
+					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+						<a class=" text-lg" href="/register">Register</a>
+					</li>
 				{/if}
 			</ul>
 		</div>
