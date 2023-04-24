@@ -4,7 +4,7 @@
 	import { applyAction, enhance } from '$app/forms';
 </script>
 
-<div class="bg-neutral text-neutral-content">
+<div class="bg-primary text-neutral-content">
 	<div class="max-w-xl mx-auto navbar">
 		<div class="navbar-start">
 			<a href="/" class="btn btn-ghost text-xl">HOME</a>
