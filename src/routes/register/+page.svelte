@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
+	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
 </script>
 
@@ -13,16 +14,26 @@
 		};
 	}}
 >
-	<h1 class="text-2xl mb-8">Register</h1>
+	<Title title="Register new account" />
+
 	<div class="form-control gap-2 mb-4">
-		<input type="email" name="email" placeholder="Email" class="input input-bordered" />
-		<input type="password" name="password" placeholder="Password" class="input input-bordered" />
+		<input type="email" name="email" placeholder="Email" class="input input-bordered text-black" />
+		<input
+			type="password"
+			name="password"
+			placeholder="Password"
+			class="input input-bordered text-black"
+		/>
 		<input
 			type="password"
 			name="passwordConfirm"
 			placeholder="Confirm Password"
-			class="input input-bordered"
+			class="input input-bordered text-black"
 		/>
 		<button class="btn btn-primary">Register</button>
 	</div>
+	<p class="text-center">
+		Already have an account?
+		<a href="/login" class="underline">Sign in!</a>
+	</p>
 </form>

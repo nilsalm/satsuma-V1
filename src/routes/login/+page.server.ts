@@ -13,6 +13,6 @@ export const actions: Actions = {
 			console.error(e);
 			throw e;
 		}
-		throw redirect(303, '/');
+		throw redirect(303, '/lists');
 	}
 };
