@@ -4,21 +4,21 @@
 	import { applyAction, enhance } from '$app/forms';
 </script>
 
-<div class="bg-primary text-neutral h-16">
+<div class="bg-primary text-neutral h-14">
 	<div class="max-w-xl mx-auto flex justify-between">
-		<div class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
-			<a href="/" class=" text-xl">HOME</a>
+		<div class="hover:bg-secondary p-2 m-1 rounded hover:bg-opacity-40">
+			<a href="/" class=" text-xl">🍊</a>
 		</div>
 		<div class="">
 			<ul class="flex">
 				{#if $currentUser}
-					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+					<li class="hover:bg-secondary p-2 m-1 rounded hover:bg-opacity-40">
 						<a class=" text-lg" href="/lists">Lists</a>
 					</li>
-					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+					<li class="hover:bg-secondary p-2 m-1 rounded hover:bg-opacity-40">
 						<a class=" text-lg" href="/profile">Profile</a>
 					</li>
-					<li class="hover:bg-secondary rounded p-2 m-2 hover:bg-opacity-40">
+					<li class="hover:bg-secondary rounded p-2 m-1 hover:bg-opacity-40">
 						<form
 							method="POST"
 							action="/logout"
@@ -33,10 +33,10 @@
 						</form>
 					</li>
 				{:else}
-					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+					<li class="hover:bg-secondary p-2 m-1 rounded hover:bg-opacity-40">
 						<a class=" text-lg" href="/login">Log in</a>
 					</li>
-					<li class="hover:bg-secondary p-2 m-2 rounded hover:bg-opacity-40">
+					<li class="hover:bg-secondary p-2 m-1 rounded hover:bg-opacity-40">
 						<a class=" text-lg" href="/register">Register</a>
 					</li>
 				{/if}
