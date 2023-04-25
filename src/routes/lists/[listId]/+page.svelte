@@ -63,7 +63,7 @@
 		{/if}
 	</div>
 
-	<div class="w-1/6">
+	<div class="w-20">
 		<Button text="Edit list" backgroundColor="secondary" textStyle="small" onClick={editList} />
 	</div>
 </div>

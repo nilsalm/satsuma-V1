@@ -11,7 +11,7 @@
 <div class="flex justify-between w-full mb-4">
 	<Title title={'Create new list'} />
 
-	<div class="w-1/6">
+	<div class="w-20">
 		<Button text="Cancel" backgroundColor="secondary" textStyle="small" onClick={goBack} />
 	</div>
 </div>
