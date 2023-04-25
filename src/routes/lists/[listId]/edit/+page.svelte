@@ -20,21 +20,25 @@
 </div>
 
 <form action="?/updateList" method="POST">
-	<div class="form-control gap-2 mb-4">
+	<div class="flex flex-col gap-4">
 		<input
 			type="text"
 			name="name"
 			placeholder="Name"
 			value={data.list.name}
-			class="input input-bordered"
+			class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 		/>
-		<label for="isTemplate">Is Template?</label>
-		<input
-			type="checkbox"
-			name="isTemplate"
-			checked={data.list.isTemplate}
-			class="input input-bordered"
-		/>
+
+		<label class="cursor-pointer label">
+			<span class="label-text text-black text-lg">Make template?</span>
+			<input
+				checked={data.list.isTemplate}
+				type="checkbox"
+				name="isTemplate"
+				class="appearance-none toggle toggle-primary"
+			/>
+		</label>
+
 		<Button text="Update list" />
 
 		<!-- TODO replace this button -->

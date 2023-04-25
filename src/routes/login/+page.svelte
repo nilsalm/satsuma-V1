@@ -15,20 +15,27 @@
 		};
 	}}
 >
-	<Title title="Log in" />
+	<div class="w-full mb-4">
+		<Title title="Log in" />
+	</div>
 
-	<div class="gap-2 mb-4">
-		<input type="email" name="email" placeholder="Email" class=" text-black" />
+	<div class="flex flex-col gap-4">
+		<input
+			type="email"
+			name="email"
+			placeholder="Email"
+			class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+		/>
 		<input
 			type="password"
 			name="password"
 			placeholder="Password"
-			class="input input-bordered text-black"
+			class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 		/>
 		<Button text={'Log in'} backgroundColor={'primary'} />
+		<p class="text-center">
+			Don't have an account?
+			<a href="/register" class="underline">Register now!</a>
+		</p>
 	</div>
-	<p class="text-center">
-		Don't have an account?
-		<a href="/register" class="underline">Create one now!</a>
-	</p>
 </form>

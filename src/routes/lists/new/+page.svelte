@@ -17,12 +17,12 @@
 </div>
 
 <form action="?/create" method="POST">
-	<div class="form-control gap-2 mb-4 mt-8">
+	<div class="flex flex-col gap-4">
 		<input
 			type="text"
 			name="name"
 			placeholder="List name"
-			class="input input-bordered text-black"
+			class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 		/>
 
 		<label class="cursor-pointer label">

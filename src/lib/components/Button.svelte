@@ -9,7 +9,7 @@
 </script>
 
 <button
-	class={`bg-${backgroundColor} bg-opacity-80 hover:bg-opacity-100 my-2 w-full rounded h-12 shadow-sm ${
+	class={`bg-${backgroundColor} bg-opacity-80 hover:bg-opacity-100 w-full rounded h-12 shadow-sm ${
 		bordered ? 'border-2 border-gray-700' : ''
 	} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${shadow ? 'shadow-lg' : ''}}`}
 	on:click={onClick}
