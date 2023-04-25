@@ -29,14 +29,29 @@ export const actions: Actions = {
 	deleteCategory: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
-
-		console.log('id', id);
+		let page = 0;
+		let totalPages = 1;
 
 		try {
+			while (page < totalPages) {
+				const itemsRecord = await locals.pb.collection('items').getList(1, 500, {
+					filter: `category = '${id}'`
+				});
+				page = itemsRecord.page;
+				totalPages = itemsRecord.totalPages;
+
+				if (itemsRecord.items.length > 0) {
+					await Promise.all(
+						itemsRecord.items.map(
+							async (item) => await locals.pb.collection('items').delete(item.id)
+						)
+					);
+				}
+			}
 			await locals.pb.collection('categories').delete(id);
 		} catch (e) {
 			console.error(e);
-			throw e;
+			return { success: false, error: e };
 		}
 		return { success: true };
 	}
