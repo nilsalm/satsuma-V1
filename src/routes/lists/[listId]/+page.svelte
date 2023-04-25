@@ -4,6 +4,7 @@
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
 	import { pb } from '$lib/pocketbase';
+	import Button from '$lib/components/Button.svelte';
 
 	export let data: PageData;
 
@@ -49,17 +50,20 @@
 	}
 </script>
 
-<div class="flex justify-between w-full">
+<div class="flex justify-between w-full mb-4">
 	<div class="flex items-start">
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
 			<p class="mt-2 ml-3">Template</p>
 		{/if}
 	</div>
-	<a href="{data.list.id}/edit" class="btn btn-accent">Edit</a>
+
+	<a href={`/lists/${data.list.id}/edit`} class="w-20">
+		<Button text="Edit list" backgroundColor="secondary" textStyle="small" />
+	</a>
 </div>
 
-<div class="flex flex-col max-h-screen h-[600px]">
+<div class="flex flex-col max-h-screen h-[650px]">
 	<div class=" flex flex-col pb-4 flex-grow overflow-y-scroll">
 		<div>
 			{#if data.items.length === 0}
@@ -82,7 +86,7 @@
 		</div>
 	</div>
 
-	<div class="pb-4">
+	<div class="mb-4 rounded shadow-lg bg-secondary p-1">
 		<!-- CATEGORY PICKER -->
 		<div class="flex overflow-x-scroll my-2 h-12 p-2 bg-secondary gap-1">
 			{#each data.categories as cat}
@@ -131,14 +135,16 @@
 		<div class="flex">
 			<div class="flex-grow">
 				<form action="?/createItem" method="POST" use:enhance>
-					<div class="w-full flex items-start gap-4 align-bottom">
+					<div class="w-full flex items-start gap-2 align-bottom">
 						<input
-							class="w-full border-0 border-b-2 rounded bg-secondary px-4 text-gray-700"
+							class="bg-neutral w-full px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 							type="text"
 							name="name"
 							bind:value={newItemName}
 						/>
-						<button class="btn btn-secondary" type="submit">Add</button>
+						<div class="w-20">
+							<Button text="Add" />
+						</div>
 					</div>
 
 					<input type="hidden" name="category" value={newItemCategoryId} />
