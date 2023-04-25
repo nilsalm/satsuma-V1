@@ -4,6 +4,8 @@
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
 	import { pb } from '$lib/pocketbase';
+	import { goto } from '$app/navigation';
+	import Button from '$lib/components/Button.svelte';
 
 	export let data: PageData;
 
@@ -47,16 +49,23 @@
 		const catId = item.category;
 		newItemCategoryId = catId;
 	}
+
+	function editList() {
+		goto(`/lists/${data.list.id}/edit`);
+	}
 </script>
 
-<div class="flex justify-between w-full">
+<div class="flex justify-between w-full mb-4">
 	<div class="flex items-start">
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
 			<p class="mt-2 ml-3">Template</p>
 		{/if}
 	</div>
-	<a href="{data.list.id}/edit" class="btn btn-accent">Edit</a>
+
+	<div class="w-1/6">
+		<Button text="Edit list" backgroundColor="secondary" textStyle="small" onClick={editList} />
+	</div>
 </div>
 
 <div class="flex flex-col max-h-screen h-[600px]">
@@ -138,7 +147,9 @@
 							name="name"
 							bind:value={newItemName}
 						/>
-						<button class="btn btn-secondary" type="submit">Add</button>
+						<div class="w-1/6">
+							<Button text="Add" />
+						</div>
 					</div>
 
 					<input type="hidden" name="category" value={newItemCategoryId} />

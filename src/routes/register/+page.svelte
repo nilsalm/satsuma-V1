@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
 </script>
@@ -30,7 +31,7 @@
 			placeholder="Confirm Password"
 			class="input input-bordered text-black"
 		/>
-		<button class="btn btn-primary">Register</button>
+		<Button text="Register" />
 	</div>
 	<p class="text-center">
 		Already have an account?
