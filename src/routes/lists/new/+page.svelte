@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
+	import Switch from '$lib/components/Switch.svelte';
 	import Title from '$lib/components/Title.svelte';
 
 	function goBack() {
 		goto('/lists/');
 	}
+
+	$: makeTemplate = false;
 </script>
 
 <div class="flex justify-between w-full mb-4">
@@ -25,10 +28,7 @@
 			class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 		/>
 
-		<label class="cursor-pointer label">
-			<span class="label-text text-black text-lg">Make template?</span>
-			<input type="checkbox" name="isTemplate" class="appearance-none toggle toggle-primary" />
-		</label>
+		<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
 
 		<Button text="Create list" />
 	</div>
