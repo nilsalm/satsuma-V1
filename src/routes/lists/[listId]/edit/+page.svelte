@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 	import Switch from '$lib/components/Switch.svelte';
 	import Title from '$lib/components/Title.svelte';
@@ -8,18 +7,14 @@
 	export let data: PageData;
 
 	let makeTemplate: boolean = data.list.isTemplate;
-
-	function goBack() {
-		goto('/lists/' + data.list.id);
-	}
 </script>
 
 <div class="flex justify-between w-full mb-4">
 	<Title title={'Edit List ' + data.list.name} />
 
-	<div class="w-20">
-		<Button text="Cancel" backgroundColor="secondary" textStyle="small" onClick={goBack} />
-	</div>
+	<a href={'/lists/' + data.list.id} class="w-20">
+		<Button text="Cancel" backgroundColor="secondary" textStyle="small" />
+	</a>
 </div>
 
 <form action="?/updateList" method="POST">

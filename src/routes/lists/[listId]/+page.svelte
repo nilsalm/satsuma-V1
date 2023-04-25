@@ -4,7 +4,6 @@
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
 	import { pb } from '$lib/pocketbase';
-	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 
 	export let data: PageData;
@@ -49,10 +48,6 @@
 		const catId = item.category;
 		newItemCategoryId = catId;
 	}
-
-	function editList() {
-		goto(`/lists/${data.list.id}/edit`);
-	}
 </script>
 
 <div class="flex justify-between w-full mb-4">
@@ -63,9 +58,9 @@
 		{/if}
 	</div>
 
-	<div class="w-20">
-		<Button text="Edit list" backgroundColor="secondary" textStyle="small" onClick={editList} />
-	</div>
+	<a href={`/lists/${data.list.id}/edit`} class="w-20">
+		<Button text="Edit list" backgroundColor="secondary" textStyle="small" />
+	</a>
 </div>
 
 <div class="flex flex-col max-h-screen h-[650px]">
