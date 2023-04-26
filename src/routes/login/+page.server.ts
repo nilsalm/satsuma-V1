@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
@@ -11,7 +11,7 @@ export const actions: Actions = {
 			await locals.pb.collection('users').authWithPassword(data.email, data.password);
 		} catch (e) {
 			console.error(e);
-			throw e;
+			return fail(400, { data, incorrect: true });
 		}
 		throw redirect(303, '/lists');
 	}
