@@ -7,10 +7,12 @@ export const load = ({ locals }) => {
 
 	const getLists = async () => {
 		try {
-			const lists = structuredClone(
-				await locals.pb.collection('lists').getFullList(undefined, {
-					filter: 'created >= "2022-01-01 00:00:00"'
-				})
+			const lists = JSON.parse(
+				JSON.stringify(
+					await locals.pb.collection('lists').getFullList(undefined, {
+						filter: 'created >= "2022-01-01 00:00:00"'
+					})
+				)
 			) as Array<{
 				id: string;
 				name: string;

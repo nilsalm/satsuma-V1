@@ -6,7 +6,9 @@ export const load = async ({ locals, params }) => {
 	}
 
 	try {
-		const list = structuredClone(await locals.pb.collection('lists').getOne(params.listId)) as {
+		const list = JSON.parse(
+			JSON.stringify(await locals.pb.collection('lists').getOne(params.listId))
+		) as {
 			id: string;
 			name: string;
 			isTemplate: boolean;

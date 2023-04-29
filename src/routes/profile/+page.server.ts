@@ -7,8 +7,8 @@ export const load = ({ locals }) => {
 
 	const getCategories = async () => {
 		try {
-			const categories = structuredClone(
-				await locals.pb.collection('categories').getFullList(undefined)
+			const categories = JSON.parse(
+				JSON.stringify(await locals.pb.collection('categories').getFullList(undefined))
 			) as Array<{
 				id: string;
 				name: string;

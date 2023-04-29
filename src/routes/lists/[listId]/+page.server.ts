@@ -3,7 +3,9 @@ import type { Actions } from './$types';
 export const load = ({ locals, params }) => {
 	const getList = async (listId: string) => {
 		try {
-			const list = structuredClone(await locals.pb.collection('lists').getOne(listId)) as {
+			const list = JSON.parse(
+				JSON.stringify(await locals.pb.collection('lists').getOne(listId))
+			) as {
 				id: string;
 				name: string;
 				isTemplate: boolean;
@@ -17,8 +19,8 @@ export const load = ({ locals, params }) => {
 	};
 	const getCategories = async () => {
 		try {
-			const categories = structuredClone(
-				await locals.pb.collection('categories').getFullList(undefined)
+			const categories = JSON.parse(
+				JSON.stringify(await locals.pb.collection('categories').getFullList(undefined))
 			) as Array<{
 				id: string;
 				name: string;
@@ -31,11 +33,13 @@ export const load = ({ locals, params }) => {
 	};
 	const getItems = async (listId: string) => {
 		try {
-			const listItems = structuredClone(
-				await locals.pb.collection('items').getList(1, 100, {
-					filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${listId}"`,
-					expand: 'category'
-				})
+			const listItems = JSON.parse(
+				JSON.stringify(
+					await locals.pb.collection('items').getList(1, 100, {
+						filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${listId}"`,
+						expand: 'category'
+					})
+				)
 			) as {
 				page: number;
 				perPage: number;
@@ -64,10 +68,12 @@ export const load = ({ locals, params }) => {
 	};
 	const getTemplates = async () => {
 		try {
-			const templates = structuredClone(
-				await locals.pb.collection('lists').getList(1, 100, {
-					filter: `created >= "2022-01-01 00:00:00" && isTemplate = true`
-				})
+			const templates = JSON.parse(
+				JSON.stringify(
+					await locals.pb.collection('lists').getList(1, 100, {
+						filter: `created >= "2022-01-01 00:00:00" && isTemplate = true`
+					})
+				)
 			) as {
 				page: number;
 				perPage: number;
