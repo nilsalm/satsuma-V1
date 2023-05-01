@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { claim_space } from 'svelte/internal';
+
 	export let list: {
 		id: string;
 		name: string;
@@ -8,12 +10,15 @@
 
 <a
 	href={`/lists/${list.id}`}
-	class="h-full rounded-lg {list.isTemplate ? 'bg-secondary' : 'bg-primary'} shadow-lg"
+	class="rounded-lg aspect-square relative {list.isTemplate
+		? 'bg-secondary'
+		: 'bg-primary'} shadow-lg"
 >
-	<div class="aspect-square w-24 text-center m-4 flex flex-col justify-center relative">
+	<div class="flex flex-col text-center h-full justify-center">
 		<p class="font-semibold text-neutral">{list.name}</p>
-		{#if list.isTemplate === true}
-			<p class="text-xs text-gray-500 font-light top-0 right-0 absolute">Template</p>
-		{/if}
 	</div>
+
+	{#if list.isTemplate === true}
+		<p class="text-xs text-gray-500 font-light top-3 right-3 absolute">Template</p>
+	{/if}
 </a>

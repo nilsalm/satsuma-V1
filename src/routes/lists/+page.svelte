@@ -23,7 +23,7 @@
 				<Button text={'Add list'} backgroundColor={'secondary'} />
 			</a>
 		{:else}
-			<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+			<div class="container m-auto grid grid-cols-2 md:grid-cols-4 gap-4">
 				{#each data.lists as list}
 					<List {list} />
 				{/each}
