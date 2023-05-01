@@ -13,6 +13,7 @@
 	} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} }`}
 	on:click={onClick}
 	on:keydown={onClick}
+	{disabled}
 >
 	<p
 		class={`m-auto text-gray-700 text-md ${
