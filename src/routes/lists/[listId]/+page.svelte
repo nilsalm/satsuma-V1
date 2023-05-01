@@ -2,17 +2,22 @@
 	import { enhance } from '$app/forms';
 	import Item from '$lib/components/Item.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 	import { pb } from '$lib/pocketbase';
 	import Button from '$lib/components/Button.svelte';
 
 	export let data: PageData;
+	export let form: ActionData;
 
 	// STATE
 	let newItemCategoryId = '';
 	let newCategoryName = '';
 	let showNewCategoryModal = false;
 	let newItemName = '';
+
+	$: if (form?.success && form?.action === 'createCategory') {
+		setNewItemCategoryId(form?.id);
+	}
 
 	$: proposeCategory(newItemName);
 
@@ -91,7 +96,7 @@
 				</div>
 			{:else}
 				<form action="?/createCategory" method="POST" use:enhance>
-					<div class="flex flex-row h-full px-1 gap-1">
+					<div class="flex flex-row h-full gap-1">
 						<input
 							class="w-28 text-gray-700 text-xs bg-neutral border-0 rounded"
 							bind:value={newCategoryName}
