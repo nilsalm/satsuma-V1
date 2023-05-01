@@ -129,6 +129,19 @@ export const actions: Actions = {
 		}
 		return { success: true };
 	},
+	decreaseItem: async ({ locals, request }) => {
+		const values = await request.formData();
+		const id = String(values.get('id'));
+		const quantity = Number(values.get('quantity'));
+
+		try {
+			await locals.pb.collection('items').update(id, { quantity });
+		} catch (e) {
+			console.error(e);
+			throw e;
+		}
+		return { success: true };
+	},
 	increaseItem: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
