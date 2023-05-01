@@ -93,7 +93,7 @@
 				<form action="?/createCategory" method="POST" use:enhance>
 					<div class="flex flex-row h-full px-1 gap-1">
 						<input
-							class="w-28 text-gray-700 text-xs bg-neutral border-0 rounded-md"
+							class="w-28 text-gray-700 text-xs bg-neutral border-0 rounded"
 							bind:value={newCategoryName}
 							name="name"
 							type="text"
@@ -121,7 +121,7 @@
 							bind:value={newItemName}
 						/>
 						<div class="w-20">
-							<Button text="Add" />
+							<Button text="Add" disabled={!newItemCategoryId} />
 						</div>
 					</div>
 
