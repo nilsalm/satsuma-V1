@@ -26,7 +26,7 @@
 				<button class="flex">
 					<div class="w-4 mr-2 text-right text-gray-700">{item.quantity}</div>
 					<div
-						class="text-gray-700 text-left font-semibold max-w-[calc(100vw-150px)] truncate whitespace-nowrap"
+						class="text-gray-700 text-left font-semibold w-[calc(100vw-150px)] sm:w-[400px] truncate whitespace-nowrap"
 					>
 						{item.name}
 					</div>
