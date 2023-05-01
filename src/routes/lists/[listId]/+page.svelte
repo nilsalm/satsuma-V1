@@ -50,7 +50,7 @@
 	}
 </script>
 
-<div class="flex justify-between w-full mb-4">
+<div class="flex justify-between w-full mb-1 px-4">
 	<div class="flex items-start">
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
@@ -63,40 +63,18 @@
 	</a>
 </div>
 
-<div class="flex flex-col max-h-screen h-[650px]">
-	<div class=" flex flex-col pb-4 flex-grow overflow-y-scroll">
-		<div>
-			{#if data.items.length === 0}
-				<div class="text-center mt-20">
-					<p>Good job!</p>
-					<p>Now get yourself some ice cream 🍦</p>
-				</div>
-			{:else}
-				{#each data.categories as cat}
-					{#if data.items.filter((i) => i.category === cat.id).length > 0}
-						<div class="text-lg mt-8 border-primary border-b-4 text-primary font-semibold">
-							<p>{cat.name}</p>
-						</div>
-						{#each data.items.filter((i) => i.category === cat.id) as item}
-							<Item {item} />
-						{/each}
-					{/if}
-				{/each}
-			{/if}
-		</div>
-	</div>
-
-	<div class="mb-4 rounded shadow-lg bg-secondary p-1">
+<div class="fixed w-screen max-w-xl bottom-0">
+	<div class="bg-gradient-to-b from-white to-secondary h-2 sm:h-0" />
+	<div class="sm:rounded sm:mb-2 sm:shadow-lg bg-secondary px-2">
 		<!-- CATEGORY PICKER -->
-		<div class="flex overflow-x-scroll my-2 h-12 p-2 bg-secondary gap-1">
+		<div class="flex overflow-x-scroll h-11 p-2 first:pl-0 gap-1">
 			{#each data.categories as cat}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					on:click={() => setNewItemCategoryId(cat.id)}
-					class="p-1 bg-neutral rounded-lg text-gray-700 text-sm text-center {cat.id ===
-					newItemCategoryId
-						? 'border-2 border-primary'
-						: 'border-2 border-neutral'}"
+					class="p-1 rounded h-full text-sm shadow text-center {cat.id === newItemCategoryId
+						? 'bg-primary text-neutral'
+						: 'bg-neutral text-gray-700'}"
 				>
 					{cat.name}
 				</div>
@@ -107,13 +85,13 @@
 					on:click={() => {
 						showNewCategoryModal = true;
 					}}
-					class="py-1 rounded-lg text-gray-700 text-xs text-center bg-accent cursor-pointer"
+					class="py-1 rounded text-gray-500 font-bold text-xs text-center bg-accent shadow cursor-pointer"
 				>
 					<div class="text-sm px-2">+</div>
 				</div>
 			{:else}
 				<form action="?/createCategory" method="POST" use:enhance>
-					<div class="flex flex-row px-1 gap-1">
+					<div class="flex flex-row h-full px-1 gap-1">
 						<input
 							class="w-28 text-gray-700 text-xs bg-neutral border-0 rounded-md"
 							bind:value={newCategoryName}
@@ -155,10 +133,10 @@
 
 		<!-- TEMPLATE PICKER -->
 		{#if data.templates.length > 0 && data.list.isTemplate === false}
-			<div class="flex flex-row overflow-x-scroll m-2">
+			<div class="flex overflow-x-scroll h-11 py-2 first:pl-0 gap-1">
 				{#each data.templates as template}
 					<form action="?/addTemplateItemsToList" method="POST" use:enhance>
-						<button class="p-1 rounded-lg mr-1 text-gray-700 h-6 text-xs text-center bg-accent">
+						<button class="p-1 rounded text-gray-700 h-full text-xs text-center bg-accent">
 							{template.name || `Template ${template.id.substring(0, 3)}`}
 						</button>
 						<input type="hidden" name="template" value={template.id} />
@@ -166,6 +144,28 @@
 					</form>
 				{/each}
 			</div>
+		{/if}
+	</div>
+</div>
+
+<div class="flex flex-col pb-4 overscroll-contain px-4 mb-[130px]">
+	<div>
+		{#if data.items.length === 0}
+			<div class="text-center mt-20">
+				<p>Good job!</p>
+				<p>Now get yourself some ice cream 🍦</p>
+			</div>
+		{:else}
+			{#each data.categories as cat}
+				{#if data.items.filter((i) => i.category === cat.id).length > 0}
+					<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+						<p>{cat.name}</p>
+					</div>
+					{#each data.items.filter((i) => i.category === cat.id) as item}
+						<Item {item} />
+					{/each}
+				{/if}
+			{/each}
 		{/if}
 	</div>
 </div>

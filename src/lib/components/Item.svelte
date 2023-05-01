@@ -34,7 +34,7 @@
 	}
 </script>
 
-<div class="border-b-2 border-secondary py-2 px-4 rounded-sm mx-4 mt-1">
+<div class="border-b-2 last:border-0 border-secondary py-2 px-4 rounded-sm mx-4 mt-1">
 	<div class="flex flex-row">
 		<div class="flex-grow">
 			<form action="?/pickItem" method="POST" use:enhance>
