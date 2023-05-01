@@ -191,12 +191,14 @@ export const actions: Actions = {
 		const user = locals.user.id;
 
 		try {
-			await locals.pb.collection('categories').create({ name, user });
+			const cat = await locals.pb.collection('categories').create({ name, user });
+			const id = cat.id;
+			console.log('created category', id);
+			return { success: true, id, action: 'createCategory' };
 		} catch (e) {
 			console.error(e);
 			throw e;
 		}
-		return { success: true };
 	},
 	addTemplateItemsToList: async ({ locals, request }) => {
 		const values = await request.formData();
