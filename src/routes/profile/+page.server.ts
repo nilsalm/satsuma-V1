@@ -21,6 +21,8 @@ export const load = ({ locals }) => {
 	};
 
 	return {
+		email: locals.pb.authStore.model.email,
+		username: locals.pb.authStore.model.username,
 		categories: getCategories()
 	};
 };
