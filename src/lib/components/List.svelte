@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { claim_space } from 'svelte/internal';
-
 	export let list: {
 		id: string;
 		name: string;
@@ -10,7 +8,7 @@
 
 <a
 	href={`/lists/${list.id}`}
-	class="rounded-lg aspect-square relative {list.isTemplate
+	class="hover:scale-103 rounded-lg aspect-square relative {list.isTemplate
 		? 'bg-secondary'
 		: 'bg-primary'} shadow-lg"
 >
