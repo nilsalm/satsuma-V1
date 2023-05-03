@@ -6,9 +6,10 @@
 
 <div class="bg-primary text-neutral h-12 sticky top-0 p-1">
 	<div class="max-w-xl mx-auto flex justify-between">
-		<div class="hover:bg-secondary p-1 m-1 my-auto rounded hover:bg-opacity-40">
-			<a href={$currentUser ? '/lists' : '/'} class=" text-xl">🍊</a>
-		</div>
+		<a
+			href={$currentUser ? '/lists' : '/'}
+			class="hover:bg-secondary p-1 m-1 my-auto rounded hover:bg-opacity-40 text-xl">🍊</a
+		>
 
 		<ul class="flex my-auto">
 			{#if $currentUser}
