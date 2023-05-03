@@ -77,7 +77,7 @@
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					on:click={() => setNewItemCategoryId(cat.id)}
-					class="p-1 rounded h-full text-sm shadow text-center {cat.id === newItemCategoryId
+					class="p-1 rounded h-full text-sm cursor-pointer shadow text-center {cat.id === newItemCategoryId
 						? 'bg-primary text-neutral'
 						: 'bg-neutral text-gray-700'}"
 				>
