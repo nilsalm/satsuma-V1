@@ -1,5 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import type { BaseList } from '$lib/models/List';
 
 export const load = ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
@@ -9,13 +10,21 @@ export const load = ({ locals }) => {
 
 export const actions: Actions = {
 	create: async ({ request, locals }) => {
+		const user = locals.user?.id;
+		if (!user) throw 'Unauthorized';
+
 		const values = await request.formData();
 		const name = values.get('name') as string;
 		const isTemplate = values.has('isTemplate');
-		const user = locals.user?.id;
+
+		const newList: BaseList = {
+			name,
+			isTemplate,
+			user
+		};
 
 		try {
-			await locals.pb.collection('lists').create({ name, isTemplate, user });
+			await locals.pb.collection('lists').create(newList);
 		} catch (err) {
 			console.error(err);
 			throw err;
