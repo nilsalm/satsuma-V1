@@ -1,17 +1,15 @@
+import {
+	getCategoriesQuery,
+	getItemsInListQuery,
+	getListQuery,
+	getTemplatesQuery
+} from '$lib/pocketbase';
 import type { Actions } from './$types';
 
-export const load = ({ locals, params }) => {
+export const load = ({ params }) => {
 	const getList = async (listId: string) => {
 		try {
-			const list = JSON.parse(
-				JSON.stringify(await locals.pb.collection('lists').getOne(listId))
-			) as {
-				id: string;
-				name: string;
-				isTemplate: boolean;
-				user: string;
-			};
-			return list;
+			return await getListQuery(listId);
 		} catch (err) {
 			console.error(err);
 			throw err;
@@ -19,13 +17,7 @@ export const load = ({ locals, params }) => {
 	};
 	const getCategories = async () => {
 		try {
-			const categories = JSON.parse(
-				JSON.stringify(await locals.pb.collection('categories').getFullList(undefined))
-			) as Array<{
-				id: string;
-				name: string;
-			}>;
-			return categories;
+			return await getCategoriesQuery();
 		} catch (err) {
 			console.error(err);
 			throw err;
@@ -33,34 +25,7 @@ export const load = ({ locals, params }) => {
 	};
 	const getItems = async (listId: string) => {
 		try {
-			const listItems = JSON.parse(
-				JSON.stringify(
-					await locals.pb.collection('items').getList(1, 100, {
-						filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${listId}"`,
-						expand: 'category'
-					})
-				)
-			) as {
-				page: number;
-				perPage: number;
-				totalItems: number;
-				totalPages: number;
-				items: Array<{
-					id: string;
-					name: string;
-					picked: boolean;
-					user: string;
-					list: string;
-					category: string;
-					quantity: number;
-					expand: {
-						id: string;
-						name: string;
-					};
-				}>;
-			};
-
-			return listItems.items;
+			return await getItemsInListQuery(listId);
 		} catch (err) {
 			console.error(err);
 			throw err;
@@ -68,25 +33,7 @@ export const load = ({ locals, params }) => {
 	};
 	const getTemplates = async () => {
 		try {
-			const templates = JSON.parse(
-				JSON.stringify(
-					await locals.pb.collection('lists').getList(1, 100, {
-						filter: `created >= "2022-01-01 00:00:00" && isTemplate = true`
-					})
-				)
-			) as {
-				page: number;
-				perPage: number;
-				totalItems: number;
-				totalPages: number;
-				items: Array<{
-					id: string;
-					name: string;
-					isTemplate: boolean;
-					user: string;
-				}>;
-			};
-			return templates.items;
+			return await getTemplatesQuery();
 		} catch (err) {
 			console.error(err);
 			throw err;

@@ -10,12 +10,10 @@ export const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 
 export const currentUser = writable(pb.authStore.model);
 
-export async function getItemsQuery(listId: string) {
-	const items = deepClone(
-		await pb.collection('items').getList<Item>(1, 100, {
-			filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${listId}"`
-		})
-	);
+export async function getItemsInListQuery(listId: string) {
+	const { items } = await pb.collection('items').getList<Item>(1, 100, {
+		filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${listId}"`
+	});
 	return items.map((item) => {
 		return {
 			id: item.id,
@@ -54,4 +52,30 @@ export async function getListsQuery() {
 			user: list.user
 		} as List;
 	});
+}
+
+export async function getTemplatesQuery() {
+	const templates = deepClone(
+		await pb.collection('lists').getFullList<List>({
+			filter: 'created >= "2022-01-01 00:00:00" && isTemplate = true'
+		})
+	);
+	return templates.map((template) => {
+		return {
+			id: template.id,
+			name: template.name,
+			isTemplate: template.isTemplate,
+			user: template.user
+		} as List;
+	});
+}
+
+export async function getListQuery(listId: string) {
+	const list = deepClone(await pb.collection('lists').getOne<List>(listId));
+	return {
+		id: list.id,
+		name: list.name,
+		isTemplate: list.isTemplate,
+		user: list.user
+	} as List;
 }
