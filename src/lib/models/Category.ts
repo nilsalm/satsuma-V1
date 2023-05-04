@@ -1,7 +1,5 @@
-export type BaseCategory = {
+export type Category = {
+	id: string;
 	name: string;
 	user: string;
-};
-export type Category = BaseCategory & {
-	id: string;
 };

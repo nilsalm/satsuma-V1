@@ -1,6 +1,5 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import type { BaseList } from '$lib/models/List';
 
 export const load = ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
@@ -17,7 +16,7 @@ export const actions: Actions = {
 		const name = values.get('name') as string;
 		const isTemplate = values.has('isTemplate');
 
-		const newList: BaseList = {
+		const newList = {
 			name,
 			isTemplate,
 			user

@@ -1,16 +1,9 @@
-import type { User } from './User';
-import type { List } from './List';
-import type { Category } from './Category';
-
-export type BaseItem = {
+export type Item = {
+	id: string;
 	name: string;
 	quantity: number;
 	picked: boolean;
-	category: Category | string;
-	list: List | string;
-	user: User | string;
-};
-
-export type Item = BaseItem & {
-	id: string;
+	category: string;
+	list: string;
+	user: string;
 };

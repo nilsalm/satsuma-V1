@@ -1,8 +1,6 @@
-export type BaseUser = {
+export type User = {
+	id: string;
 	username: string;
 	name: string;
 	email: string;
-};
-export type User = BaseUser & {
-	id: string;
 };

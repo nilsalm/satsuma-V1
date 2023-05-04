@@ -1,8 +1,6 @@
-export type BaseList = {
+export type List = {
+	id: string;
 	name: string;
 	isTemplate: boolean;
 	user: string;
-};
-export type List = BaseList & {
-	id: string;
 };
