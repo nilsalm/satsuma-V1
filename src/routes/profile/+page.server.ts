@@ -1,6 +1,4 @@
-import type { Category } from '$lib/models/Category';
 import { getCategoriesQuery } from '$lib/pocketbase';
-import { deepClone } from '$lib/util.js';
 import { redirect, type Actions } from '@sveltejs/kit';
 
 export const load = ({ locals }) => {
