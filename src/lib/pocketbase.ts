@@ -19,6 +19,7 @@ export async function getItemsInListQuery(listId: string) {
 			id: item.id,
 			name: item.name,
 			picked: item.picked,
+			quantity: item.quantity,
 			category: item.category,
 			list: item.list,
 			user: item.user
