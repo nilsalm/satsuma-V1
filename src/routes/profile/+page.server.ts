@@ -29,11 +29,11 @@ export const actions: Actions = {
 	deleteCategory: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
-		let page = 0;
+		let page = 1;
 		let totalPages = 1;
 
 		try {
-			while (page < totalPages) {
+			while (page <= totalPages) {
 				const itemsRecord = await locals.pb.collection('items').getList(1, 500, {
 					filter: `category = '${id}'`
 				});
