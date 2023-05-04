@@ -59,7 +59,11 @@
 	<div class="flex items-start">
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
-			<p class="mt-2 ml-3">Template</p>
+			<div class="flex justify-center ml-4 h-full items-center">
+				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">
+					Template
+				</div>
+			</div>
 		{/if}
 	</div>
 
@@ -77,7 +81,8 @@
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					on:click={() => setNewItemCategoryId(cat.id)}
-					class="p-1 rounded h-full text-sm shadow text-center {cat.id === newItemCategoryId
+					class="p-1 rounded h-full text-sm cursor-pointer shadow text-center {cat.id ===
+					newItemCategoryId
 						? 'bg-primary text-neutral'
 						: 'bg-neutral text-gray-700'}"
 				>

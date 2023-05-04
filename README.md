@@ -21,6 +21,8 @@ Create an admin account to log in. You can then import the `pb_schema.json` in S
 4. Create a local `.env` file with `cp .env.template .env`.
 5. Run with `npm run dev`.
 
+The pocketbase executable should be run in a separate folder.
+
 ## Roadmap
 
 - [x] list and pick categories
