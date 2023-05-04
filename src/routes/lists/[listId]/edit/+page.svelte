@@ -5,15 +5,16 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	const { list } = data;
 
-	let makeTemplate: boolean = data.list.isTemplate;
+	let makeTemplate: boolean = list.isTemplate;
 </script>
 
 <div class="px-4">
 	<div class="flex justify-between w-full mb-4">
-		<Title title={'Edit List ' + data.list.name} />
+		<Title title={'Edit List ' + list.name} />
 
-		<a href={'/lists/' + data.list.id} class="w-20">
+		<a href={'/lists/' + list.id} class="w-20">
 			<Button text="Cancel" backgroundColor="secondary" textStyle="small" />
 		</a>
 	</div>
@@ -24,7 +25,7 @@
 				type="text"
 				name="name"
 				placeholder="Name"
-				value={data.list.name}
+				value={list.name}
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 			/>
 
