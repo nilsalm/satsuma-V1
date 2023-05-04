@@ -140,7 +140,6 @@ export const actions: Actions = {
 		try {
 			const cat = await locals.pb.collection('categories').create({ name, user });
 			const id = cat.id;
-			console.log('created category', id);
 			return { success: true, id, action: 'createCategory' };
 		} catch (e) {
 			console.error(e);
@@ -189,7 +188,6 @@ export const actions: Actions = {
 						user: item.user,
 						picked: false
 					};
-					console.log(newItem);
 					await locals.pb.collection('items').create(newItem);
 				}
 			}
