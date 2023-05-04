@@ -43,7 +43,7 @@
 				<input type="hidden" name="quantity" value={item.quantity - 1} />
 			</form>
 			<form action="?/increaseItem" method="POST" use:enhance>
-				<button class="text-gray-700 font-semibold text- px-2 border-2 border-primary rounded">
+				<button class="text-gray-700 font-semibold px-2 border-2 border-primary rounded">
 					+
 				</button>
 				<input type="hidden" name="id" value={item.id} />

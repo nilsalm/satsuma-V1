@@ -8,7 +8,7 @@
 
 <a
 	href={`/lists/${list.id}`}
-	class="hover:scale-103 rounded-lg aspect-square relative {list.isTemplate
+	class="hover:scale-103 duration-200 rounded-lg aspect-square relative {list.isTemplate
 		? 'bg-secondary'
 		: 'bg-primary'} shadow-lg"
 >

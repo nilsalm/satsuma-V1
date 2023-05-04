@@ -13,7 +13,7 @@
 
 <div class="px-4">
 	<div class="flex justify-between w-full mb-4">
-		<Title title={'My Lists'} />
+		<Title title="My Lists" />
 
 		<a href="/lists/new" class="w-20" class:hidden={allLists.length === 0}>
 			<Button text="Add list" backgroundColor="secondary" textStyle="small" />
@@ -34,7 +34,7 @@
 					{/each}
 				</div>
 				{#if templateLists.length > 0}
-					<Title title={'My Templates'} />
+					<Title title="My Templates" />
 					<div class="container m-auto grid grid-cols-2 md:grid-cols-4 gap-4">
 						{#each templateLists as list}
 							<List {list} />
