@@ -1,8 +1,8 @@
-export interface BaseUser {
+export type BaseUser = {
 	username: string;
 	name: string;
 	email: string;
-}
-export interface User extends BaseUser {
+};
+export type User = BaseUser & {
 	id: string;
-}
+};

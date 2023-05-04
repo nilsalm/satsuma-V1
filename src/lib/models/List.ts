@@ -1,8 +1,8 @@
-export interface BaseList {
+export type BaseList = {
 	name: string;
 	isTemplate: boolean;
-}
-export interface List extends BaseList {
-	id: string;
 	user: string;
-}
+};
+export type List = BaseList & {
+	id: string;
+};
