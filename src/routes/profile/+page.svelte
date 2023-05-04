@@ -23,7 +23,7 @@
 		<Title title={'My Profile'} />
 	</div>
 
-	<div class="flex justify-between gap-2">
+	<div class="flex justify-between flex-wrap gap-2">
 		<div class="flex gap-4">
 			<div class="font-bold text-xl text-primary">Email:</div>
 			<div class="text-lg">
