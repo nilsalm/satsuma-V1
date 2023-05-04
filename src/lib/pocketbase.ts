@@ -104,3 +104,28 @@ export async function deleteListAndAllItemsQuery(listId: string) {
 	}
 	await pb.collection('lists').delete(listId);
 }
+
+export async function deleteCategoryAndAllItemsQuery(categoryId: string) {
+	let page = 1;
+	let totalPages = 1;
+
+	try {
+		while (page <= totalPages) {
+			const itemsRecord = await pb.collection('items').getList(1, 500, {
+				filter: `category = '${categoryId}'`
+			});
+			page = itemsRecord.page;
+			totalPages = itemsRecord.totalPages;
+
+			if (itemsRecord.items.length > 0) {
+				await Promise.all(
+					itemsRecord.items.map(async (item) => await pb.collection('items').delete(item.id))
+				);
+			}
+		}
+	} catch (e) {
+		console.error(e);
+		return { success: false, error: e };
+	}
+	await pb.collection('categories').delete(categoryId);
+}
