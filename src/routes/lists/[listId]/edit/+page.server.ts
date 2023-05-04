@@ -1,3 +1,4 @@
+import { getListQuery } from '$lib/pocketbase.js';
 import { error, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
@@ -6,15 +7,7 @@ export const load = async ({ locals, params }) => {
 	}
 
 	try {
-		const list = JSON.parse(
-			JSON.stringify(await locals.pb.collection('lists').getOne(params.listId))
-		) as {
-			id: string;
-			name: string;
-			isTemplate: boolean;
-			user: string;
-		};
-
+		const list = await getListQuery(params.listId);
 		if (locals.user?.id === list.user) {
 			return { list };
 		} else {
@@ -31,9 +24,11 @@ export const actions: Actions = {
 		const values = await request.formData();
 		const name = values.get('name') as string;
 		const isTemplate = values.has('isTemplate');
+		const { listId } = params;
+		if (!listId) return;
 
 		try {
-			await locals.pb.collection('lists').update(params.listId, { name, isTemplate });
+			await locals.pb.collection('lists').update(listId, { name, isTemplate });
 		} catch (err) {
 			console.error(err);
 			throw err;
@@ -41,8 +36,10 @@ export const actions: Actions = {
 		throw redirect(303, `/lists/${params.listId}`);
 	},
 	deleteList: async ({ locals, params }) => {
+		const { listId } = params;
+		if (!listId) return;
 		try {
-			await locals.pb.collection('lists').delete(params.listId);
+			await locals.pb.collection('lists').delete(listId);
 		} catch (err) {
 			console.error(err);
 			throw err;
