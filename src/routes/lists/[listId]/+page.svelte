@@ -60,9 +60,7 @@
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
 			<div class="flex justify-center ml-4 h-full items-center">
-				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">
-					Template
-				</div>
+				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">Template</div>
 			</div>
 		{/if}
 	</div>
@@ -72,7 +70,29 @@
 	</a>
 </div>
 
-<div class="fixed w-screen max-w-xl bottom-0">
+<div class="flex flex-col overscroll-contain px-4 mb-52">
+	<div>
+		{#if data.items.length === 0}
+			<div class="text-center mt-20">
+				<p>Good job!</p>
+				<p>Now get yourself some ice cream 🍦</p>
+			</div>
+		{:else}
+			{#each data.categories as cat}
+				{#if data.items.filter((i) => i.category === cat.id).length > 0}
+					<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+						<p>{cat.name}</p>
+					</div>
+					{#each data.items.filter((i) => i.category === cat.id) as item}
+						<Item {item} />
+					{/each}
+				{/if}
+			{/each}
+		{/if}
+	</div>
+</div>
+
+<div class="fixed w-screen max-w-xl bottom-14 md:bottom-16">
 	<div class="bg-gradient-to-b from-white to-secondary h-2 sm:h-0" />
 	<div class="sm:rounded sm:mb-2 sm:shadow-lg bg-secondary px-2">
 		<!-- CATEGORY PICKER -->
@@ -81,7 +101,7 @@
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					on:click={() => setNewItemCategoryId(cat.id)}
-					class="p-1 rounded h-full text-sm cursor-pointer shadow text-center {cat.id ===
+					class="px-1 rounded h-full text-md cursor-pointer shadow text-center {cat.id ===
 					newItemCategoryId
 						? 'bg-primary text-neutral'
 						: 'bg-neutral text-gray-700'}"
@@ -156,28 +176,6 @@
 			</div>
 		{:else}
 			<div class="h-2" />
-		{/if}
-	</div>
-</div>
-
-<div class="flex flex-col pb-4 overscroll-contain px-4 mb-[130px]">
-	<div>
-		{#if data.items.length === 0}
-			<div class="text-center mt-20">
-				<p>Good job!</p>
-				<p>Now get yourself some ice cream 🍦</p>
-			</div>
-		{:else}
-			{#each data.categories as cat}
-				{#if data.items.filter((i) => i.category === cat.id).length > 0}
-					<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
-						<p>{cat.name}</p>
-					</div>
-					{#each data.items.filter((i) => i.category === cat.id) as item}
-						<Item {item} />
-					{/each}
-				{/if}
-			{/each}
 		{/if}
 	</div>
 </div>

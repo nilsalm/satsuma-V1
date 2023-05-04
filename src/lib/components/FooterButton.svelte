@@ -14,10 +14,10 @@
 	{href}
 >
 	<div class="flex flex-col justify-center items-center">
-		<div class="text-3xl">
+		<div class="text-xl md:text-2xl">
 			{icon}
 		</div>
-		<div class="text-white text-lg">
+		<div class="text-white text-md md:text-lg">
 			{text}
 		</div>
 	</div>

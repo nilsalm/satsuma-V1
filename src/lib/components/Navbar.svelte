@@ -5,7 +5,7 @@
 	import NavButton from '$lib/components/NavButton.svelte';
 </script>
 
-<div class="bg-primary text-neutral h-12 sticky top-0 p-1">
+<div class="bg-primary text-neutral h-12 w-full sticky top-0 p-1 z-10">
   <div class="max-w-xl mx-auto flex justify-between">
     <a
       href={$currentUser ? '/lists' : '/'}
