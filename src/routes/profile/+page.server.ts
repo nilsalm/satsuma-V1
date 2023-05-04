@@ -1,3 +1,6 @@
+import type { Category } from '$lib/models/Category';
+import { getCategoriesQuery } from '$lib/pocketbase';
+import { deepClone } from '$lib/util.js';
 import { redirect, type Actions } from '@sveltejs/kit';
 
 export const load = ({ locals }) => {
@@ -7,12 +10,7 @@ export const load = ({ locals }) => {
 
 	const getCategories = async () => {
 		try {
-			const categories = JSON.parse(
-				JSON.stringify(await locals.pb.collection('categories').getFullList(undefined))
-			) as Array<{
-				id: string;
-				name: string;
-			}>;
+			const categories = getCategoriesQuery();
 			return categories;
 		} catch (err) {
 			console.error(err);
