@@ -11,7 +11,6 @@
         "type": "text",
         "system": false,
         "required": false,
-        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -24,7 +23,6 @@
         "type": "file",
         "system": false,
         "required": false,
-        "unique": false,
         "options": {
           "maxSelect": 1,
           "maxSize": 5242880,
@@ -35,9 +33,13 @@
             "image/gif",
             "image/webp"
           ],
-          "thumbs": null
+          "thumbs": null,
+          "protected": false
         }
       }
+    ],
+    "indexes": [
+      "CREATE INDEX `__pb_users_auth__created_idx` ON `users` (`created`)"
     ],
     "listRule": "id = @request.auth.id",
     "viewRule": "id = @request.auth.id",
@@ -67,7 +69,6 @@
         "type": "text",
         "system": false,
         "required": true,
-        "unique": false,
         "options": {
           "min": 2,
           "max": 32,
@@ -80,7 +81,6 @@
         "type": "bool",
         "system": false,
         "required": false,
-        "unique": false,
         "options": {}
       },
       {
@@ -89,7 +89,6 @@
         "type": "relation",
         "system": false,
         "required": true,
-        "unique": false,
         "options": {
           "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
@@ -99,98 +98,8 @@
         }
       }
     ],
-    "listRule": "@request.auth.id = user",
-    "viewRule": "@request.auth.id = user",
-    "createRule": "@request.auth.id = user",
-    "updateRule": "@request.auth.id = user",
-    "deleteRule": "@request.auth.id = user",
-    "options": {}
-  },
-  {
-    "id": "aulcys6z6e3kpgi",
-    "name": "items",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "oj6e7ya3",
-        "name": "name",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "unique": false,
-        "options": {
-          "min": 2,
-          "max": 64,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "zpv03zbq",
-        "name": "category",
-        "type": "relation",
-        "system": false,
-        "required": true,
-        "unique": false,
-        "options": {
-          "collectionId": "6mn7hj7qelsu6hh",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": []
-        }
-      },
-      {
-        "id": "xb3thdne",
-        "name": "quantity",
-        "type": "number",
-        "system": false,
-        "required": true,
-        "unique": false,
-        "options": {
-          "min": 0,
-          "max": null
-        }
-      },
-      {
-        "id": "u8uyj5fw",
-        "name": "user",
-        "type": "relation",
-        "system": false,
-        "required": true,
-        "unique": false,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": []
-        }
-      },
-      {
-        "id": "rdum2oks",
-        "name": "list",
-        "type": "relation",
-        "system": false,
-        "required": true,
-        "unique": false,
-        "options": {
-          "collectionId": "d74wn23f6nm3exs",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": []
-        }
-      },
-      {
-        "id": "u4ipjlgf",
-        "name": "picked",
-        "type": "bool",
-        "system": false,
-        "required": false,
-        "unique": false,
-        "options": {}
-      }
+    "indexes": [
+      "CREATE INDEX `_d74wn23f6nm3exs_created_idx` ON `lists` (`created`)"
     ],
     "listRule": "@request.auth.id = user",
     "viewRule": "@request.auth.id = user",
@@ -211,7 +120,6 @@
         "type": "text",
         "system": false,
         "required": true,
-        "unique": false,
         "options": {
           "min": 2,
           "max": 64,
@@ -224,7 +132,6 @@
         "type": "relation",
         "system": false,
         "required": true,
-        "unique": false,
         "options": {
           "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
@@ -233,6 +140,99 @@
           "displayFields": []
         }
       }
+    ],
+    "indexes": [
+      "CREATE INDEX `_6mn7hj7qelsu6hh_created_idx` ON `categories` (`created`)"
+    ],
+    "listRule": "@request.auth.id = user",
+    "viewRule": "@request.auth.id = user",
+    "createRule": "@request.auth.id = user",
+    "updateRule": "@request.auth.id = user",
+    "deleteRule": "@request.auth.id = user",
+    "options": {}
+  },
+  {
+    "id": "aulcys6z6e3kpgi",
+    "name": "items",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "oj6e7ya3",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 2,
+          "max": 64,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "zpv03zbq",
+        "name": "category",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "6mn7hj7qelsu6hh",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "xb3thdne",
+        "name": "quantity",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "u8uyj5fw",
+        "name": "user",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "rdum2oks",
+        "name": "list",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "d74wn23f6nm3exs",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "u4ipjlgf",
+        "name": "picked",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX `_aulcys6z6e3kpgi_created_idx` ON `items` (`created`)"
     ],
     "listRule": "@request.auth.id = user",
     "viewRule": "@request.auth.id = user",
