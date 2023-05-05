@@ -22,6 +22,10 @@
 	$: proposeCategory(newItemName);
 
 	function setNewItemCategoryId(id: string) {
+		if (id === newItemCategoryId) {
+			newItemCategoryId = '';
+			return;
+		}
 		newItemCategoryId = id;
 	}
 
@@ -60,9 +64,7 @@
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
 			<div class="flex justify-center ml-4 h-full items-center">
-				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">
-					Template
-				</div>
+				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">Template</div>
 			</div>
 		{/if}
 	</div>
@@ -131,7 +133,7 @@
 							bind:value={newItemName}
 						/>
 						<div class="w-20">
-							<Button text="Add" disabled={!newItemCategoryId} />
+							<Button text="Add" />
 						</div>
 					</div>
 
@@ -178,6 +180,14 @@
 					{/each}
 				{/if}
 			{/each}
+			{#if data.items.filter((i) => i.category === null).length > 0}
+				<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+					<p>Other</p>
+				</div>
+				{#each data.items.filter((i) => i.category === null) as item}
+					<Item {item} />
+				{/each}
+			{/if}
 		{/if}
 	</div>
 </div>

@@ -20,7 +20,7 @@ export async function getItemsInListQuery(listId: string) {
 			name: item.name,
 			picked: item.picked,
 			quantity: item.quantity,
-			category: item.category,
+			category: item.category ? item.category : null,
 			list: item.list,
 			user: item.user
 		} as Item;
