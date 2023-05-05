@@ -63,6 +63,18 @@ export const actions: Actions = {
 		}
 		return { success: true };
 	},
+	setCategory: async ({ locals, request }) => {
+		const values = await request.formData();
+		const id = String(values.get('id'));
+		const category = String(values.get('category'));
+		try {
+			await locals.pb.collection('items').update(id, { category });
+		} catch (e) {
+			console.error(e);
+			throw e;
+		}
+		return { success: true };
+	},
 	pickItem: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));

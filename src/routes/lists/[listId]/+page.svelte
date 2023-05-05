@@ -176,7 +176,7 @@
 						<p>{cat.name}</p>
 					</div>
 					{#each data.items.filter((i) => i.category === cat.id) as item}
-						<Item {item} />
+						<Item {item} newCategoryId={newItemCategoryId} />
 					{/each}
 				{/if}
 			{/each}
@@ -185,7 +185,7 @@
 					<p>Other</p>
 				</div>
 				{#each data.items.filter((i) => i.category === null) as item}
-					<Item {item} />
+					<Item {item} newCategoryId={newItemCategoryId} />
 				{/each}
 			{/if}
 		{/if}
