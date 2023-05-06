@@ -23,6 +23,8 @@ Create an admin account to log in. You can then import the `pb_schema.json` in S
 4. Create a local `.env` file with `cp .env.template .env`.
 5. Run with `npm run dev`.
 
+The pocketbase executable should be run in a separate folder.
+
 ## Links
 
 - 🎨 [Color Scheme](https://colorhunt.co/palette/cdf0eaf9f9f9f7dbf0beaee2)

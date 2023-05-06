@@ -22,6 +22,10 @@
 	$: proposeCategory(newItemName);
 
 	function setNewItemCategoryId(id: string) {
+		if (id === newItemCategoryId) {
+			newItemCategoryId = '';
+			return;
+		}
 		newItemCategoryId = id;
 	}
 
@@ -59,7 +63,9 @@
 	<div class="flex items-start">
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
-			<p class="mt-2 ml-3">Template</p>
+			<div class="flex justify-center ml-4 h-full items-center">
+				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">Template</div>
+			</div>
 		{/if}
 	</div>
 
@@ -77,7 +83,8 @@
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					on:click={() => setNewItemCategoryId(cat.id)}
-					class="p-1 rounded h-full text-sm shadow text-center {cat.id === newItemCategoryId
+					class="p-1 rounded h-full text-sm cursor-pointer shadow text-center {cat.id ===
+					newItemCategoryId
 						? 'bg-primary text-neutral'
 						: 'bg-neutral text-gray-700'}"
 				>
@@ -126,7 +133,7 @@
 							bind:value={newItemName}
 						/>
 						<div class="w-20">
-							<Button text="Add" disabled={!newItemCategoryId} />
+							<Button text="Add" />
 						</div>
 					</div>
 
@@ -169,10 +176,18 @@
 						<p>{cat.name}</p>
 					</div>
 					{#each data.items.filter((i) => i.category === cat.id) as item}
-						<Item {item} />
+						<Item {item} newCategoryId={newItemCategoryId} />
 					{/each}
 				{/if}
 			{/each}
+			{#if data.items.filter((i) => i.category === null).length > 0}
+				<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+					<p>Other</p>
+				</div>
+				{#each data.items.filter((i) => i.category === null) as item}
+					<Item {item} newCategoryId={newItemCategoryId} />
+				{/each}
+			{/if}
 		{/if}
 	</div>
 </div>
