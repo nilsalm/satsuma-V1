@@ -1,4 +1,8 @@
-# 🍊 Satsuma - the helpful shopping list
+<p align="center">
+  <img  height="200" src="static/icon_255x255_clear.png">
+</p>
+
+# Satsuma - the helpful shopping list
 
 > Are you adding the same staples to you shopping list week after week? There should be a template function for this!
 >
@@ -8,7 +12,7 @@
 >
 > Relax, have a satsuma and enjoy the next trip to the supermarket.
 >
-> 🍊
+
 
 That's at least the vision for this little helper app.
 
