@@ -1,25 +1,33 @@
-<script>
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+  import { State } from '$lib/types/ItemEditorState';
 
 	const dispatch = createEventDispatcher();
 
-	let mode = 0;
+  let mode = State.CLOSED
 
 	function toggleMode() {
-		mode = (mode + 1) % 3;
+		if (mode === State.ADD) {
+      mode = State.TEMPLATES;
+    } else if (mode === State.TEMPLATES) {
+      mode = State.CLOSED;
+    } else {
+      mode = State.ADD;
+    }
+
 		dispatch('switchMode', { mode });
 	}
 </script>
 
 <button
-	class="flex flex-col gap-4 py-4 px-6 bg-accent rounded-full shadow-md"
+	class="flex flex-col font-bold gap-4 py-3 md:py-4 px-5 md:px-6 bg-accent rounded-full shadow-md"
 	on:click={toggleMode}
 >
-	{#if mode === 1}
-		<div>+</div>
-	{:else if mode === 2}
+	{#if mode === State.ADD}
 		<div>T</div>
-	{:else}
-		<div>0</div>
+	{:else if mode === State.TEMPLATES}
+		<div>X</div>
+	{:else if mode === State.CLOSED}
+		<div>+</div>
 	{/if}
 </button>
