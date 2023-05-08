@@ -6,7 +6,7 @@
 	import { pb } from '$lib/pocketbase';
 	import Button from '$lib/components/Button.svelte';
 	import ModeToggler from '$lib/components/ModeToggler.svelte';
-  import { State } from '$lib/types/ItemEditorState';
+  import { ItemAdderState } from '$lib/types/ItemAdderState';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -16,7 +16,7 @@
 	let newCategoryName = '';
 	let showNewCategoryModal = false;
 	let newItemName = '';
-	let mode = State.CLOSED;
+	let mode = ItemAdderState.CLOSED;
 
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
@@ -115,7 +115,7 @@
 			}}
 		/>
 	</div>
-	{#if mode === State.ADD}
+	{#if mode === ItemAdderState.ADD}
 		<!-- CATEGORY PICKER -->
 		<div class="rounded shadow-lg bg-secondary p-2">
 			<div class="flex overflow-x-scroll h-10 pb-2 first:pl-0 gap-1">
@@ -178,7 +178,7 @@
 				<input type="hidden" name="list" value={data.list.id} />
 			</form>
 		</div>
-	{:else if mode === State.TEMPLATES}
+	{:else if mode === ItemAdderState.TEMPLATES}
 		<!-- TEMPLATE PICKER -->
 		<div class="rounded shadow-lg bg-secondary p-2">
 			<div class="font-bold text-lg mb-1">Templates</div>
