@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
-	import SubTitle from '$lib/components/SubTitle.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
 
@@ -18,28 +17,9 @@
 	}
 </script>
 
-<div class="max-w-xl mx-auto py-8 px-4">
-	<div class="mb-4 w-full">
-		<Title title={'My Profile'} />
-	</div>
-
-	<div class="flex justify-between flex-wrap gap-2">
-		<div class="flex gap-4">
-			<div class="font-bold text-xl text-primary">Email:</div>
-			<div class="text-lg">
-				{data.email}
-			</div>
-		</div>
-		<div class="flex gap-4">
-			<div class="font-bold text-xl text-primary">Username:</div>
-			<div class="text-lg">
-				{data.username}
-			</div>
-		</div>
-	</div>
-
-	<div class="mt-8 mb-4 w-full">
-		<SubTitle title={'My Categories'} />
+<div class="max-w-xl mx-auto pb-8 px-4">
+	<div class="mt-4 md:mt-8 mb-4 w-full">
+		<Title title={'My Categories'} />
 	</div>
 
 	<div class="w-full mt-4 flex flex-col items-center">

@@ -5,10 +5,11 @@
 	export let bordered = false;
 	export let textStyle: 'big' | 'small' = 'big';
 	export let disabled = false;
+	export let height = 'h-12';
 </script>
 
 <button
-	class={`bg-${backgroundColor} bg-opacity-80 hover:bg-opacity-100 w-full shadow-lg rounded h-12 ${
+	class={`bg-${backgroundColor} bg-opacity-80 hover:bg-opacity-100 w-full shadow-lg rounded ${height} ${
 		bordered ? 'border-2 border-gray-700' : ''
 	} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} }`}
 	on:click={onClick}
