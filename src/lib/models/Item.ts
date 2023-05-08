@@ -3,7 +3,7 @@ export type Item = {
 	name: string;
 	quantity: number;
 	picked: boolean;
-	category: string;
+	category: string | null;
 	list: string;
 	user: string;
 };

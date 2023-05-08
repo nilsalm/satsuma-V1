@@ -23,6 +23,10 @@
 	$: proposeCategory(newItemName);
 
 	function setNewItemCategoryId(id: string) {
+		if (id === newItemCategoryId) {
+			newItemCategoryId = '';
+			return;
+		}
 		newItemCategoryId = id;
 	}
 
@@ -130,7 +134,7 @@
 							bind:value={newItemName}
 						/>
 						<div class="w-20">
-							<Button text="Add" disabled={!newItemCategoryId} />
+							<Button text="Add" />
 						</div>
 					</div>
 
@@ -174,11 +178,19 @@
 					</div>
 					{#each data.items.filter((i) => i.category === cat.id) as item}
 						<div in:fade out:fly="{{ x: -25, duration: 200 }}">
-							<Item {item} />
+							<Item {item} newCategoryId={newItemCategoryId} />
 						</div>
 					{/each}
 				{/if}
 			{/each}
+			{#if data.items.filter((i) => i.category === null).length > 0}
+				<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+					<p>Other</p>
+				</div>
+				{#each data.items.filter((i) => i.category === null) as item}
+					<Item {item} newCategoryId={newItemCategoryId} />
+				{/each}
+			{/if}
 		{/if}
 	</div>
 </div>
