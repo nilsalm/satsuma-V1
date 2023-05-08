@@ -5,6 +5,7 @@
 	import type { ActionData, PageData } from './$types';
 	import { pb } from '$lib/pocketbase';
 	import Button from '$lib/components/Button.svelte';
+	import ModeToggler from '$lib/components/ModeToggler.svelte';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -14,6 +15,7 @@
 	let newCategoryName = '';
 	let showNewCategoryModal = false;
 	let newItemName = '';
+	let mode = 1;
 
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
@@ -104,90 +106,98 @@
 	</div>
 </div>
 
-<div class="fixed w-screen max-w-xl bottom-14 md:bottom-16">
-	<div class="bg-gradient-to-b from-white to-secondary h-2 sm:h-0" />
-	<div class="sm:rounded sm:mb-2 sm:shadow-lg bg-secondary px-2">
+<div class="fixed w-screen max-w-xl bottom-14 md:bottom-20 flex flex-col">
+	<div class="self-end p-2">
+		<ModeToggler
+			on:switchMode={(event) => {
+				mode = event.detail.mode;
+			}}
+		/>
+	</div>
+	{#if mode === 1}
 		<!-- CATEGORY PICKER -->
-		<div class="flex overflow-x-scroll h-11 p-2 first:pl-0 gap-1">
-			{#each data.categories as cat}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div
-					on:click={() => setNewItemCategoryId(cat.id)}
-					class="px-1 rounded h-full text-md cursor-pointer shadow text-center {cat.id ===
-					newItemCategoryId
-						? 'bg-primary text-neutral'
-						: 'bg-neutral text-gray-700'}"
-				>
-					{cat.name}
+		<div class="rounded shadow-lg bg-secondary p-2">
+			<div class="flex overflow-x-scroll h-10 pb-2 first:pl-0 gap-1">
+				{#each data.categories as cat}
+					<button
+						on:click={() => setNewItemCategoryId(cat.id)}
+						class="px-1 md:px-2 rounded h-full text-md md:text-lg cursor-pointer shadow text-center {cat.id ===
+						newItemCategoryId
+							? 'bg-primary text-neutral'
+							: 'bg-neutral text-gray-700'}"
+					>
+						{cat.name}
+					</button>
+				{/each}
+				{#if showNewCategoryModal === false}
+					<button
+						on:click={() => {
+							showNewCategoryModal = true;
+						}}
+						class="py-1 rounded text-gray-500 font-bold text-xs text-center bg-accent shadow cursor-pointer"
+					>
+						<div class="text-sm px-3">+</div>
+					</button>
+				{:else}
+					<form action="?/createCategory" method="POST" use:enhance>
+						<div class="flex flex-row gap-1">
+							<input
+								class="w-28 text-gray-700 text-xs bg-neutral border-0 rounded"
+								bind:value={newCategoryName}
+								name="name"
+								type="text"
+								placeholder="New shopping item"
+							/>
+							<button
+								class="rounded px-3 bg-primary disabled:opacity-70 disabled:text-gray-300 text-gray-700"
+								disabled={newCategoryName.length === 0}
+							>
+								Add
+							</button>
+						</div>
+					</form>
+				{/if}
+			</div>
+
+			<!-- CREATE ITEM -->
+			<form action="?/createItem" method="POST" use:enhance>
+				<div class="w-full flex items-start gap-2 align-bottom">
+					<input
+						class="bg-neutral w-full px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-8 md:h-10 shadow-sm"
+						type="text"
+						name="name"
+						bind:value={newItemName}
+					/>
+					<div class="w-20">
+						<Button text="Add" height="h-8 md:h-10" />
+					</div>
 				</div>
-			{/each}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			{#if showNewCategoryModal === false}
-				<div
-					on:click={() => {
-						showNewCategoryModal = true;
-					}}
-					class="py-1 rounded text-gray-500 font-bold text-xs text-center bg-accent shadow cursor-pointer"
-				>
-					<div class="text-sm px-2">+</div>
+
+				<input type="hidden" name="category" value={newItemCategoryId} />
+				<input type="hidden" name="list" value={data.list.id} />
+			</form>
+		</div>
+	{:else if mode === 2}
+		<!-- TEMPLATE PICKER -->
+		<div class="rounded shadow-lg bg-secondary p-2">
+			<div class="font-bold text-lg mb-1">Templates</div>
+			{#if data.templates.length > 0 && data.list.isTemplate === false}
+				<div class="flex overflow-x-scroll h-11 first:pl-0 gap-1">
+					{#each data.templates as template}
+						<form action="?/addTemplateItemsToList" method="POST" use:enhance>
+							<button class="p-2 rounded text-gray-700 h-full text-sm text-center bg-accent">
+								{template.name || `Template ${template.id.substring(0, 3)}`}
+							</button>
+							<input type="hidden" name="template" value={template.id} />
+							<input type="hidden" name="list" value={data.list.id} />
+						</form>
+					{/each}
 				</div>
 			{:else}
-				<form action="?/createCategory" method="POST" use:enhance>
-					<div class="flex flex-row h-full gap-1">
-						<input
-							class="w-28 text-gray-700 text-xs bg-neutral border-0 rounded"
-							bind:value={newCategoryName}
-							name="name"
-							type="text"
-						/>
-						<button
-							class="rounded px-3 bg-primary disabled:opacity-70 disabled:text-gray-300 text-gray-700"
-							disabled={newCategoryName.length === 0}
-						>
-							Add
-						</button>
-					</div>
-				</form>
+				<div>
+					<p class="text-gray-700 text-sm">No templates available</p>
+				</div>
 			{/if}
 		</div>
-
-		<!-- CREATE ITEM -->
-		<div class="flex">
-			<div class="flex-grow">
-				<form action="?/createItem" method="POST" use:enhance>
-					<div class="w-full flex items-start gap-2 align-bottom">
-						<input
-							class="bg-neutral w-full px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
-							type="text"
-							name="name"
-							bind:value={newItemName}
-						/>
-						<div class="w-20">
-							<Button text="Add" />
-						</div>
-					</div>
-
-					<input type="hidden" name="category" value={newItemCategoryId} />
-					<input type="hidden" name="list" value={data.list.id} />
-				</form>
-			</div>
-		</div>
-
-		<!-- TEMPLATE PICKER -->
-		{#if data.templates.length > 0 && data.list.isTemplate === false}
-			<div class="flex overflow-x-scroll h-11 py-2 first:pl-0 gap-1">
-				{#each data.templates as template}
-					<form action="?/addTemplateItemsToList" method="POST" use:enhance>
-						<button class="p-1 rounded text-gray-700 h-full text-xs text-center bg-accent">
-							{template.name || `Template ${template.id.substring(0, 3)}`}
-						</button>
-						<input type="hidden" name="template" value={template.id} />
-						<input type="hidden" name="list" value={data.list.id} />
-					</form>
-				{/each}
-			</div>
-		{:else}
-			<div class="h-2" />
-		{/if}
-	</div>
+	{/if}
 </div>
