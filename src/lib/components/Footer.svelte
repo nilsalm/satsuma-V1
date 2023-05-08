@@ -8,7 +8,7 @@
 		<div class="max-w-xl h-full mx-auto flex justify-around">
 			<FooterButton text="Lists" icon="🗒" href="/lists" />
 			<FooterButton text="Categories" icon="🗂" href="/categories" />
-			<FooterButton text="Profile" icon="🍊" href="/profile" />
+			<FooterButton text="Profile" icon="👤" href="/profile" />
 		</div>
 	</div>
 	<div class="h-14 md:h-16 w-full" />
