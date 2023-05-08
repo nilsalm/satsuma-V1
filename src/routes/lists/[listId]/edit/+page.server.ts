@@ -1,4 +1,4 @@
-import { getListQuery } from '$lib/pocketbase.js';
+import { deleteListAndAllItemsQuery, getListQuery } from '$lib/pocketbase.js';
 import { error, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
@@ -35,15 +35,10 @@ export const actions: Actions = {
 		}
 		throw redirect(303, `/lists/${params.listId}`);
 	},
-	deleteList: async ({ locals, params }) => {
+	deleteList: async ({ params }) => {
 		const { listId } = params;
 		if (!listId) return;
-		try {
-			await locals.pb.collection('lists').delete(listId);
-		} catch (err) {
-			console.error(err);
-			throw err;
-		}
+		await deleteListAndAllItemsQuery(listId);
 		throw redirect(303, `/lists`);
 	}
 };

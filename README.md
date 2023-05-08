@@ -12,6 +12,8 @@
 
 That's at least the vision for this little helper app.
 
+Try it out live 👉 [here](https://main--satsuma-shopping.netlify.app) 👈
+
 ## Setup
 
 1. Run `nvm use` in the project root to ensure the right node version is used.
@@ -23,25 +25,7 @@ Create an admin account to log in. You can then import the `pb_schema.json` in S
 
 The pocketbase executable should be run in a separate folder.
 
-## Roadmap
-
-- [x] list and pick categories
-- [x] sort items in categories
-- [x] auto-update list on screen
-- [x] update status on item
-- [x] add template to list
-- [x] add new list
-- [x] set permissions policy in database
-- [x] signup flow
-- [s] refactor pb into hook
-- [x] increase quantity if a duplicate item is added
-- [x] [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
-- [ ] redo styling without daisyui
-- [ ] remove existing categories via profile
-- [ ] Error handling for signin / signup
-- [ ] dynamic header
-- [ ] share list with other users
-
 ## Links
 
-🎨 [Color Scheme](https://colorhunt.co/palette/cdf0eaf9f9f9f7dbf0beaee2)
+- 🎨 [Color Scheme](https://colorhunt.co/palette/cdf0eaf9f9f9f7dbf0beaee2)
+- 🛢️ [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)

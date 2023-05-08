@@ -20,7 +20,7 @@ export async function getItemsInListQuery(listId: string) {
 			name: item.name,
 			picked: item.picked,
 			quantity: item.quantity,
-			category: item.category,
+			category: item.category ? item.category : null,
 			list: item.list,
 			user: item.user
 		} as Item;
@@ -79,4 +79,53 @@ export async function getListQuery(listId: string) {
 		isTemplate: list.isTemplate,
 		user: list.user
 	} as List;
+}
+
+export async function deleteListAndAllItemsQuery(listId: string) {
+	let page = 1;
+	let totalPages = 1;
+	try {
+		while (page <= totalPages) {
+			const itemsRecord = await pb.collection('items').getList(1, 500, {
+				filter: `list = '${listId}'`
+			});
+			page = itemsRecord.page;
+			totalPages = itemsRecord.totalPages;
+
+			if (itemsRecord.items.length > 0) {
+				await Promise.all(
+					itemsRecord.items.map(async (item) => await pb.collection('items').delete(item.id))
+				);
+			}
+		}
+	} catch (e) {
+		console.error(e);
+		return { success: false, error: e };
+	}
+	await pb.collection('lists').delete(listId);
+}
+
+export async function deleteCategoryAndAllItemsQuery(categoryId: string) {
+	let page = 1;
+	let totalPages = 1;
+
+	try {
+		while (page <= totalPages) {
+			const itemsRecord = await pb.collection('items').getList(1, 500, {
+				filter: `category = '${categoryId}'`
+			});
+			page = itemsRecord.page;
+			totalPages = itemsRecord.totalPages;
+
+			if (itemsRecord.items.length > 0) {
+				await Promise.all(
+					itemsRecord.items.map(async (item) => await pb.collection('items').delete(item.id))
+				);
+			}
+		}
+	} catch (e) {
+		console.error(e);
+		return { success: false, error: e };
+	}
+	await pb.collection('categories').delete(categoryId);
 }

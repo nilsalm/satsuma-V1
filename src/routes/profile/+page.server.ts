@@ -1,6 +1,4 @@
-import type { Category } from '$lib/models/Category';
-import { getCategoriesQuery } from '$lib/pocketbase';
-import { deepClone } from '$lib/util.js';
+import { deleteCategoryAndAllItemsQuery, getCategoriesQuery } from '$lib/pocketbase';
 import { redirect, type Actions } from '@sveltejs/kit';
 
 export const load = ({ locals }) => {
@@ -10,7 +8,7 @@ export const load = ({ locals }) => {
 
 	const getCategories = async () => {
 		try {
-			const categories = getCategoriesQuery();
+			const categories = await getCategoriesQuery();
 			return categories;
 		} catch (err) {
 			console.error(err);
@@ -26,33 +24,10 @@ export const load = ({ locals }) => {
 };
 
 export const actions: Actions = {
-	deleteCategory: async ({ locals, request }) => {
+	deleteCategory: async ({ request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
-		let page = 0;
-		let totalPages = 1;
-
-		try {
-			while (page < totalPages) {
-				const itemsRecord = await locals.pb.collection('items').getList(1, 500, {
-					filter: `category = '${id}'`
-				});
-				page = itemsRecord.page;
-				totalPages = itemsRecord.totalPages;
-
-				if (itemsRecord.items.length > 0) {
-					await Promise.all(
-						itemsRecord.items.map(
-							async (item) => await locals.pb.collection('items').delete(item.id)
-						)
-					);
-				}
-			}
-			await locals.pb.collection('categories').delete(id);
-		} catch (e) {
-			console.error(e);
-			return { success: false, error: e };
-		}
+		await deleteCategoryAndAllItemsQuery(id);
 		return { success: true };
 	}
 };

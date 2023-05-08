@@ -22,6 +22,10 @@
 	$: proposeCategory(newItemName);
 
 	function setNewItemCategoryId(id: string) {
+		if (id === newItemCategoryId) {
+			newItemCategoryId = '';
+			return;
+		}
 		newItemCategoryId = id;
 	}
 
@@ -70,7 +74,7 @@
 	</a>
 </div>
 
-<div class="flex flex-col overscroll-contain px-4 mb-52">
+<div class="flex flex-col pb-4 overscroll-contain px-4 mb-[130px]">
 	<div>
 		{#if data.items.length === 0}
 			<div class="text-center mt-20">
@@ -84,10 +88,18 @@
 						<p>{cat.name}</p>
 					</div>
 					{#each data.items.filter((i) => i.category === cat.id) as item}
-						<Item {item} />
+						<Item {item} newCategoryId={newItemCategoryId} />
 					{/each}
 				{/if}
 			{/each}
+			{#if data.items.filter((i) => i.category === null).length > 0}
+				<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+					<p>Other</p>
+				</div>
+				{#each data.items.filter((i) => i.category === null) as item}
+					<Item {item} newCategoryId={newItemCategoryId} />
+				{/each}
+			{/if}
 		{/if}
 	</div>
 </div>
@@ -151,7 +163,7 @@
 							bind:value={newItemName}
 						/>
 						<div class="w-20">
-							<Button text="Add" disabled={!newItemCategoryId} />
+							<Button text="Add" />
 						</div>
 					</div>
 
