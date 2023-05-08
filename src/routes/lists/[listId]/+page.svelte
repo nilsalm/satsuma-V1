@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade, fly } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import Item from '$lib/components/Item.svelte';
 	import Title from '$lib/components/Title.svelte';
@@ -60,9 +61,7 @@
 		<Title title={data.list.name} />
 		{#if data.list.isTemplate}
 			<div class="flex justify-center ml-4 h-full items-center">
-				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">
-					Template
-				</div>
+				<div class="bg-accent text-md text-gray-600 font-medium pb-1 px-2 rounded-lg">Template</div>
 			</div>
 		{/if}
 	</div>
@@ -174,7 +173,9 @@
 						<p>{cat.name}</p>
 					</div>
 					{#each data.items.filter((i) => i.category === cat.id) as item}
-						<Item {item} />
+						<div in:fade out:fly="{{ x: -25, duration: 200 }}">
+							<Item {item} />
+						</div>
 					{/each}
 				{/if}
 			{/each}
