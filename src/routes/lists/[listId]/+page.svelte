@@ -76,7 +76,7 @@
 	</a>
 </div>
 
-<div class="flex flex-col pb-4 overscroll-contain px-4 mb-[130px]">
+<div class="flex flex-col pb-4 overscroll-contain px-4 mb-40">
 	<div>
 		{#if data.items.length === 0}
 			<div class="text-center mt-20">
