@@ -1,22 +1,17 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { isPlanModeActive } from '$lib/stores/mode';
 
 	let localPlanMode = false;
-
-	const isPlanModeActive = writable();
 
 	function togglePlanMode() {
 		localPlanMode = !localPlanMode;
 		isPlanModeActive.set(localPlanMode);
 	}
-
-	setContext('isPlanModeActive', isPlanModeActive);
 </script>
 
 <button
 	on:click={togglePlanMode}
-	class="text-sm hover:bg-darker py-1 w-full my-2 rounded-lg flex justify-center hover:bg-opacity-30"
+	class="text-sm hover:bg-darker py-1 w-full my-1 rounded-lg flex justify-center hover:bg-opacity-30"
 >
 	<div class="h-full flex justify-center items-center gap-2">
 		{#if !localPlanMode}

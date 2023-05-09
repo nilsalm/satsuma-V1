@@ -8,7 +8,7 @@
 
 	let isActive = false;
 
-	$: isActive = $page.route.id?.includes(href);
+	$: isActive = $page.route.id?.includes(href) || false;
 </script>
 
 <div class="flex flex-col justify-center">

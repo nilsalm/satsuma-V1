@@ -7,7 +7,7 @@
 </script>
 
 {#if $currentUser}
-	<div class="w-full bg-primary fixed bottom-0 h-16">
+	<div class="w-full bg-primary fixed bottom-0 h-14">
 		<div class="px-1 max-w-xl h-full mx-auto flex justify-around gap-2 md:gap-4">
 			<FooterButton icon="{dummyIcon}" href="/profile" />
 			<FooterButton icon="{dummyIcon}" href="/categories" />
