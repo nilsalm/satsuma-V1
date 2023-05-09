@@ -1,5 +1,5 @@
 <p align="center">
-  <img  height="200" src="static/icon_255x255_clear.png">
+  <img  height="200" src="static/icon_255x255_clear.svg">
 </p>
 
 # Satsuma - the helpful shopping list
