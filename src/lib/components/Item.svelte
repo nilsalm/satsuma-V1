@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { Item } from '$lib/models/Item';
+	import { isPlanModeActive } from '$lib/stores/mode';
 
 	export let item: Item;
 	export let newCategoryId: string | null;
@@ -39,16 +40,18 @@
 				<input type="hidden" name="id" value={item.id} />
 				<input type="hidden" name="quantity" value={item.quantity + 1} />
 			</form>
-			<form action="?/setCategory" method="POST" use:enhance>
-				<button
-					class="text-gray-700 font-semibold px-2 disabled:opacity-30 border-2 border-primary rounded"
-					disabled={!newCategoryId}
-				>
-					🔀
-				</button>
-				<input type="hidden" name="id" value={item.id} />
-				<input type="hidden" name="category" value={newCategoryId} />
-			</form>
+			{#if $isPlanModeActive}
+				<form action="?/setCategory" method="POST" use:enhance>
+					<button
+						class="text-gray-700 font-semibold px-2 disabled:opacity-30 border-2 border-primary rounded"
+						disabled={!newCategoryId}
+					>
+						🔀
+					</button>
+					<input type="hidden" name="id" value={item.id} />
+					<input type="hidden" name="category" value={newCategoryId} />
+				</form>
+			{/if}
 		</div>
 	</div>
 </div>

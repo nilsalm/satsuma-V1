@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { isPlanModeActive } from '$lib/stores/mode';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
@@ -26,22 +27,25 @@
 		{#if data.categories.length === 0}
 			<div class="text-gray-500 text-center">You don't have any categories yet.</div>
 		{:else}
-			{#each data.categories as category}
-				<div class="w-full bg-neutral rounded-lg shadow-lg p-4 mb-4">
-					<div class="flex justify-between items-center">
+			<div class="flex flex-col justify-center w-full gap-3">
+				{#each data.categories as category}
+					<div class="bg-neutral rounded-lg shadow-lg h-14 px-4 flex justify-between items-center">
 						<div class="text-gray-800 font-bold text-xl">{category.name}</div>
-						<div class="flex w-20">
-							<!-- <a href="/categories/{category.id}/edit" class="btn btn-primary mr-2">Edit</a> -->
-							<Button
-								text="Delete"
-								onClick={() => {
-									modalCategoryId = category.id;
-								}}
-							/>
-						</div>
+						{#if $isPlanModeActive}
+							<div class="flex w-20">
+								<!-- <a href="/categories/{category.id}/edit" class="btn btn-primary mr-2">Edit</a> -->
+								<Button
+									height="h-10"
+									text="Delete"
+									onClick={() => {
+										modalCategoryId = category.id;
+									}}
+								/>
+							</div>
+						{/if}
 					</div>
-				</div>
-			{/each}
+				{/each}
+			</div>
 		{/if}
 	</div>
 
