@@ -7,7 +7,7 @@
 	import { pb } from '$lib/pocketbase';
 	import Button from '$lib/components/Button.svelte';
 	import ModeToggler from '$lib/components/ModeToggler.svelte';
-  import { ItemAdderState } from '$lib/types/ItemAdderState';
+	import { ItemAdderState } from '$lib/types/ItemAdderState';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -18,6 +18,14 @@
 	let showNewCategoryModal = false;
 	let newItemName = '';
 	let mode = ItemAdderState.CLOSED;
+	let showHidden = false;
+	let items = [] as any;
+
+	$: if (showHidden) {
+		items = data.items;
+	} else {
+		items = data.items.filter((item) => !item.picked);
+	}
 
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
@@ -73,36 +81,46 @@
 		{/if}
 	</div>
 
-	<a href={`/lists/${data.list.id}/edit`} class="w-20">
-		<Button text="Edit list" backgroundColor="secondary" textStyle="small" />
-	</a>
+	<div class="flex gap-2">
+		<div class="w-20">
+			<Button
+				onClick={() => (showHidden = !showHidden)}
+				text="{showHidden ? 'Hide' : 'Show'}"
+				backgroundColor="secondary"
+				textStyle="small"
+			/>
+		</div>
+		<a href={`/lists/${data.list.id}/edit`} class="w-20">
+			<Button text="Edit list" backgroundColor="secondary" textStyle="small" />
+		</a>
+	</div>
 </div>
 
 <div class="flex flex-col pb-4 overscroll-contain px-4 mb-40">
 	<div>
-		{#if data.items.length === 0}
+		{#if items.length === 0}
 			<div class="text-center mt-20">
 				<p>Good job!</p>
 				<p>Now get yourself some ice cream 🍦</p>
 			</div>
 		{:else}
 			{#each data.categories as cat}
-				{#if data.items.filter((i) => i.category === cat.id).length > 0}
+				{#if items.filter((i) => i.category === cat.id).length > 0}
 					<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
 						<p>{cat.name}</p>
 					</div>
-					{#each data.items.filter((i) => i.category === cat.id) as item}
-						<div in:fade out:fly="{{ x: -25, duration: 200 }}">
+					{#each items.filter((i) => i.category === cat.id) as item}
+						<div in:fade out:fly={{ x: -25, duration: 200 }}>
 							<Item {item} newCategoryId={newItemCategoryId} />
 						</div>
 					{/each}
 				{/if}
 			{/each}
-			{#if data.items.filter((i) => i.category === null).length > 0}
+			{#if items.filter((i) => i.category === null).length > 0}
 				<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
 					<p>Other</p>
 				</div>
-				{#each data.items.filter((i) => i.category === null) as item}
+				{#each items.filter((i) => i.category === null) as item}
 					<Item {item} newCategoryId={newItemCategoryId} />
 				{/each}
 			{/if}
@@ -189,7 +207,9 @@
 				<div class="flex overflow-x-scroll h-11 first:pl-0 gap-1">
 					{#each data.templates as template}
 						<form action="?/addTemplateItemsToList" method="POST" use:enhance>
-							<button class="p-2 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent">
+							<button
+								class="p-2 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent"
+							>
 								{template.name || `Template ${template.id.substring(0, 3)}`}
 							</button>
 							<input type="hidden" name="template" value={template.id} />

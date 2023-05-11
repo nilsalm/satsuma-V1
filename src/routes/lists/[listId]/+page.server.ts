@@ -49,20 +49,6 @@ export const load = ({ params }) => {
 };
 
 export const actions: Actions = {
-	updateItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const quantity = Number(values.get('quantity'));
-		const picked = Boolean(values.has('picked'));
-
-		try {
-			await locals.pb.collection('items').update(id, { quantity, picked });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
 	setCategory: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
@@ -78,7 +64,7 @@ export const actions: Actions = {
 	pickItem: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
-		const picked = Boolean(values.has('picked'));
+		const picked = String(values.get('picked')) === "true";
 
 		try {
 			await locals.pb.collection('items').update(id, { picked });

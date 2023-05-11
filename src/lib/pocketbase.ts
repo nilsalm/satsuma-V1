@@ -12,7 +12,7 @@ export const currentUser = writable(pb.authStore.model);
 
 export async function getItemsInListQuery(listId: string) {
 	const { items } = await pb.collection('items').getList<Item>(1, 100, {
-		filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${listId}"`
+		filter: `created >= "2022-01-01 00:00:00" && list = "${listId}"`
 	});
 	return items.map((item) => {
 		return {
