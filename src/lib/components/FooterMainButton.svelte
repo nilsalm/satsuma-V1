@@ -16,10 +16,10 @@
 	<div class="h-full flex justify-center items-center gap-2">
 		{#if !localPlanMode}
 			<div class="text-2xl md:text-3xl">🛒</div>
-			<div class="text-gray-700 font-bold text-xl md:text-2xl">Shopping</div>
+			<div class="text-gray-700 text-xl md:text-2xl">Shopping</div>
 			{:else}
 			<div class="text-2xl md:text-3xl">📚</div>
-			<div class="text-gray-700 font-bold text-xl md:text-2xl">Planning</div>
+			<div class="text-gray-700 text-xl md:text-2xl">Planning</div>
 		{/if}
 	</div>
 </button>
