@@ -6,8 +6,7 @@
 	import type { ActionData, PageData } from './$types';
 	import { pb } from '$lib/pocketbase';
 	import Button from '$lib/components/Button.svelte';
-	import ModeToggler from '$lib/components/ModeToggler.svelte';
-  import { ItemAdderState } from '$lib/types/ItemAdderState';
+	import { isPlanModeActive } from '$lib/stores/mode';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -17,7 +16,6 @@
 	let newCategoryName = '';
 	let showNewCategoryModal = false;
 	let newItemName = '';
-	let mode = ItemAdderState.CLOSED;
 
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
@@ -92,7 +90,7 @@
 						<p>{cat.name}</p>
 					</div>
 					{#each data.items.filter((i) => i.category === cat.id) as item}
-						<div in:fade out:fly="{{ x: -25, duration: 200 }}">
+						<div in:fade out:fly={{ x: -25, duration: 200 }}>
 							<Item {item} newCategoryId={newItemCategoryId} />
 						</div>
 					{/each}
@@ -110,15 +108,8 @@
 	</div>
 </div>
 
-<div class="fixed w-screen max-w-xl bottom-14 md:bottom-20 flex flex-col">
-	<div class="self-end p-2">
-		<ModeToggler
-			on:switchMode={(event) => {
-				mode = event.detail.mode;
-			}}
-		/>
-	</div>
-	{#if mode === ItemAdderState.ADD}
+{#if $isPlanModeActive}
+	<div class="fixed w-screen max-w-xl bottom-14 md:bottom-20 flex flex-col">
 		<!-- CATEGORY PICKER -->
 		<div class="rounded shadow-lg bg-secondary p-2">
 			<div class="flex overflow-x-scroll h-10 pb-2 first:pl-0 gap-1">
@@ -180,16 +171,15 @@
 				<input type="hidden" name="category" value={newItemCategoryId} />
 				<input type="hidden" name="list" value={data.list.id} />
 			</form>
-		</div>
-	{:else if mode === ItemAdderState.TEMPLATES}
-		<!-- TEMPLATE PICKER -->
-		<div class="rounded shadow-lg bg-secondary p-2">
-			<div class="font-bold text-lg mb-1">Templates</div>
+
+			<!-- TEMPLATE PICKER -->
 			{#if data.templates.length > 0 && data.list.isTemplate === false}
-				<div class="flex overflow-x-scroll h-11 first:pl-0 gap-1">
+				<div class="flex overflow-x-scroll h-7 mt-1 first:pl-0 gap-1">
 					{#each data.templates as template}
 						<form action="?/addTemplateItemsToList" method="POST" use:enhance>
-							<button class="p-2 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent">
+							<button
+								class="p-1 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent"
+							>
 								{template.name || `Template ${template.id.substring(0, 3)}`}
 							</button>
 							<input type="hidden" name="template" value={template.id} />
@@ -203,5 +193,5 @@
 				</div>
 			{/if}
 		</div>
-	{/if}
-</div>
+	</div>
+{/if}
