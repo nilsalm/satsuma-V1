@@ -127,10 +127,13 @@ export const actions: Actions = {
 
 		try {
 			const existingItems = await locals.pb.collection('items').getList(1, 100, {
-				filter: `created >= "2022-01-01 00:00:00" && name ~ "${name.toLowerCase()}" && picked = false && list = "${list}"`
+				filter: `created >= "2022-01-01 00:00:00" && name ~ "${name}" && picked = false && list = "${list}"`
 			});
 
-			if (existingItems.items.length > 0) {
+			if (
+				existingItems.items.length > 0 &&
+				existingItems.items[0].name.toLowerCase() === name.toLowerCase()
+			) {
 				const existingItem = existingItems.items[0];
 				await locals.pb
 					.collection('items')
