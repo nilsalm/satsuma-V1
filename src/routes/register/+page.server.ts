@@ -21,7 +21,6 @@ export const actions: Actions = {
 			await locals.pb.collection('users').create(data);
 			await locals.pb.collection('users').authWithPassword(data.email, data.password);
 		} catch (e) {
-			console.error(e);
 			return fail(400, { incorrect: true });
 		}
 		throw redirect(303, '/lists');
