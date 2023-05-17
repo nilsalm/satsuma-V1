@@ -16,11 +16,11 @@
 >
 	<div class="h-full flex flex-col justify-center text-center items-center gap-2">
 		{#if !localPlanMode}
-			<div class="w-12 h-12 border-b-2 border-transparent" title="Shopping Mode">
+			<div class="w-12 h-12">
 				<Logo />
 			</div>
 		{:else}
-			<div class="w-12 h-12 border-b-2 border-neutral" title="Planning Mode">
+			<div class="w-12 h-12 bg-secondary bg-opacity-50 rounded-lg">
 				<Logo />
 			</div>
 		{/if}

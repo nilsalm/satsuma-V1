@@ -6,7 +6,6 @@
 
 	export let href: string;
 	export let icon: IconType;
-	export let title: string;
 
 	$page.route.id;
 
@@ -15,7 +14,7 @@
 	$: isActive = $page.route.id?.includes(href) || false;
 </script>
 
-<div class="flex flex-col justify-center" {title}>
+<div class="flex flex-col justify-center">
 	<a
 		class="text-sm hover:bg-darker p-1 rounded-lg my-2 duration-200 hover:bg-opacity-40
 		{isActive ? 'bg-darker bg-opacity-40' : ''}"
