@@ -43,7 +43,6 @@
 				placeholder="Confirm Password"
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 			/>
-
 			<Button text="Register" />
 
 			{#if form?.incorrect}
