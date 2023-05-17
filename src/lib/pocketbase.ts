@@ -10,9 +10,9 @@ export const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 
 export const currentUser = writable(pb.authStore.model);
 
-export async function getItemsInListQuery(listId: string) {
+export async function getItemsInListQuery(listId: string, picked: boolean = false) {
 	const items = await pb.collection('items').getFullList<Item>({
-		filter: `created >= "2022-01-01 00:00:00" && list = "${listId}"`
+		filter: `created >= "2022-01-01 00:00:00" && list = "${listId}" && picked = ${picked}`
 	});
 	return items.map((item) => {
 		return {
