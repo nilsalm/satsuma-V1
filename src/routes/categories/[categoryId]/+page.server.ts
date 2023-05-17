@@ -1,4 +1,4 @@
-import { deleteCategoryQuery, getCategoriesQuery, getCategoryQuery } from '$lib/pocketbase';
+import { deleteCategoryQuery, getCategoryQuery, getItemsPerCategory } from '$lib/pocketbase';
 import { redirect, type Actions } from '@sveltejs/kit';
 
 export const load = ({ locals, params }) => {
@@ -16,8 +16,19 @@ export const load = ({ locals, params }) => {
 		}
 	};
 
+	const getItems = async () => {
+		try {
+			const items = getItemsPerCategory(params.categoryId);
+			return items;
+		} catch (err) {
+			console.error(err);
+			throw err;
+		}
+	};
+
 	return {
-		category: getCategory()
+		category: getCategory(),
+		items: getItems()
 	};
 };
 

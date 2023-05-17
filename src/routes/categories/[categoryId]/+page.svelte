@@ -6,6 +6,14 @@
 
 	export let data: PageData;
 	const { category } = data;
+	const { items } = data;
+
+	const totalItems = items.length;
+	const totalItemsPicked = items.filter((item) => item.picked).length;
+	const totalItemsPickedPercentage = Math.round((totalItemsPicked / totalItems) * 100);
+	const differentLists = items
+		.map((item) => item.list)
+		.filter((value, index, self) => self.indexOf(value) === index);
 </script>
 
 <div class="px-4">
@@ -15,6 +23,13 @@
 		<a href={'/categories'} class="w-20">
 			<Button text="Back" backgroundColor="secondary" textStyle="small" />
 		</a>
+	</div>
+
+	<div class="my-10 font-normal">
+		You have assigned a total of <strong>{totalItems}</strong> items to this category, of which
+		<strong>{totalItemsPicked}</strong> are picked. That's
+		<strong>{totalItemsPickedPercentage}%</strong>. Those items are in
+		<strong>{differentLists.length}</strong> different lists.
 	</div>
 
 	<form action="?/updateCategory" method="POST">
