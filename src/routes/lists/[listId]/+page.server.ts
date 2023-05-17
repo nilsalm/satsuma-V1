@@ -43,7 +43,6 @@ export const load = ({ params, url }) => {
 	
 	const listId = params.listId;
 	const showPicked = url.searchParams.get('showPicked') === 'true' || false;
-	console.log(showPicked)
 
 	return {
 		list: getList(listId),
