@@ -3,6 +3,9 @@
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 </script>
 
 <div class="max-w-xl mx-auto py-8 px-4">
@@ -39,6 +42,11 @@
 				placeholder="Confirm Password"
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 			/>
+			{#if form?.incorrect}
+				<p class="text-center text-red-500">We had trouble creating your account.</p>
+			{:else if form?.passwordMatchError}
+				<p class="text-center text-red-500">Passwords don't match.</p>
+			{/if}
 			<Button text="Register" />
 			<p class="text-center">
 				Already have an account?
