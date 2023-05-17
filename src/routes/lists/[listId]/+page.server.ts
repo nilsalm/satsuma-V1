@@ -6,7 +6,7 @@ import {
 } from '$lib/pocketbase';
 import type { Actions } from './$types';
 
-export const load = ({ params }) => {
+export const load = ({ params, url }) => {
 	const getList = async (listId: string) => {
 		try {
 			return await getListQuery(listId);
@@ -23,9 +23,9 @@ export const load = ({ params }) => {
 			throw err;
 		}
 	};
-	const getItems = async (listId: string) => {
+	const getItems = async (listId: string, showPicked: boolean) => {
 		try {
-			return await getItemsInListQuery(listId);
+			return await getItemsInListQuery(listId, showPicked);
 		} catch (err) {
 			console.error(err);
 			throw err;
@@ -40,29 +40,19 @@ export const load = ({ params }) => {
 		}
 	};
 
+	
+	const listId = params.listId;
+	const showPicked = url.searchParams.get('showPicked') === 'true' || false;
+
 	return {
-		list: getList(params.listId),
+		list: getList(listId),
 		categories: getCategories(),
-		items: getItems(params.listId),
+		items: getItems(listId, showPicked),
 		templates: getTemplates()
 	};
 };
 
 export const actions: Actions = {
-	updateItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const quantity = Number(values.get('quantity'));
-		const picked = Boolean(values.has('picked'));
-
-		try {
-			await locals.pb.collection('items').update(id, { quantity, picked });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
 	setCategory: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
@@ -78,7 +68,7 @@ export const actions: Actions = {
 	pickItem: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
-		const picked = Boolean(values.has('picked'));
+		const picked = String(values.get('picked')) === "true";
 
 		try {
 			await locals.pb.collection('items').update(id, { picked });
