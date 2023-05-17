@@ -27,6 +27,19 @@ export async function getItemsInListQuery(listId: string, picked: boolean = fals
 	});
 }
 
+export async function getCategoryQuery(id: string) {
+	const category = await pb.collection('categories').getOne<Category>(id);
+	return {
+		id: category.id,
+		name: category.name,
+		user: category.user
+	} as Category;
+}
+
+export async function deleteCategoryQuery(id: string) {
+	await pb.collection('categories').delete(id);
+}
+
 export async function getCategoriesQuery() {
 	const categories = deepClone(await pb.collection('categories').getFullList<Category>());
 	return categories.map((category) => {

@@ -4,6 +4,9 @@
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
+	import Icon from '$lib/components/Icon.svelte';
+	import { IconType } from '$lib/types/IconType';
+	import { colors } from '$lib/util';
 
 	export let data: PageData;
 	export let form;
@@ -29,20 +32,14 @@
 		{:else}
 			<div class="flex flex-col justify-center w-full gap-3">
 				{#each data.categories as category}
-					<div class="bg-neutral rounded-lg shadow-lg h-14 px-4 flex justify-between items-center">
+					<div class="bg-neutral rounded-lg shadow-lg h-16 px-4 flex justify-between items-center">
 						<div class="text-gray-800 font-bold text-xl">{category.name}</div>
-						{#if $isPlanModeActive}
-							<div class="flex w-20">
-								<!-- <a href="/categories/{category.id}/edit" class="btn btn-primary mr-2">Edit</a> -->
-								<Button
-									height="h-10"
-									text="Delete"
-									onClick={() => {
-										modalCategoryId = category.id;
-									}}
-								/>
-							</div>
-						{/if}
+						<div class="flex gap-8">
+							<a href={'/categories/' + category.id} class=" w-20">
+								<Button height="h-10" text="Edit" backgroundColor="secondary" textStyle="small" />
+							</a>
+							<Icon type={IconType.Drag} size="40" stroke={colors.primary} />
+						</div>
 					</div>
 				{/each}
 			</div>
