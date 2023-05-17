@@ -17,26 +17,11 @@
 			</div></a
 		>
 
-		<div class="flex my-auto">
-			{#if $currentUser}
-				<form
-					method="POST"
-					action="/logout"
-					use:enhance={() => {
-						return async ({ result }) => {
-							pb.authStore.clear();
-							await applyAction(result);
-						};
-					}}
-				>
-					<button class="hover:bg-secondary rounded py-1 px-2 m-1 hover:bg-opacity-40 text-sm"
-						>Log out</button
-					>
-				</form>
-			{:else}
+		{#if !$currentUser}
+			<div class="flex my-auto">
 				<NavButton href="/login" text="Log in" />
 				<NavButton href="/register" text="Register" />
-			{/if}
-		</div>
+			</div>
+		{/if}
 	</div>
 </div>
