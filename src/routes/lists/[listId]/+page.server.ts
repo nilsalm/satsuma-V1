@@ -6,7 +6,7 @@ import {
 } from '$lib/pocketbase';
 import type { Actions } from './$types';
 
-export const load = ({ params }) => {
+export const load = ({ params, url }) => {
 	const getList = async (listId: string) => {
 		try {
 			return await getListQuery(listId);
@@ -23,9 +23,9 @@ export const load = ({ params }) => {
 			throw err;
 		}
 	};
-	const getItems = async (listId: string) => {
+	const getItems = async (listId: string, showPicked: boolean) => {
 		try {
-			return await getItemsInListQuery(listId);
+			return await getItemsInListQuery(listId, showPicked);
 		} catch (err) {
 			console.error(err);
 			throw err;
@@ -40,10 +40,15 @@ export const load = ({ params }) => {
 		}
 	};
 
+	
+	const listId = params.listId;
+	const showPicked = url.searchParams.get('showPicked') === 'true' || false;
+	console.log(showPicked)
+
 	return {
-		list: getList(params.listId),
+		list: getList(listId),
 		categories: getCategories(),
-		items: getItems(params.listId),
+		items: getItems(listId, showPicked),
 		templates: getTemplates()
 	};
 };

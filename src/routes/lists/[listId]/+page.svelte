@@ -7,6 +7,7 @@
 	import { pb } from '$lib/pocketbase';
 	import Button from '$lib/components/Button.svelte';
 	import { isPlanModeActive } from '$lib/stores/mode';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -16,14 +17,12 @@
 	let newCategoryName = '';
 	let showNewCategoryModal = false;
 	let newItemName = '';
-	let showHidden = false;
-	let items = [] as any;
+	let showPicked = false;
+	let items = data.items;
 
-	$: if (showHidden) {
-		items = data.items;
-	} else {
-		items = data.items.filter((item) => !item.picked);
-	}
+	$: items = data.items;
+
+	$: showPicked = $page.url.searchParams.get('showPicked') === 'true' || false;
 
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
@@ -81,12 +80,13 @@
 
 	<div class="flex gap-2">
 		<div class="w-20">
-			<Button
-				onClick={() => (showHidden = !showHidden)}
-				text={showHidden ? 'Hide' : 'Show'}
-				backgroundColor="secondary"
-				textStyle="small"
-			/>
+			<a href={`/lists/${data.list.id}?showPicked=${!showPicked}`} class="w-20">
+				<Button
+					text={showPicked ? 'Hide' : 'Show'}
+					backgroundColor="secondary"
+					textStyle="small"
+				/>
+			</a>
 		</div>
 		<a href={`/lists/${data.list.id}/edit`} class="w-20">
 			<Button text="Edit list" backgroundColor="secondary" textStyle="small" />
