@@ -36,12 +36,11 @@ export const actions: Actions = {
 	updateCategory: async ({ request, locals, params }) => {
 		const values = await request.formData();
 		const name = values.get('name') as string | null;
-		const order = values.get('order') as number | null;
 		const { categoryId } = params;
 		if (!categoryId) return;
 
 		try {
-			await locals.pb.collection('categories').update(categoryId, { name, order });
+			await locals.pb.collection('categories').update(categoryId, { name });
 		} catch (err) {
 			console.error(err);
 			throw err;
