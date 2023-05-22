@@ -8,7 +8,10 @@
 	export let category: Category;
 </script>
 
-<div class="bg-neutral rounded-lg shadow-lg h-16 px-4 flex justify-between items-center">
+<div
+	class="bg-neutral rounded-lg shadow-lg h-16 px-4 flex justify-between items-center"
+	draggable={true}
+>
 	<div class="text-gray-800 font-bold text-xl">{category.name}</div>
 	<div class="flex gap-8">
 		<a href={'/categories/' + category.id} class=" w-20">

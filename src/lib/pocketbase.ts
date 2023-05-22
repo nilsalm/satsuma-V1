@@ -69,7 +69,7 @@ export async function getCategoriesQuery() {
 				order: category.order
 			} as Category;
 		})
-		.sort((a, b) => b.order - a.order);
+		.sort((a, b) => a.order - b.order);
 }
 
 export async function getListsQuery() {
