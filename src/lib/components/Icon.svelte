@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { IconType } from '$lib/types/IconType';
 	export let stroke: string;
-	export let size = '32';
+	export let size: string = '32';
 	export let type: IconType;
 </script>
 
@@ -95,7 +95,7 @@
 	{:else if type === IconType.Drag}
 		<path
 			fill={stroke}
-			d="M5 11q-.425 0-.713-.288T4 10q0-.425.288-.713T5 9h14q.425 0 .713.288T20 10q0 .425-.288.713T19 11H5Zm0 4q-.425 0-.713-.288T4 14q0-.425.288-.713T5 13h14q.425 0 .713.288T20 14q0 .425-.288.713T19 15H5Z"
+			d="M2.5 11h19a.5.5 0 0 0 0-1h-19a.5.5 0 0 0 0 1zm19 3h-19a.5.5 0 0 0 0 1h19a.5.5 0 0 0 0-1z"
 		/>
 	{/if}
 </svg>
