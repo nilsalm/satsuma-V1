@@ -32,7 +32,8 @@ export async function getCategoryQuery(id: string) {
 	return {
 		id: category.id,
 		name: category.name,
-		user: category.user
+		user: category.user,
+		order: category.order
 	} as Category;
 }
 
@@ -63,7 +64,8 @@ export async function getCategoriesQuery() {
 		return {
 			id: category.id,
 			name: category.name,
-			user: category.user
+			user: category.user,
+			order: category.order
 		} as Category;
 	});
 }

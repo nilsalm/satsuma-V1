@@ -109,49 +109,6 @@
     "options": {}
   },
   {
-    "id": "6mn7hj7qelsu6hh",
-    "name": "categories",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "frhtmdrn",
-        "name": "name",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": 2,
-          "max": 64,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "vfbmjjgq",
-        "name": "user",
-        "type": "relation",
-        "system": false,
-        "required": true,
-        "options": {
-          "collectionId": "_pb_users_auth_",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": []
-        }
-      }
-    ],
-    "indexes": [
-      "CREATE INDEX `_6mn7hj7qelsu6hh_created_idx` ON `categories` (`created`)"
-    ],
-    "listRule": "@request.auth.id = user",
-    "viewRule": "@request.auth.id = user",
-    "createRule": "@request.auth.id = user",
-    "updateRule": "@request.auth.id = user",
-    "deleteRule": "@request.auth.id = user",
-    "options": {}
-  },
-  {
     "id": "aulcys6z6e3kpgi",
     "name": "items",
     "type": "base",
@@ -233,6 +190,60 @@
     ],
     "indexes": [
       "CREATE INDEX `_aulcys6z6e3kpgi_created_idx` ON `items` (`created`)"
+    ],
+    "listRule": "@request.auth.id = user",
+    "viewRule": "@request.auth.id = user",
+    "createRule": "@request.auth.id = user",
+    "updateRule": "@request.auth.id = user",
+    "deleteRule": "@request.auth.id = user",
+    "options": {}
+  },
+  {
+    "id": "6mn7hj7qelsu6hh",
+    "name": "categories",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "frhtmdrn",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 2,
+          "max": 64,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "vfbmjjgq",
+        "name": "user",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "wct811ps",
+        "name": "order",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE INDEX `_6mn7hj7qelsu6hh_created_idx` ON `categories` (`created`)"
     ],
     "listRule": "@request.auth.id = user",
     "viewRule": "@request.auth.id = user",
