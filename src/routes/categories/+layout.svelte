@@ -1,5 +1,5 @@
 <script>
-	import LayoutContainer from "$lib/components/LayoutContainer.svelte";
+	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
 </script>
 
 <LayoutContainer>
