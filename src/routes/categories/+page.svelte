@@ -8,8 +8,10 @@
 
 	let { categories } = data;
 	let hoverIndex: number | null = null;
+	let draggingItem: number | null = null;
 
 	function dragStart(event: any, itemIndex: any) {
+		draggingItem = itemIndex;
 		event.dataTransfer.setData('itemIndex', itemIndex);
 	}
 
@@ -24,6 +26,7 @@
 		}
 		categories = categories;
 		hoverIndex = null;
+		draggingItem = null;
 	}
 </script>
 
@@ -45,7 +48,7 @@
 						on:dragover={(event) => event.preventDefault()}
 						class={hoverIndex === index ? 'border-t-4 rounded-lg border-primary' : ''}
 					>
-						<CategoryItem {category} />
+						<CategoryItem {category} dragging={index === draggingItem} />
 					</div>
 				{/each}
 			</div>

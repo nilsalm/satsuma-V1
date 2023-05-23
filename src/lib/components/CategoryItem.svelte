@@ -6,10 +6,13 @@
 	import Icon from './Icon.svelte';
 
 	export let category: Category;
+	export let dragging: boolean;
 </script>
 
 <div
-	class="bg-neutral rounded-lg shadow-lg h-16 px-4 flex justify-between items-center"
+	class=" rounded-lg shadow-lg h-16 px-4 flex justify-between items-center {dragging
+		? 'bg-primary'
+		: 'bg-neutral'}"
 	draggable={true}
 >
 	<div class="text-gray-800 font-bold text-xl">{category.name}</div>
