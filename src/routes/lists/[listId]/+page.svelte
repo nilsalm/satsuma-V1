@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import Item from '$lib/components/Item.svelte';
 	import Title from '$lib/components/Title.svelte';
@@ -108,7 +108,7 @@
 						<p>{cat.name}</p>
 					</div>
 					{#each items.filter((i) => i.category === cat.id) as item}
-						<div in:fade out:fly={{ x: -25, duration: 200 }}>
+						<div in:fade>
 							<Item {item} newCategoryId={newItemCategoryId} />
 						</div>
 					{/each}
@@ -119,7 +119,9 @@
 					<p>Other</p>
 				</div>
 				{#each items.filter((i) => i.category === null) as item}
-					<Item {item} newCategoryId={newItemCategoryId} />
+					<div in:fade>
+						<Item {item} newCategoryId={newItemCategoryId} />
+					</div>
 				{/each}
 			{/if}
 		{/if}
