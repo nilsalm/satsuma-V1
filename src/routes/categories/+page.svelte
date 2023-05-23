@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { isPlanModeActive } from '$lib/stores/mode';
 	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
