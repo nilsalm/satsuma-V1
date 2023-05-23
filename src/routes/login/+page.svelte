@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
 	import type { ActionData } from './$types';
@@ -8,7 +9,7 @@
 	export let form: ActionData;
 </script>
 
-<div class="max-w-xl mx-auto py-8 px-4">
+<LayoutContainer>
 	<form
 		method="POST"
 		class="card"
@@ -49,4 +50,4 @@
 			</p>
 		</div>
 	</form>
-</div>
+</LayoutContainer>

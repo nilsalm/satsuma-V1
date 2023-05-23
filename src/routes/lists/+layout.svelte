@@ -1,3 +1,7 @@
-<div class="max-w-xl mx-auto mt-4 md:mt-8 mb-8">
+<script>
+	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
+</script>
+
+<LayoutContainer>
 	<slot />
-</div>
+</LayoutContainer>

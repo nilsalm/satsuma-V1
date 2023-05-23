@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
+	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
 	import type { PageData } from './$types';
@@ -13,7 +14,7 @@
 	};
 </script>
 
-<div class="max-w-xl mx-auto py-8 px-4">
+<LayoutContainer>
 	<div class="flex justify-between w-full mb-4">
 		<Title title={'My Profile'} />
 		<div class="w-20">
@@ -35,4 +36,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</LayoutContainer>
