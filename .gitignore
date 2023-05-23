@@ -11,3 +11,5 @@ vite.config.ts.timestamp-*
 .netlify
 
 pocketbase
+pb_data/
+pb_migrations/

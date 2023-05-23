@@ -35,7 +35,7 @@ export const load = ({ locals, params }) => {
 export const actions: Actions = {
 	updateCategory: async ({ request, locals, params }) => {
 		const values = await request.formData();
-		const name = values.get('name') as string;
+		const name = values.get('name') as string | null;
 		const { categoryId } = params;
 		if (!categoryId) return;
 

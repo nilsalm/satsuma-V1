@@ -32,7 +32,8 @@ export async function getCategoryQuery(id: string) {
 	return {
 		id: category.id,
 		name: category.name,
-		user: category.user
+		user: category.user,
+		order: category.order
 	} as Category;
 }
 
@@ -59,13 +60,16 @@ export async function getItemsPerCategory(id: string) {
 
 export async function getCategoriesQuery() {
 	const categories = deepClone(await pb.collection('categories').getFullList<Category>());
-	return categories.map((category) => {
-		return {
-			id: category.id,
-			name: category.name,
-			user: category.user
-		} as Category;
-	});
+	return categories
+		.map((category) => {
+			return {
+				id: category.id,
+				name: category.name,
+				user: category.user,
+				order: category.order
+			} as Category;
+		})
+		.sort((a, b) => a.order - b.order);
 }
 
 export async function getListsQuery() {
