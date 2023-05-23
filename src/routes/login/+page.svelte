@@ -39,9 +39,9 @@
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 				class:bg-red-100={form?.incorrect}
 			/>
-			
+
 			<Button text={'Log in'} backgroundColor={'primary'} />
-			
+
 			{#if form?.incorrect}
 				<p class="text-center text-red-500">Invalid credentials</p>
 			{/if}
