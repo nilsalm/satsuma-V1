@@ -6,7 +6,7 @@ import {
 } from '$lib/pocketbase';
 import type { Actions } from './$types';
 
-export const load = ({ params }) => {
+export const load = ({ params, url }) => {
 	const getList = async (listId: string) => {
 		try {
 			return await getListQuery(listId);
@@ -23,9 +23,9 @@ export const load = ({ params }) => {
 			throw err;
 		}
 	};
-	const getItems = async (listId: string) => {
+	const getItems = async (listId: string, showPicked: boolean) => {
 		try {
-			return await getItemsInListQuery(listId);
+			return await getItemsInListQuery(listId, showPicked);
 		} catch (err) {
 			console.error(err);
 			throw err;
@@ -40,74 +40,24 @@ export const load = ({ params }) => {
 		}
 	};
 
+	const listId = params.listId;
+	const showPicked = url.searchParams.get('showPicked') === 'true' || false;
+
 	return {
-		list: getList(params.listId),
+		list: getList(listId),
 		categories: getCategories(),
-		items: getItems(params.listId),
+		items: getItems(listId, showPicked),
 		templates: getTemplates()
 	};
 };
 
 export const actions: Actions = {
-	updateItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const quantity = Number(values.get('quantity'));
-		const picked = Boolean(values.has('picked'));
-
-		try {
-			await locals.pb.collection('items').update(id, { quantity, picked });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
 	setCategory: async ({ locals, request }) => {
 		const values = await request.formData();
 		const id = String(values.get('id'));
 		const category = String(values.get('category'));
 		try {
 			await locals.pb.collection('items').update(id, { category });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
-	pickItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const picked = Boolean(values.has('picked'));
-
-		try {
-			await locals.pb.collection('items').update(id, { picked });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
-	decreaseItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const quantity = Number(values.get('quantity'));
-
-		try {
-			await locals.pb.collection('items').update(id, { quantity });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
-	increaseItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const quantity = Number(values.get('quantity'));
-
-		try {
-			await locals.pb.collection('items').update(id, { quantity });
 		} catch (e) {
 			console.error(e);
 			throw e;
@@ -127,10 +77,13 @@ export const actions: Actions = {
 
 		try {
 			const existingItems = await locals.pb.collection('items').getList(1, 100, {
-				filter: `created >= "2022-01-01 00:00:00" && name ~ "${name.toLowerCase()}" && picked = false && list = "${list}"`
+				filter: `created >= "2022-01-01 00:00:00" && name ~ "${name}" && picked = false && list = "${list}"`
 			});
 
-			if (existingItems.items.length > 0) {
+			if (
+				existingItems.items.length > 0 &&
+				existingItems.items[0].name.toLowerCase() === name.toLowerCase()
+			) {
 				const existingItem = existingItems.items[0];
 				await locals.pb
 					.collection('items')

@@ -3,14 +3,17 @@ import type { Actions } from './$types';
 
 export const actions: Actions = {
 	default: async ({ locals, request }) => {
+		if (locals.user) {
+			throw redirect(303, '/lists');
+		}
+
 		const data = Object.fromEntries(await request.formData()) as {
-			email: string;
+			username: string;
 			password: string;
 		};
 		try {
-			await locals.pb.collection('users').authWithPassword(data.email, data.password);
+			await locals.pb.collection('users').authWithPassword(data.username, data.password);
 		} catch (e) {
-			console.error(e);
 			return fail(400, { data, incorrect: true });
 		}
 		throw redirect(303, '/lists');

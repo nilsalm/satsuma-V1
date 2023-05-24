@@ -1,4 +1,8 @@
-# 🍊 Satsuma - the helpful shopping list
+<p align="center">
+  <img  height="200" src="static/icon_255x255_clear.svg">
+</p>
+
+# Satsuma - the helpful shopping list
 
 > Are you adding the same staples to you shopping list week after week? There should be a template function for this!
 >
@@ -8,7 +12,7 @@
 >
 > Relax, have a satsuma and enjoy the next trip to the supermarket.
 >
-> 🍊
+
 
 That's at least the vision for this little helper app.
 
@@ -27,5 +31,6 @@ The pocketbase executable should be run in a separate folder.
 
 ## Links
 
-- 🎨 [Color Scheme](https://colorhunt.co/palette/cdf0eaf9f9f9f7dbf0beaee2)
+- 🎨 [Color Scheme](https://coolors.co/cdf0ea-f9f9f9-f7dbf0-beaee2-513956)
 - 🛢️ [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
+- 📱 [Icons](https://icones.js.org/)

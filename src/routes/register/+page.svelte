@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 </script>
 
-<div class="max-w-xl mx-auto py-8 px-4">
+<LayoutContainer>
 	<form
 		method="POST"
 		class="card"
@@ -22,9 +26,9 @@
 
 		<div class="flex flex-col gap-4">
 			<input
-				type="email"
-				name="email"
-				placeholder="Email"
+				type="text"
+				name="username"
+				placeholder="Username"
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 			/>
 			<input
@@ -39,6 +43,11 @@
 				placeholder="Confirm Password"
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 			/>
+			{#if form?.incorrect}
+				<p class="text-center text-red-500">We had trouble creating your account.</p>
+			{:else if form?.passwordMatchError}
+				<p class="text-center text-red-500">Passwords don't match.</p>
+			{/if}
 			<Button text="Register" />
 			<p class="text-center">
 				Already have an account?
@@ -46,4 +55,4 @@
 			</p>
 		</div>
 	</form>
-</div>
+</LayoutContainer>

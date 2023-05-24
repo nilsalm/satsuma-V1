@@ -1,7 +1,16 @@
-<div class="relative isolate overflow-hidden pt-14 bg-gradient-to-b from-primary to-secondary">
+<script>
+	import Logo from './Logo.svelte';
+</script>
+
+<div class="relative isolate overflow-hidden pt-4 bg-gradient-to-b from-primary to-secondary">
 	<div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
 		<div class="text-center">
-			<h1 class="text-4xl font-bold tracking-tight text-gray-700 sm:text-6xl">
+			<div class="inline-flex items-center justify-center">
+				<div class="w-60 h-60">
+					<Logo />
+				</div>
+			</div>
+			<h1 class="text-4xl mt-6 font-bold tracking-tight text-gray-700 sm:text-6xl">
 				Welcome to Satsuma
 			</h1>
 			<p class="mt-6 text-lg leading-8 text-neutral">

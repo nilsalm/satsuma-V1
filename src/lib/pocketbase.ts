@@ -10,9 +10,40 @@ export const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 
 export const currentUser = writable(pb.authStore.model);
 
-export async function getItemsInListQuery(listId: string) {
-	const { items } = await pb.collection('items').getList<Item>(1, 100, {
-		filter: `created >= "2022-01-01 00:00:00" && picked = false && list = "${listId}"`
+export async function getItemsInListQuery(listId: string, picked: boolean = false) {
+	const items = await pb.collection('items').getFullList<Item>({
+		filter: `created >= "2022-01-01 00:00:00" && list = "${listId}" && picked = ${picked}`
+	});
+	return items.map((item) => {
+		return {
+			id: item.id,
+			name: item.name,
+			picked: item.picked,
+			quantity: item.quantity,
+			category: item.category ? item.category : null,
+			list: item.list,
+			user: item.user
+		} as Item;
+	});
+}
+
+export async function getCategoryQuery(id: string) {
+	const category = await pb.collection('categories').getOne<Category>(id);
+	return {
+		id: category.id,
+		name: category.name,
+		user: category.user,
+		order: category.order
+	} as Category;
+}
+
+export async function deleteCategoryQuery(id: string) {
+	await pb.collection('categories').delete(id);
+}
+
+export async function getItemsPerCategory(id: string) {
+	const items = await pb.collection('items').getFullList<Item>({
+		filter: `created >= "2022-01-01 00:00:00" && category = "${id}"`
 	});
 	return items.map((item) => {
 		return {
@@ -29,13 +60,16 @@ export async function getItemsInListQuery(listId: string) {
 
 export async function getCategoriesQuery() {
 	const categories = deepClone(await pb.collection('categories').getFullList<Category>());
-	return categories.map((category) => {
-		return {
-			id: category.id,
-			name: category.name,
-			user: category.user
-		} as Category;
-	});
+	return categories
+		.map((category) => {
+			return {
+				id: category.id,
+				name: category.name,
+				user: category.user,
+				order: category.order
+			} as Category;
+		})
+		.sort((a, b) => a.order - b.order);
 }
 
 export async function getListsQuery() {
@@ -128,4 +162,8 @@ export async function deleteCategoryAndAllItemsQuery(categoryId: string) {
 		return { success: false, error: e };
 	}
 	await pb.collection('categories').delete(categoryId);
+}
+
+export async function updateItemQuery(item: Item) {
+	await pb.collection('items').update(item.id, item);
 }
