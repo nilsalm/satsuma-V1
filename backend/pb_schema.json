@@ -244,13 +244,13 @@
     "options": {}
   },
   {
-    "id": "pcgfoipcvldtrjb",
-    "name": "categories",
+    "id": "7hl5j2inxaqx1by",
+    "name": "lists",
     "type": "base",
     "system": false,
     "schema": [
       {
-        "id": "ytn1hobj",
+        "id": "8maejv7f",
         "name": "name",
         "type": "text",
         "system": false,
@@ -262,15 +262,12 @@
         }
       },
       {
-        "id": "ckwtmrxr",
-        "name": "order",
-        "type": "number",
+        "id": "rqjs1ran",
+        "name": "isTemplate",
+        "type": "bool",
         "system": false,
         "required": false,
-        "options": {
-          "min": null,
-          "max": null
-        }
+        "options": {}
       },
       {
         "id": "lvscdvnh",
