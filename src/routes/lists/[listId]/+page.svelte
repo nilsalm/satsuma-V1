@@ -18,17 +18,22 @@
 	let showNewCategoryModal = false;
 	let newItemName = '';
 	let showPicked = false;
-	let items = data.items;
-
-	$: items = data.items;
 
 	$: showPicked = $page.url.searchParams.get('showPicked') === 'true' || false;
+	$: items = data.items.filter((i) => i.picked === showPicked);
 
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
 	}
 
 	$: proposeCategory(newItemName);
+
+	function refreshItem(event) {
+		const { item } = event.detail;
+		const index = items.findIndex((i) => i.id === item.id);
+		items[index] = item;
+		items = items;
+	}
 
 	function setNewItemCategoryId(id: string) {
 		if (id === newItemCategoryId) {
@@ -82,7 +87,7 @@
 		<div class="w-20">
 			<a href={`/lists/${data.list.id}?showPicked=${!showPicked}`} class="w-20">
 				<Button
-					text={showPicked ? 'Hide' : 'Show'}
+					text={showPicked ? 'Planned' : 'Picked'}
 					backgroundColor="secondary"
 					textStyle="small"
 				/>
@@ -109,7 +114,7 @@
 					</div>
 					{#each items.filter((i) => i.category === cat.id) as item}
 						<div in:fade>
-							<Item {item} newCategoryId={newItemCategoryId} />
+							<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
 						</div>
 					{/each}
 				{/if}
@@ -120,7 +125,7 @@
 				</div>
 				{#each items.filter((i) => i.category === null) as item}
 					<div in:fade>
-						<Item {item} newCategoryId={newItemCategoryId} />
+						<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
 					</div>
 				{/each}
 			{/if}

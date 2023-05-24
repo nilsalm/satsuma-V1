@@ -40,7 +40,6 @@ export const load = ({ params, url }) => {
 		}
 	};
 
-	
 	const listId = params.listId;
 	const showPicked = url.searchParams.get('showPicked') === 'true' || false;
 
@@ -59,45 +58,6 @@ export const actions: Actions = {
 		const category = String(values.get('category'));
 		try {
 			await locals.pb.collection('items').update(id, { category });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
-	pickItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const picked = String(values.get('picked')) === "true";
-
-		try {
-			await locals.pb.collection('items').update(id, { picked });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
-	decreaseItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const quantity = Number(values.get('quantity'));
-
-		try {
-			await locals.pb.collection('items').update(id, { quantity });
-		} catch (e) {
-			console.error(e);
-			throw e;
-		}
-		return { success: true };
-	},
-	increaseItem: async ({ locals, request }) => {
-		const values = await request.formData();
-		const id = String(values.get('id'));
-		const quantity = Number(values.get('quantity'));
-
-		try {
-			await locals.pb.collection('items').update(id, { quantity });
 		} catch (e) {
 			console.error(e);
 			throw e;

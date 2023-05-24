@@ -163,3 +163,7 @@ export async function deleteCategoryAndAllItemsQuery(categoryId: string) {
 	}
 	await pb.collection('categories').delete(categoryId);
 }
+
+export async function updateItemQuery(item: Item) {
+	await pb.collection('items').update(item.id, item);
+}
