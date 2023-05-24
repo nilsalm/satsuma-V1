@@ -36,17 +36,17 @@
     }
   },
   {
-    "id": "7hl5j2inxaqx1by",
-    "name": "lists",
+    "id": "pcgfoipcvldtrjb",
+    "name": "categories",
     "type": "base",
     "system": false,
     "schema": [
       {
-        "id": "8maejv7f",
+        "id": "ytn1hobj",
         "name": "name",
         "type": "text",
         "system": false,
-        "required": false,
+        "required": true,
         "options": {
           "min": null,
           "max": null,
@@ -54,19 +54,22 @@
         }
       },
       {
-        "id": "rqjs1ran",
-        "name": "isTemplate",
-        "type": "bool",
+        "id": "ckwtmrxr",
+        "name": "order",
+        "type": "number",
         "system": false,
         "required": false,
-        "options": {}
+        "options": {
+          "min": null,
+          "max": null
+        }
       },
       {
-        "id": "icnarmhj",
+        "id": "lvscdvnh",
         "name": "user",
         "type": "relation",
         "system": false,
-        "required": false,
+        "required": true,
         "options": {
           "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
@@ -95,7 +98,7 @@
         "name": "name",
         "type": "text",
         "system": false,
-        "required": false,
+        "required": true,
         "options": {
           "min": null,
           "max": null,
@@ -107,7 +110,7 @@
         "name": "quantity",
         "type": "number",
         "system": false,
-        "required": false,
+        "required": true,
         "options": {
           "min": null,
           "max": null
@@ -173,17 +176,17 @@
     "options": {}
   },
   {
-    "id": "pcgfoipcvldtrjb",
-    "name": "categories",
+    "id": "7hl5j2inxaqx1by",
+    "name": "lists",
     "type": "base",
     "system": false,
     "schema": [
       {
-        "id": "ytn1hobj",
+        "id": "8maejv7f",
         "name": "name",
         "type": "text",
         "system": false,
-        "required": false,
+        "required": true,
         "options": {
           "min": null,
           "max": null,
@@ -191,22 +194,19 @@
         }
       },
       {
-        "id": "ckwtmrxr",
-        "name": "order",
-        "type": "number",
+        "id": "rqjs1ran",
+        "name": "isTemplate",
+        "type": "bool",
         "system": false,
         "required": false,
-        "options": {
-          "min": null,
-          "max": null
-        }
+        "options": {}
       },
       {
-        "id": "lvscdvnh",
+        "id": "icnarmhj",
         "name": "user",
         "type": "relation",
         "system": false,
-        "required": false,
+        "required": true,
         "options": {
           "collectionId": "_pb_users_auth_",
           "cascadeDelete": false,
