@@ -1,11 +1,8 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import Button from '$lib/components/Button.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { PageData } from './$types';
 	import CategoryItem from '$lib/components/CategoryItem.svelte';
 	import { pb } from '$lib/pocketbase';
-	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
 
 	export let data: PageData;
 
