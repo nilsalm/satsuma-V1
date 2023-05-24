@@ -13,7 +13,7 @@
 >
 	<div class="flex flex-row justify-between items-center">
 		<form action="?/pickItem" method="POST" use:enhance>
-			<button class="flex gap-4 py-2">
+			<button class="flex gap-4 py-2" on:click={() => (item.picked = !item.picked)}>
 				<div class="w-4 text-right text-gray-700">{item.quantity}</div>
 				<div
 					class="text-gray-700 text-left font-semibold w-[calc(100vw-190px)] sm:w-[360px] truncate whitespace-nowrap
@@ -23,7 +23,7 @@
 				</div>
 			</button>
 			<input type="hidden" name="id" value={item.id} />
-			<input type="hidden" name="picked" value={!item.picked} />
+			<input type="hidden" name="picked" value={item.picked} />
 		</form>
 
 		{#if !item.picked}
@@ -32,18 +32,22 @@
 					<button
 						class=" text-gray-700 font-semibold px-2 disabled:opacity-30 border-2 border-primary rounded"
 						disabled={item.quantity <= 1}
+						on:click={() => item.quantity--}
 					>
 						-
 					</button>
 					<input type="hidden" name="id" value={item.id} />
-					<input type="hidden" name="quantity" value={item.quantity - 1} />
+					<input type="hidden" name="quantity" value={item.quantity} />
 				</form>
 				<form action="?/increaseItem" method="POST" use:enhance>
-					<button class="text-gray-700 font-semibold px-2 border-2 border-primary rounded">
+					<button
+						class="text-gray-700 font-semibold px-2 border-2 border-primary rounded"
+						on:click={() => item.quantity++}
+					>
 						+
 					</button>
 					<input type="hidden" name="id" value={item.id} />
-					<input type="hidden" name="quantity" value={item.quantity + 1} />
+					<input type="hidden" name="quantity" value={item.quantity} />
 				</form>
 				{#if $isPlanModeActive}
 					<form action="?/setCategory" method="POST" use:enhance>
