@@ -1,7 +1,8 @@
 <script>
-	import Title from "$lib/components/Title.svelte";
+	import LayoutContainer from "$lib/components/LayoutContainer.svelte";
+import Title from "$lib/components/Title.svelte";
 </script>
 
-<div class="max-w-xl mx-auto mt-4 md:mt-8 mb-8 px-4">
+<LayoutContainer>
   <Title title="Templates" />
-</div>
+</LayoutContainer>

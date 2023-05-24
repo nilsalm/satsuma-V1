@@ -7,8 +7,6 @@
 	export let href: string;
 	export let icon: IconType;
 
-	$page.route.id;
-
 	let isActive = false;
 
 	$: isActive = $page.route.id?.includes(href) || false;

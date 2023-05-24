@@ -15,33 +15,31 @@
 	}
 </script>
 
-<div class="px-4">
-	<div class="flex justify-between w-full mb-4">
-		<Title title={'Edit List ' + list.name} />
+<div class="flex justify-between w-full mb-4">
+	<Title title={'Edit List ' + list.name} />
 
-		<a href={'/lists/' + list.id} class="w-20">
-			<Button text="Cancel" backgroundColor="secondary" textStyle="small" />
-		</a>
+	<a href={'/lists/' + list.id} class="w-20">
+		<Button text="Cancel" backgroundColor="secondary" textStyle="small" />
+	</a>
+</div>
+
+<form action="?/updateList" method="POST">
+	<div class="flex flex-col gap-4">
+		<input
+			type="text"
+			name="name"
+			placeholder="Name"
+			value={list.name}
+			class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+		/>
+
+		<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
+
+		<Button text="Update list" />
 	</div>
-
-	<form action="?/updateList" method="POST">
-		<div class="flex flex-col gap-4">
-			<input
-				type="text"
-				name="name"
-				placeholder="Name"
-				value={list.name}
-				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
-			/>
-
-			<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
-
-			<Button text="Update list" />
-		</div>
-	</form>
-	<div class="my-2">
-		<Button text="Delete list" backgroundColor="secondary" onClick={() => (openModal = true)} />
-	</div>
+</form>
+<div class="my-2">
+	<Button text="Delete list" backgroundColor="secondary" onClick={() => (openModal = true)} />
 </div>
 
 {#if openModal}

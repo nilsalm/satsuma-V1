@@ -1,7 +1,6 @@
 <script>
 	import '../../app.postcss';
-	import { currentUser, pb } from '$lib/pocketbase';
-	import { applyAction, enhance } from '$app/forms';
+	import { currentUser } from '$lib/pocketbase';
 	import NavButton from '$lib/components/NavButton.svelte';
 	import Logo from './Logo.svelte';
 </script>
