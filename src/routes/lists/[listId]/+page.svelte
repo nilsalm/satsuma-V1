@@ -99,38 +99,36 @@
 	</div>
 </div>
 
-<div class="flex flex-col pb-4 overscroll-contain px-4 mb-40">
-	<div>
-		{#if items.length === 0}
-			<div class="text-center mt-20">
-				<p>Good job!</p>
-				<p>Now get yourself some ice cream 🍦</p>
-			</div>
-		{:else}
-			{#each data.categories as cat}
-				{#if items.filter((i) => i.category === cat.id).length > 0}
-					<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
-						<p>{cat.name}</p>
-					</div>
-					{#each items.filter((i) => i.category === cat.id) as item}
-						<div in:fade>
-							<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
-						</div>
-					{/each}
-				{/if}
-			{/each}
-			{#if items.filter((i) => i.category === null).length > 0}
+<div class="pb-4 overscroll-contain px-4 mb-40">
+	{#if items.length === 0}
+		<div class="text-center mt-20">
+			<p>Good job!</p>
+			<p>Now get yourself some ice cream 🍦</p>
+		</div>
+	{:else}
+		{#each data.categories as cat}
+			{#if items.filter((i) => i.category === cat.id).length > 0}
 				<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
-					<p>Other</p>
+					<p>{cat.name}</p>
 				</div>
-				{#each items.filter((i) => i.category === null) as item}
+				{#each items.filter((i) => i.category === cat.id) as item}
 					<div in:fade>
 						<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
 					</div>
 				{/each}
 			{/if}
+		{/each}
+		{#if items.filter((i) => i.category === null).length > 0}
+			<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+				<p>Other</p>
+			</div>
+			{#each items.filter((i) => i.category === null) as item}
+				<div in:fade>
+					<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
+				</div>
+			{/each}
 		{/if}
-	</div>
+	{/if}
 </div>
 
 {#if $isPlanModeActive}
