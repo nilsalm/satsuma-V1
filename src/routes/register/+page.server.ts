@@ -17,6 +17,8 @@ export const actions: Actions = {
 			return fail(400, { passwordMatchError: true });
 		}
 
+		data.username = data.username.trim();
+		
 		try {
 			await locals.pb.collection('users').create(data);
 			await locals.pb.collection('users').authWithPassword(data.username, data.password);
