@@ -1,4 +1,4 @@
-import { redirect, type Actions } from '@sveltejs/kit';
+import { redirect, type Actions, fail } from '@sveltejs/kit';
 
 export const load = ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
@@ -24,9 +24,8 @@ export const actions: Actions = {
 		try {
 			await locals.pb.collection('users').update(id, { username });
 		} catch (err) {
-			console.error(err);
-			throw err;
+			return fail(400, { incorrect: true });
 		}
-		throw redirect(303, '/profile');
+		return { success: true };
 	}
 };

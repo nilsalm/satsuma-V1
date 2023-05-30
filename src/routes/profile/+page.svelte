@@ -4,10 +4,10 @@
 	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
-
+	export let form: ActionData;
 	const logout = () => {
 		pb.authStore.clear();
 		goto('/');
@@ -46,4 +46,10 @@
 
 		<Button text="Update Username" />
 	</form>
+	{#if form?.success}
+		<div class="text-green-400 text-center mt-2">Username updated!</div>
+	{/if}
+	{#if form?.incorrect}
+		<div class="text-red-400 text-center mt-2">Something went wrong: {form?.incorrect}</div>
+	{/if}
 </LayoutContainer>
