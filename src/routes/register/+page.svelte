@@ -27,8 +27,8 @@
 		<div class="flex flex-col gap-4">
 			<input
 				type="text"
-				name="username"
-				placeholder="Username"
+				name="email"
+				placeholder="Email"
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 			/>
 			<input
