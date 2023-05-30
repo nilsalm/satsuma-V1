@@ -11,6 +11,9 @@ export const actions: Actions = {
 			username: string;
 			password: string;
 		};
+
+		data.username = data.username.trim();
+
 		try {
 			await locals.pb.collection('users').authWithPassword(data.username, data.password);
 		} catch (e) {
