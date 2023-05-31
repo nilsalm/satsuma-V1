@@ -51,7 +51,7 @@
 				<a href="/register" class="underline">Register now!</a>
 			</p>
 			<p class="text-center text-sm">
-				Forgot you password?
+				Forgot your password?
 				<a href="/password-reset" class="underline">Reset it</a>
 			</p>
 		</div>
