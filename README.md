@@ -44,3 +44,4 @@ The pocketbase executable should be run in a separate folder.
 - 🎨 [Color Scheme](https://coolors.co/cdf0ea-f9f9f9-f7dbf0-beaee2-513956)
 - 🛢️ [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
 - 📱 [Icons](https://icones.js.org/)
+
