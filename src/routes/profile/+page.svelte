@@ -4,10 +4,10 @@
 	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
-
+	export let form: ActionData;
 	const logout = () => {
 		pb.authStore.clear();
 		goto('/');
@@ -22,18 +22,34 @@
 		</div>
 	</div>
 
-	<div class="flex-col justify-between flex-wrap gap-2">
-		<div class="flex gap-4">
-			<div class="font-bold text-xl text-primary">Email:</div>
-			<div class="text-lg">
-				{data.email}
-			</div>
-		</div>
-		<div class="flex gap-4">
-			<div class="font-bold text-xl text-primary">Username:</div>
-			<div class="text-lg">
-				{data.username}
-			</div>
+	<div class="flex gap-4 my-4">
+		<div class="font-bold text-xl text-primary">Email:</div>
+		<div class="text-xl">
+			{data.email}
 		</div>
 	</div>
+
+	<form action="?/updateProfile" method="POST">
+		<div class="flex gap-4 my-4 items-center">
+			<div class="font-bold text-xl text-primary">Username</div>
+
+			<input
+				type="text"
+				name="username"
+				placeholder={data.username || 'Username'}
+				value={data.username}
+				class="bg-neutral w-full px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+			/>
+		</div>
+
+		<input type="hidden" name="id" value={data.id} />
+
+		<Button text="Update Username" />
+	</form>
+	{#if form?.success}
+		<div class="text-green-400 text-center mt-2">Username updated!</div>
+	{/if}
+	{#if form?.incorrect}
+		<div class="text-red-400 text-center mt-2">Something went wrong: {form?.incorrect}</div>
+	{/if}
 </LayoutContainer>

@@ -8,14 +8,14 @@ export const actions: Actions = {
 		}
 
 		const data = Object.fromEntries(await request.formData()) as {
-			username: string;
+			usernameOrEmail: string;
 			password: string;
 		};
 
-		data.username = data.username.trim();
+		data.usernameOrEmail = data.usernameOrEmail.trim();
 
 		try {
-			await locals.pb.collection('users').authWithPassword(data.username, data.password);
+			await locals.pb.collection('users').authWithPassword(data.usernameOrEmail, data.password);
 		} catch (e) {
 			return fail(400, { data, incorrect: true });
 		}
