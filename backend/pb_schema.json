@@ -282,6 +282,20 @@
           "maxSelect": 1,
           "displayFields": []
         }
+      },
+      {
+        "id": "idfzoynb",
+        "name": "sharedWith",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": null,
+          "displayFields": []
+        }
       }
     ],
     "indexes": [],
@@ -293,39 +307,69 @@
     "options": {}
   },
   {
-    "id": "_pb_users_auth_",
-    "name": "users",
-    "type": "auth",
+    "id": "pcgfoipcvldtrjb",
+    "name": "categories",
+    "type": "base",
     "system": false,
     "schema": [
       {
-        "id": "users_name",
+        "id": "ytn1hobj",
         "name": "name",
         "type": "text",
         "system": false,
-        "required": false,
+        "required": true,
         "options": {
           "min": null,
           "max": null,
           "pattern": ""
         }
+      },
+      {
+        "id": "ckwtmrxr",
+        "name": "order",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      },
+      {
+        "id": "lvscdvnh",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "btg81b3i",
+        "name": "sharedWith",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": null,
+          "displayFields": []
+        }
       }
     ],
     "indexes": [],
-    "listRule": "id = @request.auth.id",
-    "viewRule": "id = @request.auth.id",
-    "createRule": "",
-    "updateRule": "id = @request.auth.id",
-    "deleteRule": "id = @request.auth.id",
-    "options": {
-      "allowEmailAuth": true,
-      "allowOAuth2Auth": false,
-      "allowUsernameAuth": true,
-      "exceptEmailDomains": null,
-      "manageRule": null,
-      "minPasswordLength": 8,
-      "onlyEmailDomains": null,
-      "requireEmail": true
-    }
+    "listRule": "@request.auth.id = owner || @request.auth.id ?= sharedWith.id",
+    "viewRule": "@request.auth.id = owner || @request.auth.id ?= sharedWith.id",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner",
+    "deleteRule": "@request.auth.id = owner",
+    "options": {}
   }
 ]
