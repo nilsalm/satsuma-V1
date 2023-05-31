@@ -35,7 +35,7 @@
       <Button text={'Send reset email'} backgroundColor={'primary'} />
 
 			{#if form?.incorrect}
-				<p class="text-center text-lg text-red-500">Invalid email</p>
+				<p class="text-center text-lg text-red-500">Could not reset</p>
 			{/if}
 
 			{#if form?.success}
@@ -45,8 +45,8 @@
 			{/if}
 
 			<p class="text-center">
-				Searching for
-				<a href="/login" class="underline">login</a>?
+				Back to
+				<a href="/login" class="underline">login</a>
 			</p>
 		</div>
 	</form>
