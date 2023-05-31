@@ -5,5 +5,4 @@ export type Item = {
 	picked: boolean;
 	category: string | null;
 	list: string;
-	user: string;
 };

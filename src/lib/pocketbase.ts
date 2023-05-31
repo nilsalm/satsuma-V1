@@ -21,8 +21,7 @@ export async function getItemsInListQuery(listId: string, picked: boolean = fals
 			picked: item.picked,
 			quantity: item.quantity,
 			category: item.category ? item.category : null,
-			list: item.list,
-			user: item.user
+			list: item.list
 		} as Item;
 	});
 }
@@ -32,7 +31,8 @@ export async function getCategoryQuery(id: string) {
 	return {
 		id: category.id,
 		name: category.name,
-		user: category.user,
+		owner: category.owner,
+		sharedWith: category.sharedWith,
 		order: category.order
 	} as Category;
 }
@@ -52,8 +52,7 @@ export async function getItemsPerCategory(id: string) {
 			picked: item.picked,
 			quantity: item.quantity,
 			category: item.category ? item.category : null,
-			list: item.list,
-			user: item.user
+			list: item.list
 		} as Item;
 	});
 }
@@ -65,7 +64,8 @@ export async function getCategoriesQuery() {
 			return {
 				id: category.id,
 				name: category.name,
-				user: category.user,
+				owner: category.owner,
+				sharedWith: category.sharedWith,
 				order: category.order
 			} as Category;
 		})
@@ -84,7 +84,8 @@ export async function getListsQuery() {
 			id: list.id,
 			name: list.name,
 			isTemplate: list.isTemplate,
-			user: list.user
+			owner: list.owner,
+			sharedWith: list.sharedWith
 		} as List;
 	});
 }
@@ -100,7 +101,8 @@ export async function getTemplatesQuery() {
 			id: template.id,
 			name: template.name,
 			isTemplate: template.isTemplate,
-			user: template.user
+			owner: template.owner,
+			sharedWith: template.sharedWith
 		} as List;
 	});
 }
@@ -111,7 +113,8 @@ export async function getListQuery(listId: string) {
 		id: list.id,
 		name: list.name,
 		isTemplate: list.isTemplate,
-		user: list.user
+		owner: list.owner,
+		sharedWith: list.sharedWith
 	} as List;
 }
 

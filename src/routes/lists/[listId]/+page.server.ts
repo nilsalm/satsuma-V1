@@ -70,10 +70,9 @@ export const actions: Actions = {
 		const list = String(values.get('list'));
 		const category = String(values.get('category'));
 		const quantity = 1; //Number(values.get('quantity'));
-		const user = locals.user.id;
 		const picked = false;
 
-		const newItem = { name, list, category, quantity, user, picked };
+		const newItem = { name, list, category, quantity, picked };
 
 		try {
 			const existingItems = await locals.pb.collection('items').getList(1, 100, {
@@ -100,10 +99,10 @@ export const actions: Actions = {
 	createCategory: async ({ locals, request }) => {
 		const values = await request.formData();
 		const name = String(values.get('name'));
-		const user = locals.user.id;
+		const owner = locals.user.id;
 
 		try {
-			const cat = await locals.pb.collection('categories').create({ name, user });
+			const cat = await locals.pb.collection('categories').create({ name, owner });
 			const id = cat.id;
 			return { success: true, id, action: 'createCategory' };
 		} catch (e) {
@@ -127,7 +126,6 @@ export const actions: Actions = {
 				items: Array<{
 					name: string;
 					picked: boolean;
-					user: string;
 					list: string;
 					category: string;
 					quantity: number;
@@ -150,7 +148,6 @@ export const actions: Actions = {
 						list: list,
 						category: item.category,
 						quantity: item.quantity,
-						user: item.user,
 						picked: false
 					};
 					await locals.pb.collection('items').create(newItem);

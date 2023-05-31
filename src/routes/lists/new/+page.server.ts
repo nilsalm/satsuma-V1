@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const newList = {
 			name,
 			isTemplate,
-			user
+			owner: user
 		};
 
 		try {

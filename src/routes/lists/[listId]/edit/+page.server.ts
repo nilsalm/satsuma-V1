@@ -8,7 +8,7 @@ export const load = async ({ locals, params }) => {
 
 	try {
 		const list = await getListQuery(params.listId);
-		if (locals.user?.id === list.user) {
+		if (locals.user?.id === list.owner) {
 			return { list };
 		} else {
 			throw error(403, 'Forbidden');

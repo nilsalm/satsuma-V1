@@ -1,6 +1,7 @@
 export type Category = {
 	id: string;
 	name: string;
-	user: string;
+	owner: string;
+	sharedWith: string[];
 	order: number;
 };
