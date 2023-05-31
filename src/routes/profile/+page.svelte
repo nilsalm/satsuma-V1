@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 	import LayoutContainer from '$lib/components/LayoutContainer.svelte';
+	import SubTitle from '$lib/components/SubTitle.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import { pb } from '$lib/pocketbase';
 	import type { ActionData, PageData } from './$types';
@@ -52,4 +53,11 @@
 	{#if form?.incorrect}
 		<div class="text-red-400 text-center mt-2">Something went wrong: {form?.incorrect}</div>
 	{/if}
+
+	<div class="w-full">
+		<SubTitle title="Categories" />
+		<a href="/categories">
+			<Button text="MANAGE CATEGORIES" />
+		</a>
+	</div>
 </LayoutContainer>
