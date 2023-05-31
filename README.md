@@ -13,10 +13,20 @@
 > Relax, have a satsuma and enjoy the next trip to the supermarket.
 >
 
-
 That's at least the vision for this little helper app.
 
 Try it out live 👉 [here](https://main--satsuma-shopping.netlify.app) 👈
+
+## Roadmap
+
+- [ ] Add Sharing-feature
+- [ ] Add email-service for password reset and email verification
+- [ ] Protect signup and signin with ReCaptcha
+- [ ] Add GoatCounter analytics
+- [ ] Improve DevOps and hosting
+- [ ] Launch Party 🚀
+
+After that, we'll focus on improvements, new ideas and possibly explore a paid-plan. We welcome your suggestions.
 
 ## Setup
 
@@ -34,3 +44,4 @@ The pocketbase executable should be run in a separate folder.
 - 🎨 [Color Scheme](https://coolors.co/cdf0ea-f9f9f9-f7dbf0-beaee2-513956)
 - 🛢️ [Host PB for free on Fly.io](https://github.com/pocketbase/pocketbase/discussions/537)
 - 📱 [Icons](https://icones.js.org/)
+

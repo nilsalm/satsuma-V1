@@ -8,7 +8,7 @@ export const actions: Actions = {
 		}
 
 		const data = Object.fromEntries(await request.formData()) as {
-			username: string;
+			email: string;
 			password: string;
 			passwordConfirm: string;
 		};
@@ -17,11 +17,11 @@ export const actions: Actions = {
 			return fail(400, { passwordMatchError: true });
 		}
 
-		data.username = data.username.trim();
-		
+		data.email = data.email.trim();
+
 		try {
 			await locals.pb.collection('users').create(data);
-			await locals.pb.collection('users').authWithPassword(data.username, data.password);
+			await locals.pb.collection('users').authWithPassword(data.email, data.password);
 		} catch (e) {
 			return fail(400, { incorrect: true });
 		}
