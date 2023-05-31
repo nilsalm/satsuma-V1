@@ -16,7 +16,6 @@ export const actions: Actions = {
 		try {
 			await locals.pb.admins.requestPasswordReset(data.email);
 		} catch (e) {
-      console.log(e)
 			return fail(400, { data, incorrect: true });
 		}
 		
