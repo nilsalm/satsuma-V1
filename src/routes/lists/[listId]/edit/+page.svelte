@@ -3,9 +3,10 @@
 	import Button from '$lib/components/Button.svelte';
 	import Switch from '$lib/components/Switch.svelte';
 	import Title from '$lib/components/Title.svelte';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
+	export let form: ActionData;
 	const { list } = data;
 
 	let makeTemplate: boolean = list.isTemplate;
@@ -22,23 +23,45 @@
 		<Button text="Cancel" backgroundColor="secondary" textStyle="small" />
 	</a>
 </div>
+<div class="flex flex-col gap-8">
+	<form action="?/updateList" method="POST">
+		<div class="flex flex-col gap-4">
+			<input
+				type="text"
+				name="name"
+				placeholder="Name"
+				value={list.name}
+				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+			/>
 
-<form action="?/updateList" method="POST">
-	<div class="flex flex-col gap-4">
-		<input
-			type="text"
-			name="name"
-			placeholder="Name"
-			value={list.name}
-			class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
-		/>
+			<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
 
-		<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
+			<Button text="Update list" />
+		</div>
+	</form>
 
-		<Button text="Update list" />
-	</div>
-</form>
-<div class="my-2">
+	<div class=" bg-secondary rounded h-[1px]" />
+
+	<form action="?/inviteUser" method="POST">
+		<div class="flex flex-col gap-4">
+			<input
+				type="text"
+				name="usernameEmail"
+				placeholder="Username or Email"
+				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+			/>
+
+			<Button text="Invite User" />
+			{#if form?.message}
+				<div class="text-red-400 text-center">{form.message}</div>
+			{:else if form?.success}
+				<div class="text-green-400 text-center">Invitation sent.</div>
+			{/if}
+		</div>
+	</form>
+
+	<div class=" bg-secondary rounded h-[1px]" />
+
 	<Button text="Delete list" backgroundColor="secondary" onClick={() => (openModal = true)} />
 </div>
 
