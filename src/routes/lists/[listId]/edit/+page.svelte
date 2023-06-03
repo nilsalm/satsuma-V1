@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import Divider from '$lib/components/Divider.svelte';
 	import Switch from '$lib/components/Switch.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { ActionData, PageData } from './$types';
@@ -37,10 +38,16 @@
 			<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
 
 			<Button text="Update list" />
+
+			{#if form?.message}
+				<div class="text-red-400 text-center">{form.message}</div>
+			{:else if form?.success && form?.type === 'update'}
+				<div class="text-green-400 text-center">List updated.</div>
+			{/if}
 		</div>
 	</form>
 
-	<div class=" bg-secondary rounded h-[1px]" />
+	<Divider />
 
 	<form action="?/inviteUser" method="POST">
 		<div class="flex flex-col gap-4">
@@ -52,15 +59,18 @@
 			/>
 
 			<Button text="Invite User" />
+
 			{#if form?.message}
 				<div class="text-red-400 text-center">{form.message}</div>
-			{:else if form?.success}
-				<div class="text-green-400 text-center">Invitation sent.</div>
+			{:else if form?.success && form?.type === 'invitation'}
+				<div class="text-green-400 text-center">
+					Invitation sent to your friend <strong>{form?.guest}</strong>.
+				</div>
 			{/if}
 		</div>
 	</form>
 
-	<div class=" bg-secondary rounded h-[1px]" />
+	<Divider />
 
 	<Button text="Delete list" backgroundColor="secondary" onClick={() => (openModal = true)} />
 </div>

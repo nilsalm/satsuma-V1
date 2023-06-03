@@ -192,7 +192,7 @@ export async function inviteUserToListQuery(owner: string, guest: string, listId
 }
 
 export async function updateInvitationStateQuery(invitationId: string, state: InvitationState) {
-	await pb.collection('invitations').update(invitationId, { state: state });
+	await pb.collection('invitations').update(invitationId, { state: state as string });
 }
 
 export async function getInvitationsQuery(userId: string) {

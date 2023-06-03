@@ -36,10 +36,9 @@ export const actions: Actions = {
 		try {
 			await locals.pb.collection('lists').update(listId, { name, isTemplate });
 		} catch (err) {
-			console.error(err);
-			throw err;
+			return fail(400, { message: 'Error updating list' });
 		}
-		throw redirect(303, `/lists/${params.listId}`);
+		return { success: true, type: 'update' };
 	},
 	inviteUser: async ({ request, locals, params }) => {
 		const values = await request.formData();
@@ -64,7 +63,7 @@ export const actions: Actions = {
 		} catch (err) {
 			return fail(400, { message: 'Error inviting user' });
 		}
-		return { success: true };
+		return { success: true, type: 'invitation', guest: guest.username };
 	},
 	deleteList: async ({ params }) => {
 		const { listId } = params;

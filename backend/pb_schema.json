@@ -284,8 +284,7 @@
           "values": [
             "Sent",
             "Accepted",
-            "Declined",
-            "Cancelled"
+            "Declined"
           ]
         }
       }
