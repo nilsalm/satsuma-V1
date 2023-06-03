@@ -1,28 +1,5 @@
 [
   {
-    "id": "_pb_users_auth_",
-    "name": "users",
-    "type": "auth",
-    "system": false,
-    "schema": [],
-    "indexes": [],
-    "listRule": "id = @request.auth.id",
-    "viewRule": "id = @request.auth.id",
-    "createRule": "",
-    "updateRule": "id = @request.auth.id",
-    "deleteRule": "id = @request.auth.id",
-    "options": {
-      "allowEmailAuth": true,
-      "allowOAuth2Auth": false,
-      "allowUsernameAuth": true,
-      "exceptEmailDomains": null,
-      "manageRule": null,
-      "minPasswordLength": 8,
-      "onlyEmailDomains": null,
-      "requireEmail": true
-    }
-  },
-  {
     "id": "945dqudy3xbgwei",
     "name": "items",
     "type": "base",
@@ -223,6 +200,101 @@
     "createRule": "@request.auth.id = owner",
     "updateRule": "@request.auth.id = owner",
     "deleteRule": "@request.auth.id = owner",
+    "options": {}
+  },
+  {
+    "id": "_pb_users_auth_",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "schema": [],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "id = @request.auth.id",
+    "createRule": "",
+    "updateRule": "id = @request.auth.id",
+    "deleteRule": "id = @request.auth.id",
+    "options": {
+      "allowEmailAuth": true,
+      "allowOAuth2Auth": false,
+      "allowUsernameAuth": true,
+      "exceptEmailDomains": null,
+      "manageRule": null,
+      "minPasswordLength": 8,
+      "onlyEmailDomains": null,
+      "requireEmail": true
+    }
+  },
+  {
+    "id": "2jwei9mpvwduqyj",
+    "name": "invitations",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "xwzxywuu",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "01se4eh7",
+        "name": "guest",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "plw0rv47",
+        "name": "list",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "7hl5j2inxaqx1by",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "hoyaw1qe",
+        "name": "state",
+        "type": "select",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "Sent",
+            "Accepted",
+            "Declined"
+          ]
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id = owner || @request.auth.id = guest",
+    "viewRule": "@request.auth.id = owner || @request.auth.id = guest",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner || @request.auth.id = guest",
+    "deleteRule": null,
     "options": {}
   }
 ]

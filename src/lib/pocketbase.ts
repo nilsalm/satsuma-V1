@@ -5,6 +5,9 @@ import type { Item } from './models/Item';
 import type { Category } from './models/Category';
 import { deepClone } from './util';
 import type { List } from './models/List';
+import type { User } from './models/User';
+import { InvitationState } from './types/InvitationState';
+import type { Invitation } from './models/Invitation';
 
 export const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 
@@ -169,4 +172,51 @@ export async function deleteCategoryAndAllItemsQuery(categoryId: string) {
 
 export async function updateItemQuery(item: Item) {
 	await pb.collection('items').update(item.id, item);
+}
+
+export async function getUserByUsernameOrEmailQuery(usernameEmail: string) {
+	const users = await pb
+		.collection('users')
+		.getList(1, 50, { filter: `username = "${usernameEmail}" || email = "${usernameEmail}"` });
+	return users.items.length > 0 ? users.items[0] : undefined;
+}
+
+export async function inviteUserToListQuery(owner: string, guest: string, listId: string) {
+	const invite = {
+		owner,
+		guest,
+		list: listId,
+		state: InvitationState.Sent as string
+	};
+	await pb.collection('invitations').create(invite);
+}
+
+export async function updateInvitationStateQuery(invitationId: string, state: InvitationState) {
+	await pb.collection('invitations').update(invitationId, { state: state as string });
+}
+
+export async function getInvitationsQuery(userId: string) {
+	const invitations = await pb
+		.collection('invitations')
+		.getList(1, 50, { filter: `guest = "${userId}"` });
+
+	return invitations.items.map((invitation) => {
+		return {
+			id: invitation.id,
+			owner: invitation.owner,
+			guest: invitation.guest,
+			list: invitation.list,
+			state: invitation.state as InvitationState
+		} as Invitation;
+	});
+}
+
+export async function acceptInvitationQuery(invitation: Invitation) {
+	const list = await getListQuery(invitation.list);
+	await pb
+		.collection('lists')
+		.update(invitation.list, { sharedWith: [...list.sharedWith, invitation.guest] });
+	await pb
+		.collection('invitations')
+		.update(invitation.id, { state: InvitationState.Accepted as string });
 }
