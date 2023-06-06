@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { IconType } from '$lib/types/IconType';
-	export let stroke: string;
+	import { colors } from '$lib/util';
+	export let stroke: string = colors.primary;
 	export let size: string = '32';
 	export let type: IconType;
 </script>

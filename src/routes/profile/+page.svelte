@@ -55,9 +55,16 @@
 	{/if}
 
 	<div class="w-full">
-		<SubTitle title="Categories" />
+		<SubTitle text="Categories" />
 		<a href="/categories">
 			<Button text="MANAGE CATEGORIES" />
+		</a>
+	</div>
+	
+	<div class="w-full">
+		<SubTitle text="Shared Lists" />
+		<a href="/invitation">
+			<Button text="MANAGE INVITATION" />
 		</a>
 	</div>
 </LayoutContainer>

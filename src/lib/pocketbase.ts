@@ -5,7 +5,6 @@ import type { Item } from './models/Item';
 import type { Category } from './models/Category';
 import { deepClone } from './util';
 import type { List } from './models/List';
-import type { User } from './models/User';
 import { InvitationState } from './types/InvitationState';
 import type { Invitation } from './models/Invitation';
 
@@ -204,8 +203,10 @@ export async function getInvitationsQuery(userId: string) {
 		return {
 			id: invitation.id,
 			owner: invitation.owner,
+			ownerName: invitation.ownerName,
 			guest: invitation.guest,
 			list: invitation.list,
+			listName: invitation.listName,
 			state: invitation.state as InvitationState
 		} as Invitation;
 	});

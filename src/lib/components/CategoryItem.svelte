@@ -20,6 +20,6 @@
 		<a href={'/categories/' + category.id} class=" w-20">
 			<Button height="h-10" text="Edit" backgroundColor="secondary" textStyle="small" />
 		</a>
-		<Icon type={IconType.Drag} size="40" stroke={colors.primary} />
+		<Icon type={IconType.Drag} size="40"/>
 	</div>
 </div>
