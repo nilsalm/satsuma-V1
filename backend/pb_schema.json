@@ -287,6 +287,30 @@
             "Declined"
           ]
         }
+      },
+      {
+        "id": "fp4wauvn",
+        "name": "ownerName",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "py9bowkj",
+        "name": "listName",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
       }
     ],
     "indexes": [],

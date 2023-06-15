@@ -3,7 +3,8 @@ import {
 	deleteListAndAllItemsQuery,
 	getListQuery,
 	getUserByUsernameOrEmailQuery,
-	inviteUserToListQuery
+	inviteUserToListQuery,
+	removeGuestFromListQuery
 } from '$lib/pocketbase.js';
 import { error, redirect, type Actions, fail } from '@sveltejs/kit';
 
@@ -46,6 +47,7 @@ export const actions: Actions = {
 		const { listId } = params;
 		if (!listId) return;
 
+		const list = await getListQuery(listId);
 		// find user
 		let guest: User | undefined;
 		try {
@@ -59,11 +61,30 @@ export const actions: Actions = {
 
 		// create invitation
 		try {
-			inviteUserToListQuery(locals.user.id, guest.id, listId);
+			await inviteUserToListQuery(
+				locals.user.id,
+				guest.id,
+				listId,
+				locals.user.username,
+				list.name
+			);
 		} catch (err) {
 			return fail(400, { message: 'Error inviting user' });
 		}
 		return { success: true, type: 'invitation', guest: guest.username };
+	},
+	removeGuest: async ({ request, locals, params }) => {
+		const values = await request.formData();
+		const guest = values.get('guest') as string;
+		const { listId } = params;
+		if (!listId) return;
+
+		try {
+			await removeGuestFromListQuery(guest, listId);
+		} catch (err) {
+			return fail(400, { message: 'Error removing user' });
+		}
+		return { success: true, type: 'removeGuest' };
 	},
 	deleteList: async ({ params }) => {
 		const { listId } = params;

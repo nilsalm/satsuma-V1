@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import SubTitle from '$lib/components/SubTitle.svelte';
 	import Switch from '$lib/components/Switch.svelte';
 	import Title from '$lib/components/Title.svelte';
 	import type { ActionData, PageData } from './$types';
@@ -48,28 +49,54 @@
 	</form>
 
 	<Divider />
+	<div class="flex flex-col gap-2">
+		<form action="?/inviteUser" method="POST">
+			<div class="flex flex-col gap-4">
+				<input
+					type="text"
+					name="usernameEmail"
+					placeholder="Username or Email"
+					class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+				/>
 
-	<form action="?/inviteUser" method="POST">
-		<div class="flex flex-col gap-4">
-			<input
-				type="text"
-				name="usernameEmail"
-				placeholder="Username or Email"
-				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
-			/>
+				<Button text="Invite User" />
 
-			<Button text="Invite User" />
+				{#if form?.message}
+					<div class="text-red-400 text-center">{form.message}</div>
+				{:else if form?.success && form?.type === 'invitation'}
+					<div class="text-green-400 text-center">
+						Invitation sent to your friend <strong>{form?.guest}</strong>.
+					</div>
+				{/if}
+			</div>
+		</form>
 
-			{#if form?.message}
-				<div class="text-red-400 text-center">{form.message}</div>
-			{:else if form?.success && form?.type === 'invitation'}
-				<div class="text-green-400 text-center">
-					Invitation sent to your friend <strong>{form?.guest}</strong>.
-				</div>
-			{/if}
-		</div>
-	</form>
+		{#if list.sharedWith.length > 0}
+			<SubTitle title="Shared with" />
+			{#each list.sharedWith as guest}
+				<form action="?/removeGuest" method="POST">
+					<div class="flex flex-col gap-4">
+						<input type="text" name="guest" class="hidden" value={guest} />
 
+						<div class="flex justify-between items-center">
+							<div class="text-md text-gray-700 font-semibold">{guest}</div>
+							<div class="w-10">
+								<Button text="🗑️" backgroundColor="secondary" />
+							</div>
+						</div>
+
+						{#if form?.message}
+							<div class="text-red-400 text-center">{form.message}</div>
+						{:else if form?.success && form?.type === 'removeGuest'}
+							<div class="text-green-400 text-center">
+								Removed <strong>{form?.guest}</strong> from the list.
+							</div>
+						{/if}
+					</div>
+				</form>
+			{/each}
+		{/if}
+	</div>
 	<Divider />
 
 	<Button text="Delete list" backgroundColor="secondary" onClick={() => (openModal = true)} />

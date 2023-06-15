@@ -181,14 +181,32 @@ export async function getUserByUsernameOrEmailQuery(usernameEmail: string) {
 	return users.items.length > 0 ? users.items[0] : undefined;
 }
 
-export async function inviteUserToListQuery(owner: string, guest: string, listId: string) {
+export async function inviteUserToListQuery(
+	owner: string,
+	guest: string,
+	list: string,
+	ownerName: string,
+	listName: string
+) {
 	const invite = {
 		owner,
 		guest,
-		list: listId,
+		list,
+		ownerName,
+		listName,
 		state: InvitationState.Sent as string
 	};
 	await pb.collection('invitations').create(invite);
+
+	await pb
+		.collection('lists')
+		.update(list, { sharedWith: [...(await getListQuery(list)).sharedWith, guest] });
+}
+
+export async function removeGuestFromListQuery(guest: string, list: string) {
+	await pb
+		.collection('lists')
+		.update(list, { sharedWith: (await getListQuery(list)).sharedWith.filter((g) => g !== guest) });
 }
 
 export async function updateInvitationStateQuery(invitationId: string, state: InvitationState) {

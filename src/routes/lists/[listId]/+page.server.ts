@@ -1,12 +1,13 @@
 import {
 	getCategoriesQuery,
+	getInvitationsQuery,
 	getItemsInListQuery,
 	getListQuery,
 	getTemplatesQuery
 } from '$lib/pocketbase';
 import type { Actions } from './$types';
 
-export const load = ({ params, url }) => {
+export const load = ({ params, locals, url }) => {
 	const getList = async (listId: string) => {
 		try {
 			return await getListQuery(listId);
@@ -39,6 +40,14 @@ export const load = ({ params, url }) => {
 			throw err;
 		}
 	};
+	const getInvitations = async () => {
+		try {
+			return await getInvitationsQuery(locals.user?.id ?? '');
+		} catch (err) {
+			console.error(err);
+			throw err;
+		}
+	};
 
 	const listId = params.listId;
 	const showPicked = url.searchParams.get('showPicked') === 'true' || false;
@@ -47,7 +56,8 @@ export const load = ({ params, url }) => {
 		list: getList(listId),
 		categories: getCategories(),
 		items: getItems(listId, showPicked),
-		templates: getTemplates()
+		templates: getTemplates(),
+		invitations: getInvitations()
 	};
 };
 
