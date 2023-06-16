@@ -181,6 +181,15 @@ export async function getUserByUsernameOrEmailQuery(usernameEmail: string) {
 	return users.items.length > 0 ? users.items[0] : undefined;
 }
 
+export async function getUserByIdQuery(id: string) {
+	const user = await pb.collection('users').getOne<User>(id);
+	return {
+		id: user.id,
+		username: user.username,
+		email: user.email
+	} as User;
+}
+
 export async function inviteUserToListQuery(
 	owner: string,
 	guest: string,
@@ -194,7 +203,7 @@ export async function inviteUserToListQuery(
 		list,
 		ownerName,
 		listName,
-		state: InvitationState.Sent as string
+		state: InvitationState.Pending as string
 	};
 	await pb.collection('invitations').create(invite);
 
@@ -216,12 +225,13 @@ export async function updateInvitationStateQuery(invitationId: string, state: In
 export async function getInvitationsQuery(userId: string) {
 	const invitations = await pb
 		.collection('invitations')
-		.getList(1, 50, { filter: `guest = "${userId}"` });
+		.getList(1, 50, { filter: `guest = "${userId}"`, sort: '-created' });
 
 	return invitations.items.map((invitation) => {
 		return {
 			id: invitation.id,
 			owner: invitation.owner,
+			ownerName: invitation.ownerName,
 			guest: invitation.guest,
 			list: invitation.list,
 			state: invitation.state as InvitationState
@@ -229,12 +239,12 @@ export async function getInvitationsQuery(userId: string) {
 	});
 }
 
-export async function acceptInvitationQuery(invitation: Invitation) {
-	const list = await getListQuery(invitation.list);
-	await pb
-		.collection('lists')
-		.update(invitation.list, { sharedWith: [...list.sharedWith, invitation.guest] });
-	await pb
-		.collection('invitations')
-		.update(invitation.id, { state: InvitationState.Accepted as string });
+export async function updateListSharedWithBasedOnInvitationsQuery(listId: string) {
+	const invitations = await pb.collection('invitations').getList(1, 50, {
+		filter: `list = "${listId}" && state = "${InvitationState.Accepted}" || state = "${InvitationState.Pending}"`
+	});
+
+	const sharedWith = invitations.items.map((invitation) => invitation.guest);
+
+	await pb.collection('lists').update(listId, { sharedWith });
 }

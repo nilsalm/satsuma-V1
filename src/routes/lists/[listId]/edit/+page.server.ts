@@ -4,13 +4,21 @@ import {
 	getListQuery,
 	getUserByUsernameOrEmailQuery,
 	inviteUserToListQuery,
-	removeGuestFromListQuery
+	removeGuestFromListQuery,
+	updateListSharedWithBasedOnInvitationsQuery
 } from '$lib/pocketbase.js';
 import { error, redirect, type Actions, fail } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
 	if (!locals.pb.authStore.isValid) {
 		throw error(401, 'Unauthorized');
+	}
+
+	try {
+		await updateListSharedWithBasedOnInvitationsQuery(params.listId);
+	} catch (err) {
+		console.error(err);
+		throw err;
 	}
 
 	try {
@@ -73,7 +81,7 @@ export const actions: Actions = {
 		}
 		return { success: true, type: 'invitation', guest: guest.username };
 	},
-	removeGuest: async ({ request, locals, params }) => {
+	removeGuest: async ({ request, params }) => {
 		const values = await request.formData();
 		const guest = values.get('guest') as string;
 		const { listId } = params;

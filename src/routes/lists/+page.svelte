@@ -29,14 +29,14 @@
 		<div class="flex flex-col gap-4 w-full">
 			<div class="container m-auto grid grid-cols-2 md:grid-cols-4 gap-4">
 				{#each lists as list}
-					<List {list} />
+					<List {list} invitation={data.invitations.find((invite) => invite.list === list.id)} />
 				{/each}
 			</div>
 			{#if templateLists.length > 0}
 				<Title title="My Templates" />
 				<div class="container m-auto grid grid-cols-2 md:grid-cols-4 gap-4">
 					{#each templateLists as list}
-						<List {list} />
+						<List {list} invitation={data.invitations.find((invite) => invite.list === list.id)} />
 					{/each}
 				</div>
 			{/if}
