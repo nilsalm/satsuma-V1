@@ -194,15 +194,13 @@ export async function inviteUserToListQuery(
 	owner: string,
 	guest: string,
 	list: string,
-	ownerName: string,
-	listName: string
+	ownerName: string
 ) {
 	const invite = {
 		owner,
 		guest,
 		list,
 		ownerName,
-		listName,
 		state: InvitationState.Pending as string
 	};
 	await pb.collection('invitations').create(invite);

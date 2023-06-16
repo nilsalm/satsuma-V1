@@ -69,13 +69,7 @@ export const actions: Actions = {
 
 		// create invitation
 		try {
-			await inviteUserToListQuery(
-				locals.user.id,
-				guest.id,
-				listId,
-				locals.user.username,
-				list.name
-			);
+			await inviteUserToListQuery(locals.user.id, guest.id, listId, locals.user.username);
 		} catch (err) {
 			return fail(400, { message: 'Error inviting user' });
 		}
