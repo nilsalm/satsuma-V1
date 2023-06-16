@@ -55,7 +55,6 @@ export const actions: Actions = {
 		const { listId } = params;
 		if (!listId) return;
 
-		const list = await getListQuery(listId);
 		// find user
 		let guest: User | undefined;
 		try {
