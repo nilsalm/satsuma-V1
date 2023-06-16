@@ -210,7 +210,7 @@
     "schema": [],
     "indexes": [],
     "listRule": "",
-    "viewRule": "id = @request.auth.id",
+    "viewRule": "",
     "createRule": "",
     "updateRule": "id = @request.auth.id",
     "deleteRule": "id = @request.auth.id",
@@ -306,7 +306,7 @@
     "viewRule": "@request.auth.id = owner || @request.auth.id = guest",
     "createRule": "@request.auth.id = owner",
     "updateRule": "@request.auth.id = owner || @request.auth.id = guest",
-    "deleteRule": null,
+    "deleteRule": "@request.auth.id = owner ",
     "options": {}
   }
 ]

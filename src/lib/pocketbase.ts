@@ -1,6 +1,6 @@
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 import PocketBase from 'pocketbase';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import type { Item } from './models/Item';
 import type { Category } from './models/Category';
 import { deepClone } from './util';
@@ -196,6 +196,21 @@ export async function inviteUserToListQuery(
 	list: string,
 	ownerName: string
 ) {
+	const invitations = await pb
+		.collection('invitations')
+		.getFullList({ filter: `guest = "${guest}" && list = "${list}"` });
+	if (invitations.length > 0) {
+		// if any invitation has InvitationState.Accepted, return
+		if (invitations.some((i) => i.state === InvitationState.Accepted)) {
+			return;
+		}
+
+		// if all invitations have InvitationState.Pending, return
+		if (invitations.every((i) => i.state === InvitationState.Pending)) {
+			return;
+		}
+	}
+
 	const invite = {
 		owner,
 		guest,
@@ -210,10 +225,23 @@ export async function inviteUserToListQuery(
 		.update(list, { sharedWith: [...(await getListQuery(list)).sharedWith, guest] });
 }
 
-export async function removeGuestFromListQuery(guest: string, list: string) {
+export async function removeGuestFromListQuery(guest: string, listId: string) {
+	const list = await getListQuery(listId);
 	await pb
 		.collection('lists')
-		.update(list, { sharedWith: (await getListQuery(list)).sharedWith.filter((g) => g !== guest) });
+		.update(listId, { sharedWith: list.sharedWith.filter((g) => g !== guest) });
+}
+
+export async function removeInvitationsForListAndGuestQuery(guest: string, list: string) {
+	const invitations = await pb
+		.collection('invitations')
+		.getFullList({ filter: `guest = "${guest}" && list = "${list}"` });
+
+	// await pb.collection('invitations').delete(invitations[0].id);
+
+	await Promise.all(
+		invitations.map(async (invitation) => await pb.collection('invitations').delete(invitation.id))
+	);
 }
 
 export async function updateInvitationStateQuery(invitationId: string, state: InvitationState) {

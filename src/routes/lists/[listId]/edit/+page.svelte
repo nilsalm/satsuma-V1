@@ -2,9 +2,12 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 	import SubTitle from '$lib/components/SubTitle.svelte';
 	import Switch from '$lib/components/Switch.svelte';
 	import Title from '$lib/components/Title.svelte';
+	import { IconType } from '$lib/types/IconType';
+	import { colors } from '$lib/util';
 	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
@@ -40,7 +43,7 @@
 
 			<Button text="Update list" />
 
-			{#if form?.message}
+			{#if form?.message && form?.type === 'update'}
 				<div class="text-red-400 text-center">{form.message}</div>
 			{:else if form?.success && form?.type === 'update'}
 				<div class="text-green-400 text-center">List updated.</div>
@@ -61,7 +64,7 @@
 
 				<Button text="Invite User" />
 
-				{#if form?.message}
+				{#if form?.message && form?.type === 'invitation'}
 					<div class="text-red-400 text-center">{form.message}</div>
 				{:else if form?.success && form?.type === 'invitation'}
 					<div class="text-green-400 text-center">
@@ -71,25 +74,27 @@
 			</div>
 		</form>
 
-		{#if list.sharedWith.length > 0}
+		{#if data.guests.length > 0}
 			<SubTitle title="Shared with" />
-			{#each list.sharedWith as guest}
+			{#each data.guests as guest}
 				<form action="?/removeGuest" method="POST">
 					<div class="flex flex-col gap-4">
-						<input type="text" name="guest" class="hidden" value={guest} />
+						<input type="text" name="guest" class="hidden" value={guest.id} />
 
 						<div class="flex justify-between items-center">
-							<div class="text-md text-gray-700 font-semibold">{guest}</div>
+							<div class="text-md text-gray-700 font-semibold">{guest.username}</div>
 							<div class="w-10">
-								<Button text="🗑️" backgroundColor="secondary" />
+								<button type="submit" class="">
+									<Icon type={IconType.Decline} stroke={colors.darker} />
+								</button>
 							</div>
 						</div>
 
-						{#if form?.message}
+						{#if form?.message && form?.type === 'removeGuest'}
 							<div class="text-red-400 text-center">{form.message}</div>
 						{:else if form?.success && form?.type === 'removeGuest'}
 							<div class="text-green-400 text-center">
-								Removed <strong>{form?.guest}</strong> from the list.
+								Removed <strong>{guest.username}</strong> from the list.
 							</div>
 						{/if}
 					</div>
