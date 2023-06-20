@@ -101,11 +101,7 @@ export async function createCategoryQuery(name: string) {
 }
 
 export async function getListsQuery() {
-	const lists = deepClone(
-		await pb.collection('lists').getFullList<List>({
-			filter: 'created >= "2022-01-01 00:00:00"'
-		})
-	);
+	const lists = deepClone(await pb.collection('lists').getFullList<List>());
 
 	return lists.map((list) => {
 		return {
@@ -121,7 +117,7 @@ export async function getListsQuery() {
 export async function getTemplatesQuery() {
 	const templates = deepClone(
 		await pb.collection('lists').getFullList<List>({
-			filter: 'created >= "2022-01-01 00:00:00" && isTemplate = true'
+			filter: 'isTemplate = true'
 		})
 	);
 	return templates.map((template) => {
