@@ -210,14 +210,19 @@
 
 			<!-- TEMPLATE PICKER -->
 			{#if data.templates.length > 0 && data.list.isTemplate === false}
-				<div class="flex overflow-x-scroll h-7 mt-1 first:pl-0 gap-1">
+				<div class="flex overflow-x-scroll h-10 mt-1 first:pl-0 gap-1">
 					{#each data.templates as template}
 						<form action="?/addTemplateItemsToList" method="POST" use:enhance>
-							<button
-								class="p-2 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent"
-							>
-								{template.name || `Template ${template.id.substring(0, 3)}`}
-							</button>
+							<div class="relative">
+								<button
+									class="p-2 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent"
+								>
+									{template.name || `Template ${template.id.substring(0, 3)}`}
+								</button>
+								<div class="absolute top-0 right-0" hidden={user.id === template?.owner}>
+									<Icon type={IconType.Shared} size="15" stroke={colors.darker} />
+								</div>
+							</div>
 							<input type="hidden" name="template" value={template.id} />
 							<input type="hidden" name="list" value={data.list.id} />
 						</form>
