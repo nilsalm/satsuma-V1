@@ -28,8 +28,6 @@
 	$: showPicked = $page.url.searchParams.get('showPicked') === 'true' || false;
 	$: items = data.items.filter((i) => i.picked === showPicked);
 
-	$: console.log(newCategoryName);
-
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
 	}

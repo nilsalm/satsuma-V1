@@ -26,16 +26,6 @@ export const load = async ({ params, url }) => {
 		}
 	};
 	const getCategoriesSet = async (ids: (string | null)[]) => {
-		// 5 cents on categories
-		// the /profile/categories let's you view and edit YOUR categories
-		// the [listId] page gets all the used categories in the list and displays them
-		// the item adder let's you add an item to an existing list, own or shared, but indicates whether the category is yours or not
-
-		// for id in ids, get the category with promise all
-		// return a set of categories
-
-		console.log(ids);
-
 		// remove duplicates
 		ids = [...new Set(ids)];
 

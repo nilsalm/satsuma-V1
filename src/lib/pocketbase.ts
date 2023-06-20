@@ -294,3 +294,18 @@ export async function updateListSharedWithBasedOnInvitationsQuery(listId: string
 
 	await pb.collection('lists').update(listId, { sharedWith });
 }
+
+export async function unfollowListQuery(listId: string) {
+	const invitations = await pb.collection('invitations').getList(1, 50, {
+		filter: `list = "${listId}" && state = "${InvitationState.Accepted}" || state = "${InvitationState.Pending}"`
+	});
+
+	await Promise.all(
+		invitations.items.map(
+			async (invitation) =>
+				await pb
+					.collection('invitations')
+					.update(invitation.id, { state: InvitationState.Declined as string })
+		)
+	);
+}

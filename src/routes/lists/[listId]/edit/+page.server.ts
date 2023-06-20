@@ -8,6 +8,7 @@ import {
 	inviteUserToListQuery,
 	removeGuestFromListQuery,
 	removeInvitationsForListAndGuestQuery,
+	unfollowListQuery,
 	updateListSharedWithBasedOnInvitationsQuery
 } from '$lib/pocketbase.js';
 import { error, redirect, type Actions, fail } from '@sveltejs/kit';
@@ -21,7 +22,6 @@ export const load = async ({ locals, params }) => {
 		await updateListSharedWithBasedOnInvitationsQuery(params.listId);
 	} catch (err) {
 		console.error(err);
-		throw err;
 	}
 
 	let list: List;
@@ -110,6 +110,18 @@ export const actions: Actions = {
 		const { listId } = params;
 		if (!listId) return;
 		await deleteListAndAllItemsQuery(listId);
+		throw redirect(303, `/lists`);
+	},
+	unfollowList: async ({ params }) => {
+		const { listId } = params;
+		if (!listId) return;
+
+		try {
+			await unfollowListQuery(listId);
+		} catch (err) {
+			console.error(err);
+			return fail(400, { message: 'Error unfollowing list', type: 'unfollowList' });
+		}
 		throw redirect(303, `/lists`);
 	}
 };
