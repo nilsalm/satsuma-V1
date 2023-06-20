@@ -35,7 +35,6 @@ export async function getCategoryQuery(id: string) {
 		id: category.id,
 		name: category.name,
 		owner: category.owner,
-		sharedWith: category.sharedWith,
 		order: category.order
 	} as Category;
 }
@@ -60,19 +59,45 @@ export async function getItemsPerCategory(id: string) {
 	});
 }
 
-export async function getCategoriesQuery() {
-	const categories = deepClone(await pb.collection('categories').getFullList<Category>());
+export async function getMyCategoriesQuery() {
+	const userId = pb.authStore.model?.id;
+	const categories = deepClone(
+		await pb.collection('categories').getFullList<Category>({ filter: `owner = "${userId}"` })
+	);
 	return categories
 		.map((category) => {
 			return {
 				id: category.id,
 				name: category.name,
 				owner: category.owner,
-				sharedWith: category.sharedWith,
 				order: category.order
 			} as Category;
 		})
 		.sort((a, b) => a.order - b.order);
+}
+
+export async function createCategoryQuery(name: string) {
+	const userId = pb.authStore.model?.id;
+
+	// check if category already exists
+	const categories = await pb.collection('categories').getFullList<Category>({
+		filter: `owner = "${userId}" && name = "${name}"`
+	});
+	if (categories.length > 0) {
+		return categories[0];
+	}
+
+	const cat = await pb.collection('categories').create<Category>({
+		name: name,
+		owner: userId,
+		order: 0
+	});
+	return {
+		id: cat.id,
+		name: cat.name,
+		owner: cat.owner,
+		order: cat.order
+	} as Category;
 }
 
 export async function getListsQuery() {
@@ -237,8 +262,6 @@ export async function removeInvitationsForListAndGuestQuery(guest: string, list:
 		.collection('invitations')
 		.getFullList({ filter: `guest = "${guest}" && list = "${list}"` });
 
-	// await pb.collection('invitations').delete(invitations[0].id);
-
 	await Promise.all(
 		invitations.map(async (invitation) => await pb.collection('invitations').delete(invitation.id))
 	);
@@ -248,7 +271,8 @@ export async function updateInvitationStateQuery(invitationId: string, state: In
 	await pb.collection('invitations').update(invitationId, { state: state as string });
 }
 
-export async function getInvitationsQuery(userId: string) {
+export async function getInvitationsQuery() {
+	const userId = pb.authStore.model?.id;
 	const invitations = await pb
 		.collection('invitations')
 		.getList(1, 50, { filter: `guest = "${userId}"`, sort: '-created' });

@@ -17,7 +17,7 @@ export const load = ({ locals }) => {
 	};
 	const getInvitations = async () => {
 		try {
-			return await getInvitationsQuery(locals.user?.id ?? '');
+			return await getInvitationsQuery();
 		} catch (err) {
 			console.error(err);
 			throw err;

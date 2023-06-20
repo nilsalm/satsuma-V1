@@ -8,9 +8,15 @@
 	import Button from '$lib/components/Button.svelte';
 	import { isPlanModeActive } from '$lib/stores/mode';
 	import { page } from '$app/stores';
+	import { currentUser } from '$lib/pocketbase';
+	import Icon from '$lib/components/Icon.svelte';
+	import { IconType } from '$lib/types/IconType';
+	import { colors } from '$lib/util';
 
 	export let data: PageData;
 	export let form: ActionData;
+
+	const user = $currentUser;
 
 	// STATE
 	let newItemCategoryId = '';
@@ -22,8 +28,7 @@
 	$: showPicked = $page.url.searchParams.get('showPicked') === 'true' || false;
 	$: items = data.items.filter((i) => i.picked === showPicked);
 
-	$: console.log(items);
-	$: console.log(data.categories);
+	$: console.log(newCategoryName);
 
 	$: if (form?.success && form?.action === 'createCategory') {
 		setNewItemCategoryId(form?.id);
@@ -138,17 +143,24 @@
 	<div class="fixed w-screen max-w-xl bottom-14 md:bottom-20 flex flex-col">
 		<!-- CATEGORY PICKER -->
 		<div class="rounded shadow-lg bg-secondary p-2">
-			<div class="flex overflow-x-scroll h-10 pb-2 first:pl-0 gap-1">
+			<div class="flex overflow-x-scroll h-12 pb-2 first:pl-0 gap-1">
 				{#each data.categories as cat}
-					<button
-						on:click={() => setNewItemCategoryId(cat.id)}
-						class="px-1 md:px-2 rounded h-full text-md md:text-lg cursor-pointer shadow text-center {cat.id ===
+					<div
+						class="px-2 md:px-3 rounded h-full relative cursor-pointer shadow {cat.id ===
 						newItemCategoryId
 							? 'bg-primary text-neutral'
 							: 'bg-neutral text-gray-700'}"
 					>
-						{cat.name}
-					</button>
+						<button
+							on:click={() => setNewItemCategoryId(cat.id)}
+							class="h-full text-md md:text-lg text-center"
+						>
+							{cat.name}
+						</button>
+						<div class="absolute top-0 right-0" hidden={user.id === cat?.owner}>
+							<Icon type={IconType.Shared} size="15" stroke={colors.darker} />
+						</div>
+					</div>
 				{/each}
 				{#if showNewCategoryModal === false}
 					<button
