@@ -1,6 +1,6 @@
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 import PocketBase from 'pocketbase';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import type { Item } from './models/Item';
 import type { Category } from './models/Category';
 import { deepClone } from './util';
