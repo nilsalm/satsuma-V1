@@ -97,5 +97,23 @@
 			fill={stroke}
 			d="M2.5 11h19a.5.5 0 0 0 0-1h-19a.5.5 0 0 0 0 1zm19 3h-19a.5.5 0 0 0 0 1h19a.5.5 0 0 0 0-1z"
 		/>
+	{:else if type === IconType.Accept}
+		<path
+			fill="none"
+			{stroke}
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="1.5"
+			d="M20 7L10 17l-5-5"
+		/>
+	{:else if type === IconType.Decline}
+		<path
+			fill="none"
+			{stroke}
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="1.5"
+			d="m7 7l10 10M7 17L17 7"
+		/>
 	{/if}
 </svg>
