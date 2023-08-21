@@ -1,5 +1,5 @@
 export enum InvitationState {
-	Sent = 'Sent',
+	Pending = 'Pending',
 	Accepted = 'Accepted',
 	Declined = 'Declined'
 }

@@ -1,4 +1,4 @@
-import { getCategoriesQuery } from '$lib/pocketbase';
+import { getMyCategoriesQuery } from '$lib/pocketbase';
 import { redirect, type Actions } from '@sveltejs/kit';
 
 export const load = ({ locals }) => {
@@ -8,7 +8,7 @@ export const load = ({ locals }) => {
 
 	const getCategories = async () => {
 		try {
-			const categories = getCategoriesQuery();
+			const categories = getMyCategoriesQuery();
 			return categories;
 		} catch (err) {
 			console.error(err);

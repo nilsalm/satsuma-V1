@@ -2,9 +2,14 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Divider from '$lib/components/Divider.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import SubTitle from '$lib/components/SubTitle.svelte';
 	import Switch from '$lib/components/Switch.svelte';
 	import Title from '$lib/components/Title.svelte';
+	import { IconType } from '$lib/types/IconType';
+	import { colors } from '$lib/util';
 	import type { ActionData, PageData } from './$types';
+	import { currentUser } from '$lib/pocketbase';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -15,6 +20,7 @@
 	function closeModal() {
 		openModal = false;
 	}
+	const user = $currentUser;
 </script>
 
 <div class="flex justify-between w-full mb-4">
@@ -25,54 +31,95 @@
 	</a>
 </div>
 <div class="flex flex-col gap-8">
-	<form action="?/updateList" method="POST">
-		<div class="flex flex-col gap-4">
-			<input
-				type="text"
-				name="name"
-				placeholder="Name"
-				value={list.name}
-				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
-			/>
+	{#if list.owner === user?.id}
+		<form action="?/updateList" method="POST">
+			<div class="flex flex-col gap-4">
+				<input
+					type="text"
+					name="name"
+					placeholder="Name"
+					value={list.name}
+					class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+				/>
 
-			<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
+				<Switch bind:value={makeTemplate} label="Make template?" name="isTemplate" />
 
-			<Button text="Update list" />
+				<Button text="Update list" />
 
-			{#if form?.message}
-				<div class="text-red-400 text-center">{form.message}</div>
-			{:else if form?.success && form?.type === 'update'}
-				<div class="text-green-400 text-center">List updated.</div>
-			{/if}
-		</div>
-	</form>
+				{#if form?.message && form?.type === 'update'}
+					<div class="text-red-400 text-center">{form.message}</div>
+				{:else if form?.success && form?.type === 'update'}
+					<div class="text-green-400 text-center">List updated.</div>
+				{/if}
+			</div>
+		</form>
 
-	<Divider />
+		<Divider />
 
-	<form action="?/inviteUser" method="POST">
-		<div class="flex flex-col gap-4">
-			<input
-				type="text"
-				name="usernameEmail"
-				placeholder="Username or Email"
-				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
-			/>
+		<div class="flex flex-col gap-2">
+			<form action="?/inviteUser" method="POST" use:enhance>
+				<div class="flex flex-col gap-4">
+					<input
+						type="text"
+						name="usernameEmail"
+						placeholder="Username or Email"
+						class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
+					/>
 
-			<Button text="Invite User" />
+					<Button text="Invite User" />
 
-			{#if form?.message}
-				<div class="text-red-400 text-center">{form.message}</div>
-			{:else if form?.success && form?.type === 'invitation'}
-				<div class="text-green-400 text-center">
-					Invitation sent to your friend <strong>{form?.guest}</strong>.
+					{#if form?.message && form?.type === 'invitation'}
+						<div class="text-red-400 text-center">{form.message}</div>
+					{:else if form?.success && form?.type === 'invitation'}
+						<div class="text-green-400 text-center">
+							Invitation sent to your friend <strong>{form?.guest}</strong>.
+						</div>
+					{/if}
 				</div>
+			</form>
+
+			{#if data.guests.length > 0}
+				<SubTitle title="Shared with" />
+				{#each data.guests as guest}
+					<form action="?/removeGuest" method="POST" use:enhance>
+						<div class="flex flex-col gap-4">
+							<input type="text" name="guest" class="hidden" value={guest.id} />
+
+							<div class="flex justify-between items-center">
+								<div class="text-md text-gray-700 font-semibold">{guest.username}</div>
+								<div class="w-10">
+									<button type="submit" class="">
+										<Icon type={IconType.Decline} stroke={colors.darker} />
+									</button>
+								</div>
+							</div>
+
+							{#if form?.message && form?.type === 'removeGuest'}
+								<div class="text-red-400 text-center">{form.message}</div>
+							{:else if form?.success && form?.type === 'removeGuest'}
+								<div class="text-green-400 text-center">
+									Removed <strong>{guest.username}</strong> from the list.
+								</div>
+							{/if}
+						</div>
+					</form>
+				{/each}
 			{/if}
 		</div>
-	</form>
 
-	<Divider />
+		<Divider />
 
-	<Button text="Delete list" backgroundColor="secondary" onClick={() => (openModal = true)} />
+		<Button text="Delete list" backgroundColor="secondary" onClick={() => (openModal = true)} />
+	{:else}
+		<form action="?/unfollowList" method="POST">
+			<Button text="Unfollow List" />
+			{#if form?.message && form?.type === 'unfollow'}
+				<div class="text-red-400 text-center">{form.message}</div>
+			{:else if form?.success && form?.type === 'unfollow'}
+				<div class="text-green-400 text-center">You are no longer following this list.</div>
+			{/if}
+		</form>
+	{/if}
 </div>
 
 {#if openModal}

@@ -1,12 +1,14 @@
 import {
-	getCategoriesQuery,
+	getMyCategoriesQuery,
 	getItemsInListQuery,
 	getListQuery,
-	getTemplatesQuery
+	getTemplatesQuery,
+	getCategoryQuery,
+	createCategoryQuery
 } from '$lib/pocketbase';
 import type { Actions } from './$types';
 
-export const load = ({ params, url }) => {
+export const load = async ({ params, url }) => {
 	const getList = async (listId: string) => {
 		try {
 			return await getListQuery(listId);
@@ -15,14 +17,28 @@ export const load = ({ params, url }) => {
 			throw err;
 		}
 	};
-	const getCategories = async () => {
+	const getMyCategories = async () => {
 		try {
-			return await getCategoriesQuery();
+			return await getMyCategoriesQuery();
 		} catch (err) {
 			console.error(err);
 			throw err;
 		}
 	};
+	const getCategoriesSet = async (ids: (string | null)[]) => {
+		// remove duplicates
+		ids = [...new Set(ids)];
+
+		const categories = await Promise.all(
+			ids.map(async (id) => {
+				if (!id) return;
+				return await getCategoryQuery(id);
+			})
+		);
+
+		return categories.sort((a, b) => a.order - b.order);
+	};
+
 	const getItems = async (listId: string, showPicked: boolean) => {
 		try {
 			return await getItemsInListQuery(listId, showPicked);
@@ -43,10 +59,22 @@ export const load = ({ params, url }) => {
 	const listId = params.listId;
 	const showPicked = url.searchParams.get('showPicked') === 'true' || false;
 
+	const items = await getItems(listId, showPicked);
+
+	const usedCategoriesIds = items.map((item) => item.category);
+
+	const catSetList = await getCategoriesSet(usedCategoriesIds);
+	const catSetOwn = await getMyCategories();
+
+	const catSet = catSetList.concat(catSetOwn);
+	const catSetUnique = [...new Set(catSet.map((cat) => JSON.stringify(cat)))].map((cat) =>
+		JSON.parse(cat)
+	);
+
 	return {
 		list: getList(listId),
-		categories: getCategories(),
-		items: getItems(listId, showPicked),
+		categories: catSetUnique,
+		items,
 		templates: getTemplates()
 	};
 };
@@ -96,18 +124,19 @@ export const actions: Actions = {
 		}
 		return { success: true };
 	},
-	createCategory: async ({ locals, request }) => {
+	createCategory: async ({ request }) => {
 		const values = await request.formData();
 		const name = String(values.get('name'));
-		const owner = locals.user.id;
+
+		if (!name) return { success: false, error: 'No name provided' };
 
 		try {
-			const cat = await locals.pb.collection('categories').create({ name, owner });
+			const cat = await createCategoryQuery(name);
 			const id = cat.id;
 			return { success: true, id, action: 'createCategory' };
 		} catch (e) {
 			console.error(e);
-			throw e;
+			return { success: false, error: 'Could not create category' };
 		}
 	},
 	addTemplateItemsToList: async ({ locals, request }) => {
