@@ -8,17 +8,17 @@ export const actions: Actions = {
 		}
 
 		const data = Object.fromEntries(await request.formData()) as {
-			usernameOrEmail: string;
-			password: string;
+			email: string;
 		};
 
-		data.usernameOrEmail = data.usernameOrEmail.trim();
+		data.email = data.email.trim();
 
 		try {
-			await locals.pb.collection('users').authWithPassword(data.usernameOrEmail, data.password);
+			await locals.pb.admins.requestPasswordReset(data.email);
 		} catch (e) {
 			return fail(400, { data, incorrect: true });
 		}
-		throw redirect(303, '/lists');
+		
+    return { success: true, email: data.email };
 	}
 };

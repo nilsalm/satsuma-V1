@@ -1,6 +1,6 @@
 export type Category = {
 	id: string;
 	name: string;
-	user: string;
+	owner: string;
 	order: number;
 };

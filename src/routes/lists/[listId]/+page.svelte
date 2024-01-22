@@ -8,9 +8,15 @@
 	import Button from '$lib/components/Button.svelte';
 	import { isPlanModeActive } from '$lib/stores/mode';
 	import { page } from '$app/stores';
+	import { currentUser } from '$lib/pocketbase';
+	import Icon from '$lib/components/Icon.svelte';
+	import { IconType } from '$lib/types/IconType';
+	import { colors } from '$lib/util';
 
 	export let data: PageData;
 	export let form: ActionData;
+
+	const user = $currentUser;
 
 	// STATE
 	let newItemCategoryId = '';
@@ -99,55 +105,60 @@
 	</div>
 </div>
 
-<div class="flex flex-col pb-4 overscroll-contain px-4 mb-40">
-	<div>
-		{#if items.length === 0}
-			<div class="text-center mt-20">
-				<p>Good job!</p>
-				<p>Now get yourself some ice cream 🍦</p>
-			</div>
-		{:else}
-			{#each data.categories as cat}
-				{#if items.filter((i) => i.category === cat.id).length > 0}
-					<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
-						<p>{cat.name}</p>
-					</div>
-					{#each items.filter((i) => i.category === cat.id) as item}
-						<div in:fade>
-							<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
-						</div>
-					{/each}
-				{/if}
-			{/each}
-			{#if items.filter((i) => i.category === null).length > 0}
+<div class="pb-4 overscroll-contain px-4 mb-40">
+	{#if items.length === 0}
+		<div class="text-center mt-20">
+			<p>Good job!</p>
+			<p>Now get yourself some ice cream 🍦</p>
+		</div>
+	{:else}
+		{#each data.categories as cat}
+			{#if items.filter((i) => i.category === cat.id).length > 0}
 				<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
-					<p>Other</p>
+					<p>{cat.name}</p>
 				</div>
-				{#each items.filter((i) => i.category === null) as item}
+				{#each items.filter((i) => i.category === cat.id) as item}
 					<div in:fade>
 						<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
 					</div>
 				{/each}
 			{/if}
+		{/each}
+		{#if items.filter((i) => i.category === null).length > 0}
+			<div class="text-lg mt-6 first:mt-2 border-primary border-b-4 text-primary font-semibold">
+				<p>Other</p>
+			</div>
+			{#each items.filter((i) => i.category === null) as item}
+				<div in:fade>
+					<Item on:updated={refreshItem} {item} newCategoryId={newItemCategoryId} />
+				</div>
+			{/each}
 		{/if}
-	</div>
+	{/if}
 </div>
 
 {#if $isPlanModeActive}
 	<div class="fixed w-screen max-w-xl bottom-14 md:bottom-20 flex flex-col">
 		<!-- CATEGORY PICKER -->
 		<div class="rounded shadow-lg bg-secondary p-2">
-			<div class="flex overflow-x-scroll h-10 pb-2 first:pl-0 gap-1">
+			<div class="flex overflow-x-scroll h-12 pb-2 first:pl-0 gap-1">
 				{#each data.categories as cat}
-					<button
-						on:click={() => setNewItemCategoryId(cat.id)}
-						class="px-1 md:px-2 rounded h-full text-md md:text-lg cursor-pointer shadow text-center {cat.id ===
+					<div
+						class="px-2 md:px-3 rounded h-full relative cursor-pointer shadow {cat.id ===
 						newItemCategoryId
 							? 'bg-primary text-neutral'
 							: 'bg-neutral text-gray-700'}"
 					>
-						{cat.name}
-					</button>
+						<button
+							on:click={() => setNewItemCategoryId(cat.id)}
+							class="h-full text-md md:text-lg text-center"
+						>
+							{cat.name}
+						</button>
+						<div class="absolute top-0 right-0" hidden={user.id === cat?.owner}>
+							<Icon type={IconType.Shared} size="15" stroke={colors.darker} />
+						</div>
+					</div>
 				{/each}
 				{#if showNewCategoryModal === false}
 					<button
@@ -199,14 +210,19 @@
 
 			<!-- TEMPLATE PICKER -->
 			{#if data.templates.length > 0 && data.list.isTemplate === false}
-				<div class="flex overflow-x-scroll h-7 mt-1 first:pl-0 gap-1">
+				<div class="flex overflow-x-scroll h-10 mt-1 first:pl-0 gap-1">
 					{#each data.templates as template}
 						<form action="?/addTemplateItemsToList" method="POST" use:enhance>
-							<button
-								class="p-2 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent"
-							>
-								{template.name || `Template ${template.id.substring(0, 3)}`}
-							</button>
+							<div class="relative">
+								<button
+									class="p-2 rounded shadow-lg text-gray-700 h-full text-sm text-center bg-accent"
+								>
+									{template.name || `Template ${template.id.substring(0, 3)}`}
+								</button>
+								<div class="absolute top-0 right-0" hidden={user.id === template?.owner}>
+									<Icon type={IconType.Shared} size="15" stroke={colors.darker} />
+								</div>
+							</div>
 							<input type="hidden" name="template" value={template.id} />
 							<input type="hidden" name="list" value={data.list.id} />
 						</form>

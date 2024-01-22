@@ -11,12 +11,11 @@
 
 <LayoutContainer>
 	<div class="w-full mb-4">
-		<Title title="Log in" />
+		<Title title="Password reset" />
 	</div>
 
 	<form
 		method="POST"
-		class="card"
 		use:enhance={() => {
 			return async ({ result }) => {
 				pb.authStore.loadFromCookie(document.cookie);
@@ -27,32 +26,27 @@
 		<div class="flex flex-col gap-4">
 			<input
 				type="text"
-				name="usernameOrEmail"
-				placeholder="Username or Email"
+				name="email"
+				placeholder="Email"
 				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
 				class:bg-red-100={form?.incorrect}
 			/>
-			<input
-				type="password"
-				name="password"
-				placeholder="Password"
-				class="bg-neutral px-4 text-md text-gray-700 border-2 border-gray-700 font-semibold rounded h-12 shadow-sm"
-				class:bg-red-100={form?.incorrect}
-			/>
-			
-			<Button text={'Log in'} backgroundColor={'primary'} />
-			
+      
+      <Button text={'Send reset email'} backgroundColor={'primary'} />
+
 			{#if form?.incorrect}
-				<p class="text-center text-red-500">Invalid credentials</p>
+				<p class="text-center text-lg text-red-500">Could not reset</p>
+			{/if}
+
+			{#if form?.success}
+				<p class="text-center text-lg text-green-400 ">
+					Email sent to <strong> {form.email} </strong>
+				</p>
 			{/if}
 
 			<p class="text-center">
-				Don't have an account?
-				<a href="/register" class="underline">Register now!</a>
-			</p>
-			<p class="text-center text-sm">
-				Forgot your password?
-				<a href="/password-reset" class="underline">Reset it</a>
+				Back to
+				<a href="/login" class="underline">login</a>
 			</p>
 		</div>
 	</form>

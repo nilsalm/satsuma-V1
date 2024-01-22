@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Title from '$lib/components/Title.svelte';
-	import List from '$lib/components/List.svelte';
+	import ListButton from '$lib/components/ListButton.svelte';
 	import type { PageData } from './$types';
 	import Button from '$lib/components/Button.svelte';
 
@@ -29,14 +29,20 @@
 		<div class="flex flex-col gap-4 w-full">
 			<div class="container m-auto grid grid-cols-2 md:grid-cols-4 gap-4">
 				{#each lists as list}
-					<List {list} />
+					<ListButton
+						{list}
+						invitation={data.invitations.find((invite) => invite.list === list.id)}
+					/>
 				{/each}
 			</div>
 			{#if templateLists.length > 0}
 				<Title title="My Templates" />
 				<div class="container m-auto grid grid-cols-2 md:grid-cols-4 gap-4">
 					{#each templateLists as list}
-						<List {list} />
+						<ListButton
+							{list}
+							invitation={data.invitations.find((invite) => invite.list === list.id)}
+						/>
 					{/each}
 				</div>
 			{/if}
