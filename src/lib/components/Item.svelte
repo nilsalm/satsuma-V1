@@ -4,6 +4,9 @@
 	import { deleteItemQuery, updateItemQuery } from '$lib/pocketbase';
 	import { isPlanModeActive } from '$lib/stores/mode';
 	import { createEventDispatcher } from 'svelte';
+	import Icon from './Icon.svelte';
+	import { IconType } from '$lib/types/IconType';
+	import { colors } from '$lib/util';
 
 	export let item: Item;
 	export let newCategoryId: string | null;
@@ -57,43 +60,37 @@
 			<div class="flex gap-2">
 				{#if $isPlanModeActive}
 					<button
-						class=" text-gray-700 font-semibold px-2 disabled:opacity-30 border-2 border-primary rounded"
+						class="w-6 h-6 disabled:opacity-30 border-2 border-primary rounded"
 						disabled={item.quantity <= 1}
 						on:click={decreaseItem}
 					>
-						-
+						<Icon type={IconType.Minus} size="20" stroke={colors.darker} />
 					</button>
 
-					<button
-						class="text-gray-700 font-semibold px-2 border-2 border-primary rounded"
-						on:click={increaseItem}
-					>
-						+
+					<button class="w-6 h-6 border-2 border-primary rounded" on:click={increaseItem}>
+						<Icon type={IconType.Plus} size="20" stroke={colors.darker} />
 					</button>
 
 					<form action="?/setCategory" method="POST" use:enhance>
 						<button
-							class="text-gray-700 font-semibold px-2 disabled:opacity-30 border-2 border-primary rounded"
+							class="w-6 h-6 disabled:opacity-30 border-2 border-primary rounded"
 							disabled={!newCategoryId}
 						>
-							🔀
+							<Icon type={IconType.Switch} size="20" stroke={colors.darker} />
 						</button>
 						<input type="hidden" name="id" value={item.id} />
 						<input type="hidden" name="category" value={newCategoryId} />
 					</form>
-					<button
-						class="text-gray-700 font-semibold px-2 border-2 border-primary rounded"
-						on:click={deleteItem}
-					>
-						❌
+					<button class="w-6 h-6 border-2 border-primary rounded" on:click={deleteItem}>
+						<Icon type={IconType.Decline} size="20" stroke={colors.darker} />
 					</button>
 				{:else}
-					<button
-						class="text-gray-700 font-semibold px-2 border-2 border-primary rounded"
-						on:click={pickItem}
-					>
-						✅
-					</button>
+					<!-- form is bullshit workaround to align with the height of the form in the if. -->
+					<form action="">
+						<button class="w-6 h-6 border-2 border-primary rounded" on:click={pickItem}>
+							<Icon type={IconType.Accept} size="20" stroke={colors.darker} />
+						</button>
+					</form>
 				{/if}
 			</div>
 		{/if}
