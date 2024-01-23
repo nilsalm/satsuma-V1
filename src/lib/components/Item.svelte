@@ -14,12 +14,16 @@
 	const dispatch = createEventDispatcher();
 
 	async function increaseItem() {
-		item.quantity++;
+		if (item.quantity >= 100) item.quantity = item.quantity + 50;
+		else if (item.quantity >= 25) item.quantity = item.quantity + 5;
+		else item.quantity++;
 		dispatch('updated', { item });
 		await updateItemQuery(item);
 	}
 	async function decreaseItem() {
-		item.quantity--;
+		if (item.quantity >= 100) item.quantity = item.quantity - 50;
+		else if (item.quantity >= 25) item.quantity = item.quantity - 5;
+		else item.quantity--;
 		dispatch('updated', { item });
 		await updateItemQuery(item);
 	}
