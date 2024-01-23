@@ -52,6 +52,11 @@
 	async function proposeCategory(itemName: string) {
 		if (itemName.length < 3) return;
 
+		const nameMatch = itemName.match(/^(\d+)\s+(.*)$/);
+		if (nameMatch) {
+			itemName = nameMatch[2];
+		}
+
 		let resultList;
 
 		try {

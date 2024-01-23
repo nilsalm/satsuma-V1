@@ -11,5 +11,8 @@ export enum IconType {
 	Shared = 'shared', // https://api.iconify.design/iconamoon:link-light.svg
 	Drag = 'drag', // https://api.iconify.design/material-symbols:drag-handle-rounded.svg
 	Accept = 'accept', // https://api.iconify.design/iconamoon:check-light.svg
-	Decline = 'decline' // https://api.iconify.design/iconamoon:close-light.svg
+	Decline = 'decline', // https://api.iconify.design/iconamoon:close-light.svg
+	Switch = 'switch', // https://icon-sets.iconify.design/material-symbols-light/category-outline-rounded/
+	Plus = 'plus', // https://icon-sets.iconify.design/iconamoon/sign-plus-light/
+	Minus = 'minus' // https://icon-sets.iconify.design/iconamoon/sign-minus-light/
 }
