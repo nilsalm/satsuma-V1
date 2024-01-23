@@ -94,11 +94,18 @@ export const actions: Actions = {
 	},
 	createItem: async ({ locals, request }) => {
 		const values = await request.formData();
-		const name = String(values.get('name'));
+		var name = String(values.get('name'));
 		const list = String(values.get('list'));
 		const category = String(values.get('category'));
-		const quantity = 1; //Number(values.get('quantity'));
+		var quantity = 1; //Number(values.get('quantity'));
 		const picked = false;
+
+		// if name starts with number, split it into quantity and name
+		const nameMatch = name.match(/^(\d+)\s+(.*)$/);
+		if (nameMatch) {
+			quantity = Number(nameMatch[1]);
+			name = nameMatch[2];
+		}
 
 		const newItem = { name, list, category, quantity, picked };
 
@@ -114,7 +121,7 @@ export const actions: Actions = {
 				const existingItem = existingItems.items[0];
 				await locals.pb
 					.collection('items')
-					.update(existingItem.id, { quantity: existingItem.quantity + 1 });
+					.update(existingItem.id, { quantity: existingItem.quantity + quantity });
 			} else {
 				await locals.pb.collection('items').create(newItem);
 			}
