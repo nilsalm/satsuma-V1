@@ -74,7 +74,6 @@
 					<button class="w-6 h-6 border-2 border-primary rounded" on:click={increaseItem}>
 						<Icon type={IconType.Plus} size="20" stroke={colors.darker} />
 					</button>
-
 					<form action="?/setCategory" method="POST" use:enhance>
 						<button
 							class="w-6 h-6 disabled:opacity-30 border-2 border-primary rounded"

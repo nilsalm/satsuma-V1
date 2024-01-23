@@ -3,7 +3,9 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
+
 app = "satsuma-summer-sky-4837"
+
 primary_region = "arn"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
@@ -17,6 +19,7 @@ kill_timeout = "5s"
   source = "pb_data"
   destination = "/pb/pb_data"
   processes = ["app"]
+
   auto_extend_size_threshold = 0
 
 [http_service]

@@ -97,6 +97,7 @@ export const actions: Actions = {
 		var name = String(values.get('name'));
 		const list = String(values.get('list'));
 		const category = String(values.get('category'));
+
 		var quantity = 1; //Number(values.get('quantity'));
 		const picked = false;
 
