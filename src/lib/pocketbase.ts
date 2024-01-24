@@ -194,7 +194,6 @@ export async function deleteCategoryAndAllItemsQuery(categoryId: string) {
 export async function updateItemQuery(item: Item) {
 	await pb.collection('items').update(item.id, item);
 }
-
 export async function deleteItemQuery(item: Item) {
 	await pb.collection('items').delete(item.id);
 }

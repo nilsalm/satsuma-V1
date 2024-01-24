@@ -244,6 +244,242 @@
     "options": {}
   },
   {
+    "id": "7hl5j2inxaqx1by",
+    "name": "lists",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "8maejv7f",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "rqjs1ran",
+        "name": "isTemplate",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "lvscdvnh",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "idfzoynb",
+        "name": "sharedWith",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": null,
+          "displayFields": []
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner",
+    "deleteRule": "@request.auth.id = owner",
+    "options": {}
+  },
+  {
+    "id": "pcgfoipcvldtrjb",
+    "name": "categories",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "ytn1hobj",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "ckwtmrxr",
+        "name": "order",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      },
+      {
+        "id": "lvscdvnh",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "btg81b3i",
+        "name": "sharedWith",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": null,
+          "displayFields": []
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id = owner || @request.auth.id ?= sharedWith.id",
+    "viewRule": "@request.auth.id = owner || @request.auth.id ?= sharedWith.id",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner",
+    "deleteRule": "@request.auth.id = owner",
+    "options": {}
+  },
+  {
+    "id": "_pb_users_auth_",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "schema": [],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "",
+    "updateRule": "id = @request.auth.id",
+    "deleteRule": "id = @request.auth.id",
+    "options": {
+      "allowEmailAuth": true,
+      "allowOAuth2Auth": false,
+      "allowUsernameAuth": true,
+      "exceptEmailDomains": null,
+      "manageRule": null,
+      "minPasswordLength": 8,
+      "onlyEmailDomains": null,
+      "requireEmail": true
+    }
+  },
+  {
+    "id": "2jwei9mpvwduqyj",
+    "name": "invitations",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "xwzxywuu",
+        "name": "owner",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "01se4eh7",
+        "name": "guest",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "plw0rv47",
+        "name": "list",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "7hl5j2inxaqx1by",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "hoyaw1qe",
+        "name": "state",
+        "type": "select",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "Pending",
+            "Accepted",
+            "Declined"
+          ]
+        }
+      },
+      {
+        "id": "fp4wauvn",
+        "name": "ownerName",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id = owner || @request.auth.id = guest",
+    "viewRule": "@request.auth.id = owner || @request.auth.id = guest",
+    "createRule": "@request.auth.id = owner",
+    "updateRule": "@request.auth.id = owner || @request.auth.id = guest",
+    "deleteRule": "@request.auth.id = owner ",
+    "options": {}
+  },
+  {
     "id": "pcgfoipcvldtrjb",
     "name": "categories",
     "type": "base",
