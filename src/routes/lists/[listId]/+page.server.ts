@@ -66,10 +66,13 @@ export const load = async ({ params, url }) => {
 	const catSetList = await getCategoriesSet(usedCategoriesIds);
 	const catSetOwn = await getMyCategories();
 
-	const catSet = catSetList.concat(catSetOwn);
+	const catSet = catSetList.concat(catSetOwn).filter((item) => item !== undefined);
+	console.log(catSet);
 	const catSetUnique = [...new Set(catSet.map((cat) => JSON.stringify(cat)))].map((cat) =>
 		JSON.parse(cat)
 	);
+
+	console.log(catSetUnique);
 
 	return {
 		list: getList(listId),
