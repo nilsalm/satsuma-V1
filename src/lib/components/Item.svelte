@@ -44,24 +44,21 @@
 	}
 </script>
 
-<div
-	class="border-b-2 last:border-0 border-secondary rounded-sm px-2 mt-1
-	{item.picked && 'opacity-50'}"
->
+<div class="border-b-2 last:border-0 border-secondary rounded-sm px-2 mt-1">
 	<!-- // TODO breaks for unreasonable long item names -->
 	<div class="flex flex-row justify-between items-center">
 		<div class="flex gap-4 py-2 flex-grow mr-8">
-			<div class="w-4 text-right text-gray-700">{item.quantity}</div>
+			<div class="w-4 text-right text-gray-700 {item.picked && 'opacity-50'}">{item.quantity}</div>
 			<div
 				class="text-gray-700 text-left font-semibold sm:w-[310px] truncate whitespace-nowrap
-					{item.picked && 'line-through'}"
+					{item.picked && 'line-through opacity-50'}"
 			>
 				{item.name}
 			</div>
 		</div>
 
-		{#if !item.picked}
-			<div class="flex gap-2">
+		<div class="flex gap-2">
+			{#if !item.picked}
 				{#if $isPlanModeActive}
 					<button
 						class="w-6 h-6 disabled:opacity-30 border-2 border-primary rounded"
@@ -95,7 +92,11 @@
 						</button>
 					</form>
 				{/if}
-			</div>
-		{/if}
+			{:else if $isPlanModeActive}
+				<button class="w-6 h-6 border-2 border-primary rounded" on:click={togglePickedItem}>
+					<Icon type={IconType.Undo} size="20" stroke={colors.darker} />
+				</button>
+			{/if}
+		</div>
 	</div>
 </div>

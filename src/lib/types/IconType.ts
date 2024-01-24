@@ -14,5 +14,6 @@ export enum IconType {
 	Decline = 'decline', // https://api.iconify.design/iconamoon:close-light.svg
 	Switch = 'switch', // https://icon-sets.iconify.design/material-symbols-light/category-outline-rounded/
 	Plus = 'plus', // https://icon-sets.iconify.design/iconamoon/sign-plus-light/
-	Minus = 'minus' // https://icon-sets.iconify.design/iconamoon/sign-minus-light/
+	Minus = 'minus', // https://icon-sets.iconify.design/iconamoon/sign-minus-light/
+	Undo = 'undo' // https://icon-sets.iconify.design/iconamoon/do-undo-light/
 }
