@@ -3,7 +3,7 @@ import { redirect, type Actions } from '@sveltejs/kit';
 
 export const load = ({ locals, params }) => {
 	if (!locals.pb.authStore.isValid) {
-		throw redirect(303, '/login');
+		redirect(303, '/login');
 	}
 
 	const getCategory = async () => {
@@ -45,12 +45,12 @@ export const actions: Actions = {
 			console.error(err);
 			throw err;
 		}
-		throw redirect(303, `/categories/${params.categoryId}`);
+		redirect(303, `/categories/${params.categoryId}`);
 	},
 	deleteCategory: async ({ params }) => {
 		const { categoryId } = params;
 		if (!categoryId) return;
 		deleteCategoryQuery(categoryId);
-		throw redirect(303, '/categories');
+		redirect(303, '/categories');
 	}
 };

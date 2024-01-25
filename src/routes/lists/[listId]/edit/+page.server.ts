@@ -15,7 +15,7 @@ import { error, redirect, type Actions, fail } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
 	if (!locals.pb.authStore.isValid) {
-		throw error(401, 'Unauthorized');
+		error(401, 'Unauthorized');
 	}
 
 	try {
@@ -110,7 +110,7 @@ export const actions: Actions = {
 		const { listId } = params;
 		if (!listId) return;
 		await deleteListAndAllItemsQuery(listId);
-		throw redirect(303, `/lists`);
+		redirect(303, `/lists`);
 	},
 	unfollowList: async ({ params }) => {
 		const { listId } = params;
@@ -122,6 +122,6 @@ export const actions: Actions = {
 			console.error(err);
 			return fail(400, { message: 'Error unfollowing list', type: 'unfollowList' });
 		}
-		throw redirect(303, `/lists`);
+		redirect(303, `/lists`);
 	}
 };

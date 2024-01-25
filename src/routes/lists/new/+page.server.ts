@@ -3,7 +3,7 @@ import type { Actions } from './$types';
 
 export const load = ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
-		throw redirect(303, '/login');
+		redirect(303, '/login');
 	}
 };
 
@@ -28,6 +28,6 @@ export const actions: Actions = {
 			console.error(err);
 			throw err;
 		}
-		throw redirect(303, '/lists');
+		redirect(303, '/lists');
 	}
 };

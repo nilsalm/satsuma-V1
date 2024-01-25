@@ -4,7 +4,7 @@ import type { Actions } from './$types';
 export const actions: Actions = {
 	default: async ({ locals, request }) => {
 		if (locals.user) {
-			throw redirect(303, '/lists');
+			redirect(303, '/lists');
 		}
 
 		const data = Object.fromEntries(await request.formData()) as {
