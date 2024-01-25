@@ -1,9 +1,9 @@
 import { deleteCategoryQuery, getCategoryQuery, getItemsPerCategory } from '$lib/pocketbase';
 import { redirect, type Actions } from '@sveltejs/kit';
 
-export const load = ({ locals, params }) => {
+export const load = async ({ locals, params }) => {
 	if (!locals.pb.authStore.isValid) {
-		throw redirect(303, '/login');
+		redirect(303, '/login');
 	}
 
 	const getCategory = async () => {
@@ -27,8 +27,8 @@ export const load = ({ locals, params }) => {
 	};
 
 	return {
-		category: getCategory(),
-		items: getItems()
+		category: await getCategory(),
+		items: await getItems()
 	};
 };
 
@@ -45,12 +45,12 @@ export const actions: Actions = {
 			console.error(err);
 			throw err;
 		}
-		throw redirect(303, `/categories/${params.categoryId}`);
+		redirect(303, `/categories/${params.categoryId}`);
 	},
 	deleteCategory: async ({ params }) => {
 		const { categoryId } = params;
 		if (!categoryId) return;
 		deleteCategoryQuery(categoryId);
-		throw redirect(303, '/categories');
+		redirect(303, '/categories');
 	}
 };

@@ -72,10 +72,10 @@ export const load = async ({ params, url }) => {
 	);
 
 	return {
-		list: getList(listId),
+		list: await getList(listId),
 		categories: catSetUnique,
 		items,
-		templates: getTemplates()
+		templates: await getTemplates()
 	};
 };
 

@@ -2,9 +2,9 @@ import { getInvitationsQuery, getListsQuery, updateInvitationStateQuery } from '
 import { InvitationState } from '$lib/types/InvitationState.js';
 import { redirect, type Actions } from '@sveltejs/kit';
 
-export const load = ({ locals }) => {
+export const load = async ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
-		throw redirect(303, '/login');
+		redirect(303, '/login');
 	}
 
 	const getLists = async () => {
@@ -25,8 +25,8 @@ export const load = ({ locals }) => {
 	};
 
 	return {
-		lists: getLists(),
-		invitations: getInvitations()
+		lists: await getLists(),
+		invitations: await getInvitations()
 	};
 };
 
