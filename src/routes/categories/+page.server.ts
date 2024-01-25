@@ -1,7 +1,7 @@
 import { getMyCategoriesQuery } from '$lib/pocketbase';
-import { redirect, type Actions } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
-export const load = ({ locals }) => {
+export const load = async ({ locals }) => {
 	if (!locals.pb.authStore.isValid) {
 		redirect(303, '/login');
 	}
@@ -17,6 +17,6 @@ export const load = ({ locals }) => {
 	};
 
 	return {
-		categories: getCategories()
+		categories: await getCategories()
 	};
 };
